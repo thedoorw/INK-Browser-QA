@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-RESULT",
   "version": 1,
-  "requestId": "clusterB-B3-local-retouch-live-002b",
+  "requestId": "clusterB-B3-local-retouch-live-002c",
   "tool": null,
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "ca4bf6913efe1564eb572988a306120b3c008539",
@@ -22,8 +22,8 @@
           "version": 1,
           "action": "capability.describe",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -296,22 +296,22 @@
           "version": 1,
           "action": "raster.import",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [
             {
-              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
             }
           ],
           "changedRefs": [
             {
-              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
             }
           ],
           "historyReceipt": {
@@ -335,7 +335,7 @@
               "captureMode": "scoped",
               "label": "匯入可編輯影像",
               "objectIds": [
-                "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                "0762a07e-8858-4984-93d6-637f6a2d9246"
               ],
               "patchCount": 1,
               "storedBytes": 24005818,
@@ -353,7 +353,7 @@
           "outputHandles": [],
           "diagnostics": [],
           "result": {
-            "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+            "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
             "rasterState": {
               "format": null,
               "height": 1448,
@@ -379,8 +379,8 @@
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -401,15 +401,15 @@
                 "y": -24
               },
               "byteLength": 1138475,
-              "documentFingerprint": "fnv1a32:fbd7a41a",
-              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+              "documentFingerprint": "fnv1a32:3dcca74c",
+              "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:a59a4e9c",
+              "handleId": "ink-output-v1:ba43375a",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
@@ -432,7 +432,7 @@
               "y": -24
             },
             "byteLength": 1138475,
-            "handleId": "ink-output-v1:a59a4e9c",
+            "handleId": "ink-output-v1:ba43375a",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -444,21 +444,21 @@
         }
       },
       {
-        "id": "spongePropose",
+        "id": "localSharpenPropose",
         "tool": "propose_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.propose",
           "status": "PROPOSED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
             }
           ],
           "createdRefs": [],
@@ -475,25 +475,25 @@
               "approvalToken": null,
               "approved": false,
               "expected": {
-                "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-                "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+                "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+                "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "bd81b27b-6958-4be5-a116-013113f4cee3/d75441d2-1dfe-4082-8160-8b9b31b25acc": "fnv1a32:82edc32e"
+                  "a7cc2b34-cac9-40f9-8af7-82abebaa8249/0762a07e-8858-4984-93d6-637f6a2d9246": "fnv1a32:eb286fc2"
                 }
               },
-              "proposalId": "proposal:live-b3-local-sponge:396be0d7",
+              "proposalId": "proposal:live-b3-local-sharpen:a099c0e4",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "PROPOSED",
-              "stateFingerprint": "fnv1a32:2f70dee1",
+              "stateFingerprint": "fnv1a32:c2598692",
               "task": {
                 "arguments": {
+                  "amount": 2,
                   "hardness": 0.85,
-                  "mode": "saturate",
+                  "kernelRadius": 2,
                   "radius": 48,
-                  "strength": 0.8,
-                  "type": "sponge",
+                  "type": "localSharpen",
                   "x": 543,
                   "y": 724
                 },
@@ -502,12 +502,12 @@
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+                    "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+                    "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+                    "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
                   }
                 ],
-                "taskId": "live-b3-local-sponge",
+                "taskId": "live-b3-local-sharpen",
                 "version": 1
               },
               "version": 1
@@ -516,21 +516,21 @@
         }
       },
       {
-        "id": "spongeApprove",
+        "id": "localSharpenApprove",
         "tool": "approve_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.approve",
           "status": "APPROVED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
             }
           ],
           "createdRefs": [],
@@ -544,28 +544,28 @@
             "action": "approve",
             "ok": true,
             "result": {
-              "approvalToken": "INK-LOCAL-APPROVAL:proposal:live-b3-local-sponge:396be0d7:1",
+              "approvalToken": "INK-LOCAL-APPROVAL:proposal:live-b3-local-sharpen:a099c0e4:1",
               "approved": true,
               "expected": {
-                "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-                "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+                "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+                "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "bd81b27b-6958-4be5-a116-013113f4cee3/d75441d2-1dfe-4082-8160-8b9b31b25acc": "fnv1a32:82edc32e"
+                  "a7cc2b34-cac9-40f9-8af7-82abebaa8249/0762a07e-8858-4984-93d6-637f6a2d9246": "fnv1a32:eb286fc2"
                 }
               },
-              "proposalId": "proposal:live-b3-local-sponge:396be0d7",
+              "proposalId": "proposal:live-b3-local-sharpen:a099c0e4",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "APPROVED",
-              "stateFingerprint": "fnv1a32:2f70dee1",
+              "stateFingerprint": "fnv1a32:c2598692",
               "task": {
                 "arguments": {
+                  "amount": 2,
                   "hardness": 0.85,
-                  "mode": "saturate",
+                  "kernelRadius": 2,
                   "radius": 48,
-                  "strength": 0.8,
-                  "type": "sponge",
+                  "type": "localSharpen",
                   "x": 543,
                   "y": 724
                 },
@@ -574,12 +574,12 @@
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+                    "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+                    "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+                    "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
                   }
                 ],
-                "taskId": "live-b3-local-sponge",
+                "taskId": "live-b3-local-sharpen",
                 "version": 1
               },
               "version": 1
@@ -588,39 +588,39 @@
         }
       },
       {
-        "id": "spongeExecute",
+        "id": "localSharpenExecute",
         "tool": "execute_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.execute",
           "status": "EXECUTED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
             }
           ],
           "createdRefs": [],
           "changedRefs": [
             {
-              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
             }
           ],
           "historyReceipt": {
             "afterUndoCount": 2,
             "beforeUndoCount": 1,
-            "latestLabel": "CHAT raster local retouch: sponge"
+            "latestLabel": "CHAT raster local retouch: localSharpen"
           },
           "revisionReceipt": {
             "currentRevisionId": null,
-            "documentFingerprint": "fnv1a32:f55ef7ef",
+            "documentFingerprint": "fnv1a32:2e9ff760",
             "inspectedRevisionId": null
           },
           "provenanceReceipt": null,
@@ -634,32 +634,32 @@
               "controllerResult": {
                 "changed": true,
                 "rasterEdit": {
-                  "changedChannels": 20005,
-                  "changedPixels": 6989,
+                  "changedChannels": 20391,
+                  "changedPixels": 7126,
                   "radius": 48,
-                  "type": "sponge",
+                  "type": "localSharpen",
                   "x": 543,
                   "y": 724
                 },
                 "resultRefs": [
                   {
-                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+                    "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+                    "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+                    "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
                   }
                 ]
               },
               "history": {
                 "afterUndoCount": 2,
                 "beforeUndoCount": 1,
-                "latestLabel": "CHAT raster local retouch: sponge"
+                "latestLabel": "CHAT raster local retouch: localSharpen"
               },
               "ok": true,
               "operation": "image.raster.localRetouch.v1",
-              "proposalId": "proposal:live-b3-local-sponge:396be0d7",
+              "proposalId": "proposal:live-b3-local-sharpen:a099c0e4",
               "revision": {
                 "currentRevisionId": null,
-                "documentFingerprint": "fnv1a32:f55ef7ef",
+                "documentFingerprint": "fnv1a32:2e9ff760",
                 "inspectedRevisionId": null
               },
               "schema": "INK-CHAT-EDIT-RESULT",
@@ -667,11 +667,11 @@
               "targets": [
                 {
                   "ref": {
-                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+                    "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+                    "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+                    "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
                   },
-                  "stateFingerprint": "fnv1a32:b56e9b89",
+                  "stateFingerprint": "fnv1a32:1fc90446",
                   "worldMatrix": [
                     1,
                     0,
@@ -682,22 +682,22 @@
                   ]
                 }
               ],
-              "taskId": "live-b3-local-sponge",
+              "taskId": "live-b3-local-sharpen",
               "version": 1
             }
           }
         }
       },
       {
-        "id": "spongePreview",
+        "id": "localSharpenPreview",
         "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -717,22 +717,22 @@
                 "x": -24,
                 "y": -24
               },
-              "byteLength": 1138750,
-              "documentFingerprint": "fnv1a32:f55ef7ef",
-              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+              "byteLength": 1139062,
+              "documentFingerprint": "fnv1a32:2e9ff760",
+              "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:c1293e80",
+              "handleId": "ink-output-v1:7eaf73a5",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
                 "width": 607
               },
-              "renderFingerprint": "fnv1a32:f496a2ca",
+              "renderFingerprint": "fnv1a32:57ec08d4",
               "revisionId": null,
               "schema": "INK_OUTPUT_HANDLE",
               "scope": "content",
@@ -748,8 +748,8 @@
               "x": -24,
               "y": -24
             },
-            "byteLength": 1138750,
-            "handleId": "ink-output-v1:c1293e80",
+            "byteLength": 1139062,
+            "handleId": "ink-output-v1:7eaf73a5",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -761,15 +761,15 @@
         }
       },
       {
-        "id": "spongeUndo",
+        "id": "localSharpenUndo",
         "tool": "undo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.undo",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -784,7 +784,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -792,10 +792,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: sponge",
+                  "label": "CHAT raster local retouch: localSharpen",
                   "objectIds": [],
-                  "patchCount": 20007,
-                  "storedBytes": 4386394,
+                  "patchCount": 20393,
+                  "storedBytes": 4467888,
                   "targetCount": 1
                 }
               ],
@@ -814,11 +814,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20008,
+                "patchCount": 20394,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28392212,
+                "storedBytes": 28473706,
                 "undo": 1
               }
             },
@@ -832,7 +832,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -840,10 +840,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: sponge",
+                  "label": "CHAT raster local retouch: localSharpen",
                   "objectIds": [],
-                  "patchCount": 20007,
-                  "storedBytes": 4386394,
+                  "patchCount": 20393,
+                  "storedBytes": 4467888,
                   "targetCount": 1
                 }
               ],
@@ -862,11 +862,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20008,
+                "patchCount": 20394,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28392212,
+                "storedBytes": 28473706,
                 "undo": 2
               }
             }
@@ -886,7 +886,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -894,10 +894,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: sponge",
+                  "label": "CHAT raster local retouch: localSharpen",
                   "objectIds": [],
-                  "patchCount": 20007,
-                  "storedBytes": 4386394,
+                  "patchCount": 20393,
+                  "storedBytes": 4467888,
                   "targetCount": 1
                 }
               ],
@@ -916,11 +916,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20008,
+                "patchCount": 20394,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28392212,
+                "storedBytes": 28473706,
                 "undo": 1
               }
             }
@@ -928,15 +928,15 @@
         }
       },
       {
-        "id": "spongeUndoPreview",
+        "id": "localSharpenUndoPreview",
         "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -957,15 +957,15 @@
                 "y": -24
               },
               "byteLength": 1138475,
-              "documentFingerprint": "fnv1a32:17160bc9",
-              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+              "documentFingerprint": "fnv1a32:f49d8087",
+              "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:94633a75",
+              "handleId": "ink-output-v1:d93c8aac",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
@@ -988,7 +988,7 @@
               "y": -24
             },
             "byteLength": 1138475,
-            "handleId": "ink-output-v1:94633a75",
+            "handleId": "ink-output-v1:d93c8aac",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -1000,15 +1000,15 @@
         }
       },
       {
-        "id": "spongeRedo",
+        "id": "localSharpenRedo",
         "tool": "redo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.redo",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1023,7 +1023,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1031,10 +1031,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: sponge",
+                  "label": "CHAT raster local retouch: localSharpen",
                   "objectIds": [],
-                  "patchCount": 20007,
-                  "storedBytes": 4386394,
+                  "patchCount": 20393,
+                  "storedBytes": 4467888,
                   "targetCount": 1
                 }
               ],
@@ -1053,11 +1053,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20008,
+                "patchCount": 20394,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28392212,
+                "storedBytes": 28473706,
                 "undo": 2
               }
             },
@@ -1071,7 +1071,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1079,10 +1079,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: sponge",
+                  "label": "CHAT raster local retouch: localSharpen",
                   "objectIds": [],
-                  "patchCount": 20007,
-                  "storedBytes": 4386394,
+                  "patchCount": 20393,
+                  "storedBytes": 4467888,
                   "targetCount": 1
                 }
               ],
@@ -1101,11 +1101,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20008,
+                "patchCount": 20394,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28392212,
+                "storedBytes": 28473706,
                 "undo": 1
               }
             }
@@ -1125,7 +1125,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1133,10 +1133,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: sponge",
+                  "label": "CHAT raster local retouch: localSharpen",
                   "objectIds": [],
-                  "patchCount": 20007,
-                  "storedBytes": 4386394,
+                  "patchCount": 20393,
+                  "storedBytes": 4467888,
                   "targetCount": 1
                 }
               ],
@@ -1155,11 +1155,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20008,
+                "patchCount": 20394,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28392212,
+                "storedBytes": 28473706,
                 "undo": 2
               }
             }
@@ -1167,15 +1167,15 @@
         }
       },
       {
-        "id": "spongeRedoPreview",
+        "id": "localSharpenRedoPreview",
         "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1195,22 +1195,22 @@
                 "x": -24,
                 "y": -24
               },
-              "byteLength": 1138750,
-              "documentFingerprint": "fnv1a32:f55ef7ef",
-              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+              "byteLength": 1139062,
+              "documentFingerprint": "fnv1a32:2e9ff760",
+              "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:c1293e80",
+              "handleId": "ink-output-v1:7eaf73a5",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
                 "width": 607
               },
-              "renderFingerprint": "fnv1a32:f496a2ca",
+              "renderFingerprint": "fnv1a32:57ec08d4",
               "revisionId": null,
               "schema": "INK_OUTPUT_HANDLE",
               "scope": "content",
@@ -1226,8 +1226,8 @@
               "x": -24,
               "y": -24
             },
-            "byteLength": 1138750,
-            "handleId": "ink-output-v1:c1293e80",
+            "byteLength": 1139062,
+            "handleId": "ink-output-v1:7eaf73a5",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -1239,15 +1239,15 @@
         }
       },
       {
-        "id": "spongeRestore",
+        "id": "localSharpenRestore",
         "tool": "undo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.undo",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1262,7 +1262,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1270,10 +1270,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: sponge",
+                  "label": "CHAT raster local retouch: localSharpen",
                   "objectIds": [],
-                  "patchCount": 20007,
-                  "storedBytes": 4386394,
+                  "patchCount": 20393,
+                  "storedBytes": 4467888,
                   "targetCount": 1
                 }
               ],
@@ -1292,11 +1292,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20008,
+                "patchCount": 20394,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28392212,
+                "storedBytes": 28473706,
                 "undo": 1
               }
             },
@@ -1310,7 +1310,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1318,10 +1318,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: sponge",
+                  "label": "CHAT raster local retouch: localSharpen",
                   "objectIds": [],
-                  "patchCount": 20007,
-                  "storedBytes": 4386394,
+                  "patchCount": 20393,
+                  "storedBytes": 4467888,
                   "targetCount": 1
                 }
               ],
@@ -1340,11 +1340,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20008,
+                "patchCount": 20394,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28392212,
+                "storedBytes": 28473706,
                 "undo": 2
               }
             }
@@ -1364,7 +1364,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1372,10 +1372,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: sponge",
+                  "label": "CHAT raster local retouch: localSharpen",
                   "objectIds": [],
-                  "patchCount": 20007,
-                  "storedBytes": 4386394,
+                  "patchCount": 20393,
+                  "storedBytes": 4467888,
                   "targetCount": 1
                 }
               ],
@@ -1394,11 +1394,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20008,
+                "patchCount": 20394,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28392212,
+                "storedBytes": 28473706,
                 "undo": 1
               }
             }
@@ -1406,21 +1406,21 @@
         }
       },
       {
-        "id": "localBlurPropose",
+        "id": "colorReplacementPropose",
         "tool": "propose_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.propose",
           "status": "PROPOSED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
             }
           ],
           "createdRefs": [],
@@ -1437,25 +1437,26 @@
               "approvalToken": null,
               "approved": false,
               "expected": {
-                "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-                "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+                "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+                "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "bd81b27b-6958-4be5-a116-013113f4cee3/d75441d2-1dfe-4082-8160-8b9b31b25acc": "fnv1a32:82edc32e"
+                  "a7cc2b34-cac9-40f9-8af7-82abebaa8249/0762a07e-8858-4984-93d6-637f6a2d9246": "fnv1a32:eb286fc2"
                 }
               },
-              "proposalId": "proposal:live-b3-local-blur:0ba563b5",
+              "proposalId": "proposal:live-b3-local-color:d72125eb",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "PROPOSED",
-              "stateFingerprint": "fnv1a32:c312065b",
+              "stateFingerprint": "fnv1a32:4a812b8f",
               "task": {
                 "arguments": {
                   "hardness": 0.85,
-                  "kernelRadius": 3,
                   "radius": 48,
+                  "replacementColor": "#2d74cf",
                   "strength": 1,
-                  "type": "localBlur",
+                  "tolerance": 48,
+                  "type": "colorReplacement",
                   "x": 543,
                   "y": 724
                 },
@@ -1464,12 +1465,12 @@
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+                    "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+                    "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+                    "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
                   }
                 ],
-                "taskId": "live-b3-local-blur",
+                "taskId": "live-b3-local-color",
                 "version": 1
               },
               "version": 1
@@ -1478,21 +1479,21 @@
         }
       },
       {
-        "id": "localBlurApprove",
+        "id": "colorReplacementApprove",
         "tool": "approve_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.approve",
           "status": "APPROVED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
             }
           ],
           "createdRefs": [],
@@ -1506,28 +1507,29 @@
             "action": "approve",
             "ok": true,
             "result": {
-              "approvalToken": "INK-LOCAL-APPROVAL:proposal:live-b3-local-blur:0ba563b5:2",
+              "approvalToken": "INK-LOCAL-APPROVAL:proposal:live-b3-local-color:d72125eb:2",
               "approved": true,
               "expected": {
-                "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-                "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+                "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+                "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "bd81b27b-6958-4be5-a116-013113f4cee3/d75441d2-1dfe-4082-8160-8b9b31b25acc": "fnv1a32:82edc32e"
+                  "a7cc2b34-cac9-40f9-8af7-82abebaa8249/0762a07e-8858-4984-93d6-637f6a2d9246": "fnv1a32:eb286fc2"
                 }
               },
-              "proposalId": "proposal:live-b3-local-blur:0ba563b5",
+              "proposalId": "proposal:live-b3-local-color:d72125eb",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "APPROVED",
-              "stateFingerprint": "fnv1a32:c312065b",
+              "stateFingerprint": "fnv1a32:4a812b8f",
               "task": {
                 "arguments": {
                   "hardness": 0.85,
-                  "kernelRadius": 3,
                   "radius": 48,
+                  "replacementColor": "#2d74cf",
                   "strength": 1,
-                  "type": "localBlur",
+                  "tolerance": 48,
+                  "type": "colorReplacement",
                   "x": 543,
                   "y": 724
                 },
@@ -1536,12 +1538,12 @@
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+                    "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+                    "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+                    "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
                   }
                 ],
-                "taskId": "live-b3-local-blur",
+                "taskId": "live-b3-local-color",
                 "version": 1
               },
               "version": 1
@@ -1550,39 +1552,39 @@
         }
       },
       {
-        "id": "localBlurExecute",
+        "id": "colorReplacementExecute",
         "tool": "execute_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.execute",
           "status": "EXECUTED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
             }
           ],
           "createdRefs": [],
           "changedRefs": [
             {
-              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
             }
           ],
           "historyReceipt": {
             "afterUndoCount": 2,
             "beforeUndoCount": 1,
-            "latestLabel": "CHAT raster local retouch: localBlur"
+            "latestLabel": "CHAT raster local retouch: colorReplacement"
           },
           "revisionReceipt": {
             "currentRevisionId": null,
-            "documentFingerprint": "fnv1a32:2047b20f",
+            "documentFingerprint": "fnv1a32:5ee09ffa",
             "inspectedRevisionId": null
           },
           "provenanceReceipt": null,
@@ -1596,32 +1598,32 @@
               "controllerResult": {
                 "changed": true,
                 "rasterEdit": {
-                  "changedChannels": 20733,
-                  "changedPixels": 7127,
+                  "changedChannels": 8720,
+                  "changedPixels": 3005,
                   "radius": 48,
-                  "type": "localBlur",
+                  "type": "colorReplacement",
                   "x": 543,
                   "y": 724
                 },
                 "resultRefs": [
                   {
-                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+                    "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+                    "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+                    "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
                   }
                 ]
               },
               "history": {
                 "afterUndoCount": 2,
                 "beforeUndoCount": 1,
-                "latestLabel": "CHAT raster local retouch: localBlur"
+                "latestLabel": "CHAT raster local retouch: colorReplacement"
               },
               "ok": true,
               "operation": "image.raster.localRetouch.v1",
-              "proposalId": "proposal:live-b3-local-blur:0ba563b5",
+              "proposalId": "proposal:live-b3-local-color:d72125eb",
               "revision": {
                 "currentRevisionId": null,
-                "documentFingerprint": "fnv1a32:2047b20f",
+                "documentFingerprint": "fnv1a32:5ee09ffa",
                 "inspectedRevisionId": null
               },
               "schema": "INK-CHAT-EDIT-RESULT",
@@ -1629,11 +1631,11 @@
               "targets": [
                 {
                   "ref": {
-                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
-                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
-                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
+                    "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+                    "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+                    "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
                   },
-                  "stateFingerprint": "fnv1a32:45f2ce05",
+                  "stateFingerprint": "fnv1a32:85a43a04",
                   "worldMatrix": [
                     1,
                     0,
@@ -1644,22 +1646,22 @@
                   ]
                 }
               ],
-              "taskId": "live-b3-local-blur",
+              "taskId": "live-b3-local-color",
               "version": 1
             }
           }
         }
       },
       {
-        "id": "localBlurPreview",
+        "id": "colorReplacementPreview",
         "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1679,22 +1681,22 @@
                 "x": -24,
                 "y": -24
               },
-              "byteLength": 1137900,
-              "documentFingerprint": "fnv1a32:2047b20f",
-              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+              "byteLength": 1138606,
+              "documentFingerprint": "fnv1a32:5ee09ffa",
+              "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:b3b2be52",
+              "handleId": "ink-output-v1:c9c45f44",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
                 "width": 607
               },
-              "renderFingerprint": "fnv1a32:0aa47f36",
+              "renderFingerprint": "fnv1a32:5db0211e",
               "revisionId": null,
               "schema": "INK_OUTPUT_HANDLE",
               "scope": "content",
@@ -1710,8 +1712,8 @@
               "x": -24,
               "y": -24
             },
-            "byteLength": 1137900,
-            "handleId": "ink-output-v1:b3b2be52",
+            "byteLength": 1138606,
+            "handleId": "ink-output-v1:c9c45f44",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -1723,15 +1725,15 @@
         }
       },
       {
-        "id": "localBlurUndo",
+        "id": "colorReplacementUndo",
         "tool": "undo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.undo",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1746,7 +1748,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1754,10 +1756,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: localBlur",
+                  "label": "CHAT raster local retouch: colorReplacement",
                   "objectIds": [],
-                  "patchCount": 20735,
-                  "storedBytes": 4546505,
+                  "patchCount": 8722,
+                  "storedBytes": 1918802,
                   "targetCount": 1
                 }
               ],
@@ -1776,11 +1778,11 @@
                   "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20736,
+                "patchCount": 8723,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28552323,
+                "storedBytes": 25924620,
                 "undo": 1
               }
             },
@@ -1794,7 +1796,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1802,10 +1804,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: localBlur",
+                  "label": "CHAT raster local retouch: colorReplacement",
                   "objectIds": [],
-                  "patchCount": 20735,
-                  "storedBytes": 4546505,
+                  "patchCount": 8722,
+                  "storedBytes": 1918802,
                   "targetCount": 1
                 }
               ],
@@ -1824,11 +1826,11 @@
                   "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20736,
+                "patchCount": 8723,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28552323,
+                "storedBytes": 25924620,
                 "undo": 2
               }
             }
@@ -1848,7 +1850,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1856,10 +1858,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: localBlur",
+                  "label": "CHAT raster local retouch: colorReplacement",
                   "objectIds": [],
-                  "patchCount": 20735,
-                  "storedBytes": 4546505,
+                  "patchCount": 8722,
+                  "storedBytes": 1918802,
                   "targetCount": 1
                 }
               ],
@@ -1878,11 +1880,11 @@
                   "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20736,
+                "patchCount": 8723,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28552323,
+                "storedBytes": 25924620,
                 "undo": 1
               }
             }
@@ -1890,15 +1892,15 @@
         }
       },
       {
-        "id": "localBlurUndoPreview",
+        "id": "colorReplacementUndoPreview",
         "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1919,15 +1921,15 @@
                 "y": -24
               },
               "byteLength": 1138475,
-              "documentFingerprint": "fnv1a32:8c39863c",
-              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+              "documentFingerprint": "fnv1a32:31f08e3f",
+              "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:f432ab85",
+              "handleId": "ink-output-v1:8e58e48e",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
@@ -1950,7 +1952,7 @@
               "y": -24
             },
             "byteLength": 1138475,
-            "handleId": "ink-output-v1:f432ab85",
+            "handleId": "ink-output-v1:8e58e48e",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -1962,15 +1964,15 @@
         }
       },
       {
-        "id": "localBlurRedo",
+        "id": "colorReplacementRedo",
         "tool": "redo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.redo",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1985,7 +1987,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1993,10 +1995,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: localBlur",
+                  "label": "CHAT raster local retouch: colorReplacement",
                   "objectIds": [],
-                  "patchCount": 20735,
-                  "storedBytes": 4546505,
+                  "patchCount": 8722,
+                  "storedBytes": 1918802,
                   "targetCount": 1
                 }
               ],
@@ -2015,11 +2017,11 @@
                   "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20736,
+                "patchCount": 8723,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28552323,
+                "storedBytes": 25924620,
                 "undo": 2
               }
             },
@@ -2033,7 +2035,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -2041,10 +2043,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: localBlur",
+                  "label": "CHAT raster local retouch: colorReplacement",
                   "objectIds": [],
-                  "patchCount": 20735,
-                  "storedBytes": 4546505,
+                  "patchCount": 8722,
+                  "storedBytes": 1918802,
                   "targetCount": 1
                 }
               ],
@@ -2063,11 +2065,11 @@
                   "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20736,
+                "patchCount": 8723,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28552323,
+                "storedBytes": 25924620,
                 "undo": 1
               }
             }
@@ -2087,7 +2089,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -2095,10 +2097,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: localBlur",
+                  "label": "CHAT raster local retouch: colorReplacement",
                   "objectIds": [],
-                  "patchCount": 20735,
-                  "storedBytes": 4546505,
+                  "patchCount": 8722,
+                  "storedBytes": 1918802,
                   "targetCount": 1
                 }
               ],
@@ -2117,11 +2119,11 @@
                   "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20736,
+                "patchCount": 8723,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28552323,
+                "storedBytes": 25924620,
                 "undo": 2
               }
             }
@@ -2129,15 +2131,15 @@
         }
       },
       {
-        "id": "localBlurRedoPreview",
+        "id": "colorReplacementRedoPreview",
         "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -2157,22 +2159,22 @@
                 "x": -24,
                 "y": -24
               },
-              "byteLength": 1137900,
-              "documentFingerprint": "fnv1a32:2047b20f",
-              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+              "byteLength": 1138606,
+              "documentFingerprint": "fnv1a32:5ee09ffa",
+              "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:b3b2be52",
+              "handleId": "ink-output-v1:c9c45f44",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
                 "width": 607
               },
-              "renderFingerprint": "fnv1a32:0aa47f36",
+              "renderFingerprint": "fnv1a32:5db0211e",
               "revisionId": null,
               "schema": "INK_OUTPUT_HANDLE",
               "scope": "content",
@@ -2188,8 +2190,8 @@
               "x": -24,
               "y": -24
             },
-            "byteLength": 1137900,
-            "handleId": "ink-output-v1:b3b2be52",
+            "byteLength": 1138606,
+            "handleId": "ink-output-v1:c9c45f44",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -2201,15 +2203,15 @@
         }
       },
       {
-        "id": "localBlurRestore",
+        "id": "colorReplacementRestore",
         "tool": "undo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.undo",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -2224,7 +2226,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -2232,10 +2234,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: localBlur",
+                  "label": "CHAT raster local retouch: colorReplacement",
                   "objectIds": [],
-                  "patchCount": 20735,
-                  "storedBytes": 4546505,
+                  "patchCount": 8722,
+                  "storedBytes": 1918802,
                   "targetCount": 1
                 }
               ],
@@ -2254,11 +2256,11 @@
                   "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20736,
+                "patchCount": 8723,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28552323,
+                "storedBytes": 25924620,
                 "undo": 1
               }
             },
@@ -2272,7 +2274,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -2280,10 +2282,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: localBlur",
+                  "label": "CHAT raster local retouch: colorReplacement",
                   "objectIds": [],
-                  "patchCount": 20735,
-                  "storedBytes": 4546505,
+                  "patchCount": 8722,
+                  "storedBytes": 1918802,
                   "targetCount": 1
                 }
               ],
@@ -2302,11 +2304,11 @@
                   "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20736,
+                "patchCount": 8723,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28552323,
+                "storedBytes": 25924620,
                 "undo": 2
               }
             }
@@ -2326,7 +2328,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                    "0762a07e-8858-4984-93d6-637f6a2d9246"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -2334,10 +2336,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: localBlur",
+                  "label": "CHAT raster local retouch: colorReplacement",
                   "objectIds": [],
-                  "patchCount": 20735,
-                  "storedBytes": 4546505,
+                  "patchCount": 8722,
+                  "storedBytes": 1918802,
                   "targetCount": 1
                 }
               ],
@@ -2356,14 +2358,191 @@
                   "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 20736,
+                "patchCount": 8723,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28552323,
+                "storedBytes": 25924620,
                 "undo": 1
               }
             }
+          }
+        }
+      },
+      {
+        "id": "noOpPropose",
+        "tool": "propose_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.propose",
+          "status": "PROPOSED",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "action": "propose",
+            "ok": true,
+            "result": {
+              "approvalToken": null,
+              "approved": false,
+              "expected": {
+                "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+                "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
+                "revisionId": null,
+                "targetFingerprints": {
+                  "a7cc2b34-cac9-40f9-8af7-82abebaa8249/0762a07e-8858-4984-93d6-637f6a2d9246": "fnv1a32:eb286fc2"
+                }
+              },
+              "proposalId": "proposal:live-b3-local-noop:ba572676",
+              "revisionId": null,
+              "schema": "INK-CHAT-EDIT-PROPOSAL",
+              "state": "PROPOSED",
+              "stateFingerprint": "fnv1a32:42592d01",
+              "task": {
+                "arguments": {
+                  "hardness": 0.85,
+                  "radius": 48,
+                  "strength": 0,
+                  "type": "dodge",
+                  "x": 543,
+                  "y": 724
+                },
+                "expected": null,
+                "operation": "image.raster.localRetouch.v1",
+                "schema": "INK-CHAT-EDIT-TASK",
+                "targets": [
+                  {
+                    "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+                    "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+                    "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
+                  }
+                ],
+                "taskId": "live-b3-local-noop",
+                "version": 1
+              },
+              "version": 1
+            }
+          }
+        }
+      },
+      {
+        "id": "noOpApprove",
+        "tool": "approve_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.approve",
+          "status": "APPROVED",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+              "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+              "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "action": "approve",
+            "ok": true,
+            "result": {
+              "approvalToken": "INK-LOCAL-APPROVAL:proposal:live-b3-local-noop:ba572676:3",
+              "approved": true,
+              "expected": {
+                "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+                "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
+                "revisionId": null,
+                "targetFingerprints": {
+                  "a7cc2b34-cac9-40f9-8af7-82abebaa8249/0762a07e-8858-4984-93d6-637f6a2d9246": "fnv1a32:eb286fc2"
+                }
+              },
+              "proposalId": "proposal:live-b3-local-noop:ba572676",
+              "revisionId": null,
+              "schema": "INK-CHAT-EDIT-PROPOSAL",
+              "state": "APPROVED",
+              "stateFingerprint": "fnv1a32:42592d01",
+              "task": {
+                "arguments": {
+                  "hardness": 0.85,
+                  "radius": 48,
+                  "strength": 0,
+                  "type": "dodge",
+                  "x": 543,
+                  "y": 724
+                },
+                "expected": null,
+                "operation": "image.raster.localRetouch.v1",
+                "schema": "INK-CHAT-EDIT-TASK",
+                "targets": [
+                  {
+                    "layerId": "a7cc2b34-cac9-40f9-8af7-82abebaa8249",
+                    "objectId": "0762a07e-8858-4984-93d6-637f6a2d9246",
+                    "pageId": "e79f3697-75a8-48e6-b858-2aced8678478"
+                  }
+                ],
+                "taskId": "live-b3-local-noop",
+                "version": 1
+              },
+              "version": 1
+            }
+          }
+        }
+      },
+      {
+        "id": "noOpExecute",
+        "tool": "execute_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.execute",
+          "status": "FAILED",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [
+            {
+              "code": "CHAT_EDIT_NO_OP",
+              "details": {
+                "operation": "image.raster.localRetouch.v1"
+              },
+              "phase": "execute"
+            }
+          ],
+          "result": {
+            "code": "CHAT_EDIT_NO_OP",
+            "ok": false,
+            "operation": "image.raster.localRetouch.v1",
+            "phase": "execute"
           }
         }
       },
@@ -2375,8 +2554,8 @@
           "version": 1,
           "action": "history.inspect",
           "status": "COMPLETED",
-          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
-          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+          "documentId": "c58272dc-74d5-4bf0-ba0f-b9ee31d264e4",
+          "pageId": "e79f3697-75a8-48e6-b858-2aced8678478",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -2395,7 +2574,7 @@
                 "captureMode": "scoped",
                 "label": "匯入可編輯影像",
                 "objectIds": [
-                  "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                  "0762a07e-8858-4984-93d6-637f6a2d9246"
                 ],
                 "patchCount": 1,
                 "storedBytes": 24005818,
@@ -2403,10 +2582,10 @@
               },
               {
                 "captureMode": "scoped",
-                "label": "CHAT raster local retouch: localBlur",
+                "label": "CHAT raster local retouch: colorReplacement",
                 "objectIds": [],
-                "patchCount": 20735,
-                "storedBytes": 4546505,
+                "patchCount": 8722,
+                "storedBytes": 1918802,
                 "targetCount": 1
               }
             ],
@@ -2425,11 +2604,11 @@
                 "scopedCapturedBytes": 48011442
               },
               "mode": "hybrid-target-scoped-id-aware-patches",
-              "patchCount": 20736,
+              "patchCount": 8723,
               "redo": 1,
               "scopedEntries": 2,
               "scopedRatio": 1,
-              "storedBytes": 28552323,
+              "storedBytes": 25924620,
               "undo": 1
             }
           }
