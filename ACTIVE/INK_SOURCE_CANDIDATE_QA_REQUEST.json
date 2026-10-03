@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "local-paper-single-a3-regression-001",
+  "requestId": "local-paper-single-a2-regression-001",
   "candidateSha": "29e23abf609bf57603ecfe5e366355b788ddc2fd",
-  "case": "page-paper-a3"
+  "case": "stroke-create-a2"
 }
