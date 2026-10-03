@@ -1,5 +1,58 @@
 # INK Current Work Order
 
+## Architecture Recomposition — B0 BLOCKED / B1 COMPLETE / B2 PROPOSED — STOP → USER / MR REVIEW 2026-10-03
+
+B0 precondition check completed against GitHub SSOT.
+
+PWA disposition:
+```text
+PWA_INTEGRATION_LIVE_GATE = NOT CLOSED
+FOCUSED_REGRESSION = FAIL
+MAIN_INTEGRATION = NO
+PAGES_POSTINTEGRATION_GATE = NOT RUN
+PWA_CACHE_FRESHNESS_CLOSED = NO
+```
+
+Therefore:
+```text
+B0_BASELINE = BLOCKED_BY_PWA_CLOSURE
+pre-architecture-recomposition-v1 TAG = NOT CREATED
+archive/pre-architecture-recomposition BRANCH = NOT CREATED
+FROZEN_MANIFEST = NOT CREATED
+SOURCE_SNAPSHOT_CHECKSUM = NOT CREATED
+EARLIER_BASELINE_SUBSTITUTION = PROHIBITED
+```
+
+B1 architecture-only contract is complete:
+- `research/INK_COMMAND_STATE_ARCHITECTURE_CONTRACT_v0.1.md`
+
+B0 block evidence:
+- `working/INK_ARCHITECTURE_RECOMPOSITION_B0_PWA_BLOCK_RECORD_20261003.md`
+
+First B2 bounded slice proposal:
+- `working/INK_ARCHITECTURE_RECOMPOSITION_B2_GUIDE_VERTICAL_SLICE_PROPOSAL_v0.1.md`
+- proposed family: `guide.add/move/remove/lock.set/visibility.set.v1`
+- implementation: **NOT AUTHORIZED**
+
+Required next sequence:
+```text
+PWA Supervisor resolves current integration failure
+→ exact integrated main + actual Pages live gate closes
+→ resume B0 and freeze that exact accepted baseline
+→ USER / MR reviews B1 + proposed B2
+→ only then may a separate B2 product work order be authorized
+```
+
+Protected state:
+```text
+PRODUCT_SOURCE_MUTATION = NONE
+CORE_REWRITE = NO
+UI_REBUILD_IMPLEMENTATION = NO
+OLD_ROUTE_DELETION = NO
+FORMAT_VERSION = 4 / UNCHANGED
+NEXT = STOP → USER / MR REVIEW
+```
+
 ## Architecture Recomposition — B0/B1 DISPATCHED / PRE-IMPLEMENTATION 2026-10-03
 
 USER directed the current recomposition plan to be formalized, noted in root README, and dispatched to a new window.
