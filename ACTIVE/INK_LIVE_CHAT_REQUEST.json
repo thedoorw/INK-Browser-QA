@@ -1,15 +1,15 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B3-paint-bucket-live-001",
+  "requestId": "clusterB-B3-raster-mask-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "d64aa172ef6d4f3c100642aec8bcc4195c33b2dd",
+  "expectedSourceSha": "2d1c67f398c19cbbec1e935095b5dc991c886213",
   "steps": [
     {
-      "id": "describe",
+      "id": "describeMask",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "image.raster.paintBucket.v1"
+        "idOrToolName": "image.mask.raster.set.v1"
       }
     },
     {
@@ -17,22 +17,15 @@
       "tool": "import_ink_raster",
       "input": {
         "options": {
-          "name": "B3 Editable Raster",
+          "name": "B3 Mask Editable Raster",
           "type": "image/png",
-          "intent": "B3 destructive Paint Bucket formal Live qualification"
+          "intent": "B3 native raster mask formal Live qualification"
         }
       },
       "file": {
         "path": "qa/fixtures/rose-window/rose-window-primary.png",
         "name": "rose-window-primary.png",
         "type": "image/png"
-      }
-    },
-    {
-      "id": "contextImported",
-      "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 20
       }
     },
     {
@@ -45,13 +38,40 @@
       }
     },
     {
-      "id": "fillPropose",
+      "id": "staleMaskPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B3-live-paint-bucket",
+          "taskId": "clusterB-B3-live-mask-stale-pixels",
+          "operation": "image.mask.raster.set.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "shape": "rectangle",
+            "x": 100,
+            "y": 100,
+            "width": 500,
+            "height": 700,
+            "invert": false,
+            "feather": 0,
+            "expand": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "pixelPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "clusterB-B3-live-mask-intervening-pixels",
           "operation": "image.raster.paintBucket.v1",
           "targets": [
             {
@@ -70,23 +90,95 @@
       }
     },
     {
-      "id": "fillApprove",
+      "id": "pixelApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "fillPropose.result.result.proposalId"
+          "$ref": "pixelPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "fillExecute",
+      "id": "pixelExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "fillPropose.result.result.proposalId"
+          "$ref": "pixelPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "fillApprove.result.result.approvalToken"
+          "$ref": "pixelApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "staleMaskApprove",
+      "tool": "approve_ink_edit",
+      "allowFailure": true,
+      "input": {
+        "proposalId": {
+          "$ref": "staleMaskPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "undoPixel",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "previewRestored",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "maskPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "clusterB-B3-live-mask-main",
+          "operation": "image.mask.raster.set.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "shape": "rectangle",
+            "x": 100,
+            "y": 100,
+            "width": 500,
+            "height": 700,
+            "invert": false,
+            "feather": 0,
+            "expand": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "maskApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "maskPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "maskExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "maskPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "maskApprove.result.result.approvalToken"
         }
       }
     },
@@ -118,20 +210,22 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B3-live-paint-bucket-noop",
-          "operation": "image.raster.paintBucket.v1",
+          "taskId": "clusterB-B3-live-mask-noop",
+          "operation": "image.mask.raster.set.v1",
           "targets": [
             {
               "$ref": "importRaster.createdRefs.0"
             }
           ],
           "arguments": {
-            "x": 5,
-            "y": 5,
-            "color": "#20b86a",
-            "tolerance": 0,
-            "contiguous": true,
-            "opacity": 1
+            "shape": "rectangle",
+            "x": 100,
+            "y": 100,
+            "width": 500,
+            "height": 700,
+            "invert": false,
+            "feather": 0,
+            "expand": 0
           }
         }
       }
@@ -159,7 +253,7 @@
       }
     },
     {
-      "id": "undo",
+      "id": "undoMask",
       "tool": "undo_ink",
       "input": {}
     },
@@ -173,7 +267,7 @@
       }
     },
     {
-      "id": "redo",
+      "id": "redoMask",
       "tool": "redo_ink",
       "input": {}
     },
