@@ -73,3 +73,27 @@ Remaining Cluster C queue:
 C1_PAGE_OPERATIONS = CLOSED
 NEXT_AUTHORITY_QUEUE = C2_ALIGN_DISTRIBUTE
 ```
+
+
+## Cluster C2 authority closure — 2026-10-03
+
+Cluster C2 explicit-target align / distribute is accepted and formally Live-qualified.
+
+- PR #147;
+- exact candidate `6994160cae577f57e858919e261a57aa7f5fea18`;
+- merged source `f8035bd862825b913d0157f51c62de15bbb9d29e`;
+- integrated Formal Live source `f56e492af4954ae6da3be39cf10d2dbe2859d87e`;
+- candidate C1/B4/A2/B2 regressions PASS;
+- Formal Live `clusterC-C2-align-distribute-live-001`, run `37108065303`;
+- `left` and `distributeX` executed through the existing `InkApp.alignSelection()` / `applyWorldTransformBatch()` authority with scoped History and Undo/Redo;
+- candidate additionally qualified `centerX`, prior-selection restoration, and the minimum-three-target distribution guard;
+- no second layout authority, pointer simulation, UI change, History redesign, or FORMAT_VERSION change.
+
+Remaining Cluster C queue:
+1. C3 snap settings + ruler guides through existing precision-layout / InkApp wrappers;
+2. C4 bounded artboard state mutation.
+
+```text
+C2_ALIGN_DISTRIBUTE = CLOSED
+NEXT_AUTHORITY_QUEUE = C3_SNAP_GUIDES
+```
