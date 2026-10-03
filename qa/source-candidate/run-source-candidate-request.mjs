@@ -374,7 +374,7 @@ const STROKE_ERASE_A4_CASE = String.raw`(async()=>{
   const staleApprove=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId:staleProposalId}));
   if(staleApprove?.status!=='FAILED')throw new Error('STALE_PROPOSAL_NOT_REJECTED');
   const staleCode=findField(staleApprove,'code');
-  if(!['STALE_REVISION','TARGET_STALE'].includes(staleCode))throw new Error('STALE_DIAGNOSTIC_UNEXPECTED:'+JSON.stringify(staleApprove));
+  if(!['STALE_REVISION','TARGET_STALE','CHAT_EDIT_STALE_REVISION','CHAT_EDIT_TARGET_STALE'].includes(staleCode))throw new Error('STALE_DIAGNOSTIC_UNEXPECTED:'+JSON.stringify(staleApprove));
   const untranslate=await Promise.resolve(api.tools.invoke('undo_ink',{}));
   if(untranslate?.status==='FAILED')throw new Error('STALE_MUTATION_UNDO_FAILED');
   await waitFrames();
@@ -386,7 +386,7 @@ const STROKE_ERASE_A4_CASE = String.raw`(async()=>{
   if(noOpApproved?.status==='FAILED')throw new Error('NOOP_APPROVE_FAILED');
   const noOpToken=findField(noOpApproved,'approvalToken');if(!noOpToken)throw new Error('NOOP_TOKEN_MISSING');
   const noOpExecuted=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId:noOpProposalId,approvalToken:noOpToken}));
-  if(noOpExecuted?.status!=='FAILED'||findField(noOpExecuted,'code')!=='NO_OP')throw new Error('NOOP_NOT_REJECTED:'+JSON.stringify(noOpExecuted));
+  if(noOpExecuted?.status!=='FAILED'||!['NO_OP','CHAT_EDIT_NO_OP'].includes(findField(noOpExecuted,'code')))throw new Error('NOOP_NOT_REJECTED:'+JSON.stringify(noOpExecuted));
 
   return {
     passed:true,
