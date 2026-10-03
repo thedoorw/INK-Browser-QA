@@ -1,10 +1,8 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "core-perf-cache-integrated-001",
-  "candidateSha": "e095ee54a51f8562d03af248dca658cf321e6479",
-  "case": "blender-smudge-a5",
-  "regressions": true,
-  "naturalMediaCacheReview": true,
-  "postIntegration": true
+  "requestId": "clusterB-B3-source-retouch-candidate-001-regressions",
+  "candidateSha": "22593c2a59bd16c2c166a67a260a0390a6efd218",
+  "case": "raster-source-retouch-b3",
+  "regressions": true
 }
