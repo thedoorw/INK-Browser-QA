@@ -9,6 +9,7 @@ Status: **DEV_COMPLETE — AWAITING CHAT / CORE / LIVE AUTHORITY REVIEW**
 - Dispatch base main: `b6f837643064100b04cad12e338db782709ce255`
 - Latest main reconciled before final qualification: `b0bd825a8d8ce97763ec45046219ce78f799b4ed`
 - Exact browser-qualified candidate: `da40f868ebdb17c6cacb46d74867f75235ba77e5`
+- Post-qualification latest main integrated: `9c5915eaf9a67149e94cad7dc6e87552609e4de3` (evidence-only `working/INK_LIVE_CHAT_RESULT.json`; no product/QA delta)
 - Draft PR: #154
 - FORMAT_VERSION: `4` — unchanged
 - Merge to main: **NO**
@@ -162,6 +163,8 @@ Current Cluster C Artboard and C019 Text Path semantics from main were preserved
 - merge base: `b0bd825a8d8ce97763ec45046219ce78f799b4ed`
 
 The reconciled candidate then passed the final browser qualification and regressions above.
+
+After qualification, main advanced once to `9c5915eaf9a67149e94cad7dc6e87552609e4de3` only by updating `working/INK_LIVE_CHAT_RESULT.json`. That evidence-only commit was integrated into this DEV branch after qualification. Cluster D product and QA candidate bytes were unchanged, so the exact browser-qualified product candidate remains `da40f868ebdb17c6cacb46d74867f75235ba77e5`.
 
 ## Product changes
 
