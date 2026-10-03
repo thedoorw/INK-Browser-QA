@@ -150,11 +150,17 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
     return {status:r.status,fingerprint:find(r,'renderFingerprint')||find(r,'fingerprint')||null,bounds:find(r,'bounds')||null};
   };
   const renderProbe=async()=>{
-    const canvas=await app.renderExportCanvas({scope:'content',scale:1,background:true});
-    const data=canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height).data;
+    const content=app.renderer.contentBounds()||{x:-200,y:-150,w:400,h:300},pad=24,scale=1;
+    const bounds={x:content.x-pad,y:content.y-pad,w:content.w+pad*2,h:content.h+pad*2};
+    const canvas=await app.renderExportCanvas({scope:'content',scale,background:true});
+    const ctx=canvas.getContext('2d'),image=ctx.getImageData(0,0,canvas.width,canvas.height),data=image.data;
     let h=2166136261;
     for(let i=0;i<data.length;i++){h^=data[i];h=Math.imul(h,16777619);}
-    const result={hash:(h>>>0).toString(16),width:canvas.width,height:canvas.height};
+    const px=Math.max(0,Math.min(canvas.width-1,Math.round((0-bounds.x)*scale)));
+    const py=Math.max(0,Math.min(canvas.height-1,Math.round((0-bounds.y)*scale)));
+    const offset=(py*canvas.width+px)*4;
+    const centerPixel=[data[offset],data[offset+1],data[offset+2],data[offset+3]];
+    const result={hash:(h>>>0).toString(16),width:canvas.width,height:canvas.height,bounds,centerPixel};
     canvas.width=1;canvas.height=1;
     return result;
   };
