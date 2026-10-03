@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterC-C3-snap-guides-candidate-003-integration-regressions",
-  "candidateSha": "1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
-  "case": "snap-guides-c3",
+  "requestId": "core-perf-spatial-batch-candidate-001",
+  "candidateSha": "28537865a90843b4176c103f09452177fedf2544",
+  "case": "align-distribute-c2",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:40245/?sourceCandidate=1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
+    "href": "http://127.0.0.1:44341/?sourceCandidate=28537865a90843b4176c103f09452177fedf2544",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,70 +13,178 @@
   },
   "result": {
     "passed": true,
-    "operations": [
-      "page.snap.set.v1",
-      "guide.add.v1",
-      "guide.move.v1",
-      "guide.remove.v1",
-      "guide.lock.set.v1",
-      "guide.visibility.set.v1"
+    "operation": "object.align.v1",
+    "modes": [
+      "left",
+      "centerX",
+      "distributeX"
     ],
-    "baselineGrid": false,
-    "gridValue": true,
-    "staleCode": "CHAT_EDIT_STALE_PRECISION_LAYOUT",
-    "snapNoOp": "CHAT_EDIT_NO_OP",
-    "lockedMove": "CHAT_EDIT_GUIDE_LOCKED",
-    "hiddenNoOp": "CHAT_EDIT_NO_OP",
-    "snapEvidence": {
-      "delta": {
-        "x": 4,
-        "y": 0
+    "baseline": [
+      {
+        "x": 10,
+        "y": 19.999999999999996,
+        "w": 40,
+        "h": 30.000000000000004
       },
-      "snapped": {
-        "x": true,
-        "y": false
+      {
+        "x": 90,
+        "y": 69.99999999999999,
+        "w": 50,
+        "h": 30.000000000000043
       },
-      "evidence": {
-        "x": {
-          "type": "guide",
-          "axis": "x",
-          "sourceRole": "start",
-          "targetRole": "guide",
-          "targetId": "qa-c3-guide-v",
-          "candidateKey": "guide:x:start:qa-c3-guide-v:guide",
-          "correction": 4,
-          "targetValue": 180,
-          "line": {
-            "axis": "x",
-            "value": 180
-          }
+      {
+        "x": 260,
+        "y": 125,
+        "w": 60,
+        "h": 30
+      }
+    ],
+    "left": [
+      {
+        "x": 10,
+        "y": 19.999999999999996,
+        "w": 40,
+        "h": 30.000000000000004
+      },
+      {
+        "x": 10,
+        "y": 69.99999999999999,
+        "w": 50,
+        "h": 30.000000000000043
+      },
+      {
+        "x": 10,
+        "y": 125,
+        "w": 60,
+        "h": 30
+      }
+    ],
+    "center": [
+      {
+        "x": 145,
+        "y": 19.999999999999996,
+        "w": 40,
+        "h": 30.000000000000004
+      },
+      {
+        "x": 140,
+        "y": 69.99999999999999,
+        "w": 50,
+        "h": 30.000000000000043
+      },
+      {
+        "x": 135,
+        "y": 125,
+        "w": 60,
+        "h": 30
+      }
+    ],
+    "distributed": [
+      {
+        "x": 10,
+        "y": 19.999999999999996,
+        "w": 40,
+        "h": 30.000000000000004
+      },
+      {
+        "x": 130,
+        "y": 69.99999999999999,
+        "w": 50,
+        "h": 30.000000000000043
+      },
+      {
+        "x": 260,
+        "y": 125,
+        "w": 60,
+        "h": 30
+      }
+    ],
+    "gaps": [
+      80,
+      80
+    ],
+    "selectionRestored": true,
+    "distributionGuard": "CHAT_EDIT_TARGET_COUNT_INVALID",
+    "historyLabel": "對齊物件",
+    "spatialBatchReview": {
+      "passed": true,
+      "targets": 16,
+      "before": {
+        "pageId": "0a7f6bde-88f5-492a-b74e-61e8a160d8e7",
+        "objects": 19,
+        "nestedObjects": 0,
+        "nodes": 5,
+        "revision": 1,
+        "fullRebuilds": 1,
+        "incrementalUpdates": 0,
+        "mode": "incremental-quadtree-hierarchy-aware"
+      },
+      "after": {
+        "pageId": "0a7f6bde-88f5-492a-b74e-61e8a160d8e7",
+        "objects": 19,
+        "nestedObjects": 0,
+        "nodes": 5,
+        "revision": 2,
+        "fullRebuilds": 2,
+        "incrementalUpdates": 0,
+        "mode": "incremental-quadtree-hierarchy-aware"
+      },
+      "beforeHash": 704683766,
+      "afterHash": 2895483156,
+      "previewStatus": "COMPLETED",
+      "undoRedoExact": true,
+      "indexFreshParity": true,
+      "largeFixture": {
+        "objects": 3000,
+        "batch": 100,
+        "cycles": 20,
+        "timesMs": [
+          18.599999999998545,
+          18.599999999998545,
+          24,
+          14.200000000004366,
+          15.19999999999709,
+          13.700000000004366,
+          11.19999999999709,
+          20.599999999998545,
+          14.099999999998545,
+          70.80000000000291,
+          11.400000000001455,
+          11.5,
+          13.099999999998545,
+          11.900000000001455,
+          10.5,
+          12.200000000004366,
+          12.099999999998545,
+          10.19999999999709,
+          12.400000000001455,
+          12.80000000000291
+        ],
+        "stats": {
+          "pageId": "large-spatial-fixture",
+          "objects": 3000,
+          "nestedObjects": 0,
+          "nodes": 613,
+          "revision": 21,
+          "fullRebuilds": 21,
+          "incrementalUpdates": 0,
+          "mode": "incremental-quadtree-hierarchy-aware"
         },
-        "y": null
+        "queryParity": true
       },
-      "bypassed": false
-    },
-    "finalGuides": [],
-    "initialGuides": [],
-    "historyLabels": [
-      "新增參考線",
-      "移動參考線",
-      "鎖定參考線",
-      "鎖定參考線",
-      "顯示參考線",
-      "顯示參考線",
-      "刪除參考線"
-    ]
+      "memoryLeakClaim": false
+    }
   },
   "status": "PASS",
   "regressions": [
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterC-C3-snap-guides-candidate-003-integration-regressions-align-distribute-c2",
-      "candidateSha": "1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
-      "case": "align-distribute-c2",
+      "requestId": "core-perf-spatial-batch-candidate-001-paint-session-create",
+      "candidateSha": "28537865a90843b4176c103f09452177fedf2544",
+      "case": "paint-session-create",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:34643/?sourceCandidate=1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
+        "href": "http://127.0.0.1:33985/?sourceCandidate=28537865a90843b4176c103f09452177fedf2544",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -84,110 +192,40 @@
       },
       "result": {
         "passed": true,
-        "operation": "object.align.v1",
-        "modes": [
-          "left",
-          "centerX",
-          "distributeX"
-        ],
-        "baseline": [
-          {
-            "x": 10,
-            "y": 19.999999999999996,
-            "w": 40,
-            "h": 30.000000000000004
-          },
-          {
-            "x": 90,
-            "y": 69.99999999999999,
-            "w": 50,
-            "h": 30.000000000000043
-          },
-          {
-            "x": 260,
-            "y": 125,
-            "w": 60,
-            "h": 30
-          }
-        ],
-        "left": [
-          {
-            "x": 10,
-            "y": 19.999999999999996,
-            "w": 40,
-            "h": 30.000000000000004
-          },
-          {
-            "x": 10,
-            "y": 69.99999999999999,
-            "w": 50,
-            "h": 30.000000000000043
-          },
-          {
-            "x": 10,
-            "y": 125,
-            "w": 60,
-            "h": 30
-          }
-        ],
-        "center": [
-          {
-            "x": 145,
-            "y": 19.999999999999996,
-            "w": 40,
-            "h": 30.000000000000004
-          },
-          {
-            "x": 140,
-            "y": 69.99999999999999,
-            "w": 50,
-            "h": 30.000000000000043
-          },
-          {
-            "x": 135,
-            "y": 125,
-            "w": 60,
-            "h": 30
-          }
-        ],
-        "distributed": [
-          {
-            "x": 10,
-            "y": 19.999999999999996,
-            "w": 40,
-            "h": 30.000000000000004
-          },
-          {
-            "x": 130,
-            "y": 69.99999999999999,
-            "w": 50,
-            "h": 30.000000000000043
-          },
-          {
-            "x": 260,
-            "y": 125,
-            "w": 60,
-            "h": 30
-          }
-        ],
-        "gaps": [
-          80,
-          80
-        ],
-        "selectionRestored": true,
-        "distributionGuard": "CHAT_EDIT_TARGET_COUNT_INVALID",
-        "historyLabel": "對齊物件"
+        "before": {
+          "count": 0,
+          "undo": 0,
+          "canvas": "308b5875"
+        },
+        "after": {
+          "count": 1,
+          "undo": 1,
+          "canvas": "c81fe871",
+          "id": "chat-paint-fnv1a32-c7900103",
+          "strokes": 2,
+          "replayHash": "ca30ca32"
+        },
+        "previewStatus": "COMPLETED",
+        "previewBounds": {
+          "h": 231.12032,
+          "w": 274.0064,
+          "x": -135.13,
+          "y": -120.46648
+        },
+        "undoStatus": "COMPLETED",
+        "redoStatus": "COMPLETED",
+        "restoredStrokeCount": 2
       },
       "status": "PASS"
     },
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterC-C3-snap-guides-candidate-003-integration-regressions-page-ops-c1",
-      "candidateSha": "1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
-      "case": "page-ops-c1",
+      "requestId": "core-perf-spatial-batch-candidate-001-stroke-create-a2",
+      "candidateSha": "28537865a90843b4176c103f09452177fedf2544",
+      "case": "stroke-create-a2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:38437/?sourceCandidate=1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
+        "href": "http://127.0.0.1:41089/?sourceCandidate=28537865a90843b4176c103f09452177fedf2544",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -195,59 +233,198 @@
       },
       "result": {
         "passed": true,
-        "operations": [
-          "page.create.v1",
-          "page.duplicate.v1",
-          "page.delete.v1",
-          "page.rename.v1",
-          "page.activate.v1"
+        "operation": "stroke.create.v1",
+        "created": [
+          {
+            "id": "chat-stroke-fnv1a32-bb21046a",
+            "kind": "pencil",
+            "mediaModel": null,
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-ba3b2301",
+            "kind": "brush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-9d7b788f",
+            "kind": "airbrush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-4b41deb2",
+            "kind": "drybrush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          }
         ],
-        "initialPageId": "4895f79d-a0ca-4e58-8ff9-31cd02a43ae6",
-        "createdPageId": "a9ba2b69-8816-4c2c-acba-34c2d6c89180",
-        "duplicatedPageId": "2e0b573d-00fc-46c3-a436-101b4536424f",
-        "duplicateIdentity": {
-          "sourceLayerIds": [
-            "5cc19e06-b2bf-4d52-9d6c-1055279e2f2a"
-          ],
-          "sourceObjectIds": [
-            "qa-c1-page2-path"
-          ],
-          "duplicateLayerIds": [
-            "abf99d35-fdc6-43f9-a8c3-6bda984a1328"
-          ],
-          "duplicateObjectIds": [
-            "0a8f4d8a-556a-424e-acd7-7d4c1b189f04"
-          ]
+        "before": {
+          "count": 0,
+          "undo": 0,
+          "canvas": "308b5875"
         },
-        "noOpCodes": {
-          "rename": "CHAT_EDIT_NO_OP",
-          "activate": "CHAT_EDIT_NO_OP"
+        "after": {
+          "count": 4,
+          "undo": 4,
+          "canvas": "e70b7919"
         },
-        "staleCode": "CHAT_EDIT_STALE_PAGE",
-        "minimumPageCode": "CHAT_EDIT_MINIMUM_PAGE_REQUIRED",
-        "finalPageCount": 1,
-        "finalActivePageId": "4895f79d-a0ca-4e58-8ff9-31cd02a43ae6",
         "historyLabels": [
-          "新增頁面",
-          "CHAT create Path",
-          "重新命名頁面",
-          "複製頁面",
-          "刪除頁面",
-          "新增頁面",
-          "刪除頁面",
-          "刪除頁面"
-        ]
+          "CHAT create Stroke",
+          "CHAT create Stroke",
+          "CHAT create Stroke",
+          "CHAT create Stroke"
+        ],
+        "previewStatus": "COMPLETED",
+        "previewBounds": {
+          "h": 350.6,
+          "w": 451,
+          "x": -233.6,
+          "y": -182
+        },
+        "undoStatus": "COMPLETED",
+        "redoStatus": "COMPLETED",
+        "redoCanvas": "e70b7919",
+        "naturalMedia": {
+          "preference": "auto",
+          "floraReferenceBackend": "canvas2d",
+          "activeBackend": "webgl2-multichannel",
+          "gpuAvailable": true,
+          "gpuState": "ready",
+          "forcedReason": null,
+          "fallbacks": 0,
+          "batchFallbacks": 0,
+          "mixingRuns": 0,
+          "webgl": {
+            "backend": "webgl2",
+            "drawCalls": 3,
+            "cacheHits": 24,
+            "cacheMisses": 3,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "vertices": 1740,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 3,
+            "lastError": null,
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "maxTextureUnits": 32,
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+              "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 3,
+              "releases": 0,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 742548,
+              "budgetBytes": 100663296,
+              "usedBytes": 742548,
+              "availableBytes": 99920748,
+              "utilization": 0.007376551628112793,
+              "resources": 3,
+              "byType": {
+                "raster-cache": 742548
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelWebgl": {
+            "backend": "webgl2-multichannel",
+            "runs": 6,
+            "strokes": 6,
+            "drawCalls": 6,
+            "simulationPasses": 24,
+            "cacheHits": 23,
+            "cacheMisses": 6,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 4,
+            "lastError": null,
+            "targets": "164x79",
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxDrawBuffers": 8,
+              "maxColorAttachments": 8,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 16,
+              "releases": 10,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 766152,
+              "budgetBytes": 167772160,
+              "usedBytes": 473576,
+              "availableBytes": 167298584,
+              "utilization": 0.002822732925415039,
+              "resources": 6,
+              "byType": {
+                "raster-cache": 266280,
+                "mrt-target": 207296
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelCanvas2d": {
+            "backend": "canvas2d-multichannel",
+            "runs": 0,
+            "strokes": 0,
+            "mixingStrokes": 0,
+            "stamps": 0,
+            "mixerStamps": 0,
+            "transportedPigment": 0,
+            "pixels": 0,
+            "cacheHits": 0,
+            "cacheMisses": 0,
+            "preparations": 0,
+            "preparationSkips": 0,
+            "evictions": 0,
+            "skipped": 0,
+            "cacheEntries": 0
+          },
+          "canvas2d": {
+            "backend": "canvas2d",
+            "surfaceRevision": "WP8B-1",
+            "drawCalls": 0,
+            "frequencyVisibility": {
+              "low": true,
+              "mid": true,
+              "high": true
+            }
+          }
+        }
       },
       "status": "PASS"
     },
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterC-C3-snap-guides-candidate-003-integration-regressions-page-paper-a3",
-      "candidateSha": "1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
+      "requestId": "core-perf-spatial-batch-candidate-001-page-paper-a3",
+      "candidateSha": "28537865a90843b4176c103f09452177fedf2544",
       "case": "page-paper-a3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:45861/?sourceCandidate=1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
+        "href": "http://127.0.0.1:46539/?sourceCandidate=28537865a90843b4176c103f09452177fedf2544",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -436,11 +613,159 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterC-C3-snap-guides-candidate-003-integration-regressions-raster-stack-adjustment-b2",
-      "candidateSha": "1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
+      "requestId": "core-perf-spatial-batch-candidate-001-stroke-erase-a4",
+      "candidateSha": "28537865a90843b4176c103f09452177fedf2544",
+      "case": "stroke-erase-a4",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:34503/?sourceCandidate=28537865a90843b4176c103f09452177fedf2544",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "descriptorStatus": "COMPLETED",
+        "sourceId": "qa-a4-source-stroke",
+        "fragmentIds": [
+          "chat-erase-fnv1a32-659162db",
+          "chat-erase-fnv1a32-9c326998"
+        ],
+        "baselineCanvas": "52e1086e",
+        "erasedCanvas": "f8fd8c45",
+        "previewBefore": "fnv1a32:482bfe2b",
+        "previewAfter": "fnv1a32:786ce305",
+        "undoCanvas": "52e1086e",
+        "redoCanvas": "f8fd8c45",
+        "historyLabel": "CHAT erase Stroke",
+        "staleCode": "CHAT_EDIT_TARGET_STALE",
+        "noOpCode": "CHAT_EDIT_NO_OP",
+        "controllerResult": {
+          "changed": true,
+          "circle": {
+            "radius": 32,
+            "x": 0,
+            "y": 0
+          },
+          "erasedTargetCount": 1,
+          "fragmentCount": 2,
+          "removedRefs": [
+            {
+              "layerId": "b53b3e9a-467e-425f-beb3-418a1ce4a9b9",
+              "objectId": "qa-a4-source-stroke",
+              "pageId": "5fa3c7fd-ccd7-4982-99b9-9e29d1bf8e38"
+            }
+          ],
+          "resultRefs": [
+            {
+              "layerId": "b53b3e9a-467e-425f-beb3-418a1ce4a9b9",
+              "objectId": "chat-erase-fnv1a32-659162db",
+              "pageId": "5fa3c7fd-ccd7-4982-99b9-9e29d1bf8e38"
+            },
+            {
+              "layerId": "b53b3e9a-467e-425f-beb3-418a1ce4a9b9",
+              "objectId": "chat-erase-fnv1a32-9c326998",
+              "pageId": "5fa3c7fd-ccd7-4982-99b9-9e29d1bf8e38"
+            }
+          ]
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "core-perf-spatial-batch-candidate-001-blender-smudge-a5",
+      "candidateSha": "28537865a90843b4176c103f09452177fedf2544",
+      "case": "blender-smudge-a5",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:44213/?sourceCandidate=28537865a90843b4176c103f09452177fedf2544",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "stroke.create.v1",
+        "kinds": [
+          "blender",
+          "smudge"
+        ],
+        "baseline": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:1c7b7b41",
+          "bounds": {
+            "h": 192.4,
+            "w": 452.4,
+            "x": -226.2,
+            "y": -94.2
+          }
+        },
+        "afterBlender": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:3e594331",
+          "bounds": {
+            "h": 197.8,
+            "w": 452.4,
+            "x": -226.2,
+            "y": -97.4
+          }
+        },
+        "afterSmudge": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:06e7d736",
+          "bounds": {
+            "h": 224.6,
+            "w": 452.4,
+            "x": -226.2,
+            "y": -97.4
+          }
+        },
+        "historyLabels": [
+          "CHAT create Stroke",
+          "CHAT create Stroke"
+        ],
+        "diagnostics": {
+          "activeBackend": "canvas2d-multichannel",
+          "mixingRuns": 10,
+          "multiChannelCanvas2d": {
+            "backend": "canvas2d-multichannel",
+            "runs": 11,
+            "strokes": 29,
+            "mixingStrokes": 9,
+            "stamps": 1256,
+            "mixerStamps": 288,
+            "transportedPigment": 192521.06028555412,
+            "pixels": 451273,
+            "cacheHits": 9,
+            "cacheMisses": 11,
+            "preparations": 11,
+            "preparationSkips": 9,
+            "evictions": 0,
+            "skipped": 0,
+            "cacheEntries": 8
+          }
+        },
+        "undoStatus": [
+          "COMPLETED",
+          "COMPLETED"
+        ],
+        "redoStatus": [
+          "COMPLETED",
+          "COMPLETED"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "core-perf-spatial-batch-candidate-001-raster-stack-adjustment-b2",
+      "candidateSha": "28537865a90843b4176c103f09452177fedf2544",
       "case": "raster-stack-adjustment-b2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:42407/?sourceCandidate=1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
+        "href": "http://127.0.0.1:43059/?sourceCandidate=28537865a90843b4176c103f09452177fedf2544",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -450,9 +775,9 @@
         "passed": true,
         "operation": "image.adjustment.add.v1",
         "adjustmentType": "brightnessContrast",
-        "objectId": "49b9025e-44db-4d5f-8a65-b698f9cfc7a9",
-        "beforeFingerprint": "fnv1a32:3ece49b6",
-        "afterFingerprint": "fnv1a32:25c0a1ff",
+        "objectId": "d6e2c38d-25b5-46b2-acd1-d65d377cec20",
+        "beforeFingerprint": "fnv1a32:cb8e52be",
+        "afterFingerprint": "fnv1a32:8157408d",
         "beforeHash": "7883b22",
         "afterHash": "9cd23fe",
         "undoHash": "7883b22",
@@ -465,14 +790,955 @@
           "adjustmentCount": 1,
           "resultRefs": [
             {
-              "layerId": "93549f78-1152-4c28-8d59-36422cb41c70",
-              "objectId": "49b9025e-44db-4d5f-8a65-b698f9cfc7a9",
-              "pageId": "d7c4a0ab-9e9c-4e38-abb3-fbb1f4f0ec51"
+              "layerId": "322e2814-ac20-4721-96f7-ec82dc24f625",
+              "objectId": "d6e2c38d-25b5-46b2-acd1-d65d377cec20",
+              "pageId": "b00ab7b8-0167-4b4f-a059-287191a93a22"
             }
           ],
-          "stackItemId": "adj_1602qxr",
+          "stackItemId": "adj_1l3pi8k",
           "stackItemType": "brightnessContrast"
         }
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "core-perf-spatial-batch-candidate-001-path-deformation-b4",
+      "candidateSha": "28537865a90843b4176c103f09452177fedf2544",
+      "case": "path-deformation-b4",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:46619/?sourceCandidate=28537865a90843b4176c103f09452177fedf2544",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "inventory": [
+          "get_ink_capabilities",
+          "get_ink_context",
+          "get_ink_selection",
+          "inspect_ink_objects",
+          "decompose_ink_reference",
+          "propose_ink_edit",
+          "approve_ink_edit",
+          "execute_ink_edit",
+          "get_ink_history",
+          "undo_ink",
+          "redo_ink",
+          "get_ink_revisions",
+          "capture_ink_revision",
+          "restore_ink_revision",
+          "get_ink_preview",
+          "inspect_ink_output",
+          "release_ink_output",
+          "describe_ink_capability",
+          "use_ink",
+          "import_ink_reference",
+          "import_ink_raster",
+          "export_ink_asset",
+          "search_ink_library"
+        ],
+        "receipts": [
+          {
+            "operation": "path.create.v1",
+            "proposed": "PROPOSED",
+            "approved": "APPROVED",
+            "executed": "EXECUTED"
+          },
+          {
+            "operation": "path.warp.v1",
+            "proposed": "PROPOSED",
+            "approved": "APPROVED",
+            "executed": "EXECUTED"
+          },
+          {
+            "operation": "path.distort.v1",
+            "proposed": "PROPOSED",
+            "approved": "APPROVED",
+            "executed": "EXECUTED"
+          },
+          {
+            "operation": "path.perspective.v1",
+            "proposed": "PROPOSED",
+            "approved": "APPROVED",
+            "executed": "EXECUTED"
+          }
+        ],
+        "outcomes": {
+          "warp": {
+            "stableId": "b4-native-path",
+            "baseSubpathsRetained": true,
+            "parameters": {
+              "bend": 67.2
+            },
+            "deformation": {
+              "baseSubpaths": [
+                {
+                  "id": "b4-native-path_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_mus4pfm2_eexma0s",
+                      "x": 140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus4pfm3_vanjahx",
+                      "x": 0,
+                      "y": 95,
+                      "in": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus4pfm3_0m4evh6",
+                      "x": -140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus4pfm3_zgtc0hs",
+                      "x": 0,
+                      "y": -95,
+                      "in": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "type": "INK-NON-DESTRUCTIVE-DEFORMATION",
+              "version": "1.0",
+              "parameters": {
+                "bend": 67.2
+              },
+              "frontBack": "front",
+              "reversible": true,
+              "revision": 1
+            },
+            "subpaths": [
+              {
+                "id": "b4-native-path_s0",
+                "closed": true,
+                "role": "outer",
+                "anchors": [
+                  {
+                    "id": "v_mus4pfm2_eexma0s",
+                    "x": 207.2,
+                    "y": 0,
+                    "in": {
+                      "x": -23.740760834938527,
+                      "y": -52.46705123392539
+                    },
+                    "out": {
+                      "x": -23.740760834938527,
+                      "y": 52.46705123392539
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus4pfm3_vanjahx",
+                    "x": 8.229626490270214e-15,
+                    "y": 95,
+                    "in": {
+                      "x": 77.3198649763111,
+                      "y": 0
+                    },
+                    "out": {
+                      "x": -77.3198649763111,
+                      "y": 0
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus4pfm3_0m4evh6",
+                    "x": -72.8,
+                    "y": 0,
+                    "in": {
+                      "x": -23.74076083493854,
+                      "y": 52.46705123392539
+                    },
+                    "out": {
+                      "x": -23.74076083493854,
+                      "y": -52.46705123392539
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus4pfm3_zgtc0hs",
+                    "x": 0,
+                    "y": -95,
+                    "in": {
+                      "x": -77.3198649763111,
+                      "y": 0
+                    },
+                    "out": {
+                      "x": 77.3198649763111,
+                      "y": 0
+                    },
+                    "mode": "smooth"
+                  }
+                ]
+              }
+            ],
+            "canvasBefore": "ca5e221b",
+            "canvasAfter": "ac22a30d",
+            "previewBefore": "fnv1a32:a94d0df7",
+            "previewAfter": "fnv1a32:08317eb1",
+            "historyLabel": "CHAT warp Path",
+            "historyStatus": "COMPLETED",
+            "undoRedoExact": true,
+            "resetExact": true,
+            "reapplicationFromBaseExact": true
+          },
+          "distort": {
+            "stableId": "b4-native-path",
+            "baseSubpathsRetained": true,
+            "parameters": {
+              "projective": {
+                "mode": "distort",
+                "xOffset": 32,
+                "yOffset": 16,
+                "sourceQuad": [
+                  {
+                    "x": -140,
+                    "y": -95
+                  },
+                  {
+                    "x": 140,
+                    "y": -95
+                  },
+                  {
+                    "x": 140,
+                    "y": 95
+                  },
+                  {
+                    "x": -140,
+                    "y": 95
+                  }
+                ],
+                "destinationQuad": [
+                  {
+                    "x": -108,
+                    "y": -95
+                  },
+                  {
+                    "x": 140,
+                    "y": -79
+                  },
+                  {
+                    "x": 140,
+                    "y": 95
+                  },
+                  {
+                    "x": -140,
+                    "y": 95
+                  }
+                ],
+                "matrix": [
+                  0.9422118897376287,
+                  -0.08516142564981036,
+                  14.599800730654268,
+                  0.03155097974094988,
+                  0.9535038193291264,
+                  -1.0727333111922954,
+                  0.00033211557622052476,
+                  -0.0006082958974986454,
+                  1
+                ]
+              }
+            },
+            "deformation": {
+              "baseSubpaths": [
+                {
+                  "id": "b4-native-path_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_mus4pfm2_eexma0s",
+                      "x": 140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus4pfm3_vanjahx",
+                      "x": 0,
+                      "y": 95,
+                      "in": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus4pfm3_0m4evh6",
+                      "x": -140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus4pfm3_zgtc0hs",
+                      "x": 0,
+                      "y": -95,
+                      "in": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "type": "INK-NON-DESTRUCTIVE-DEFORMATION",
+              "version": "1.0",
+              "parameters": {
+                "projective": {
+                  "mode": "distort",
+                  "xOffset": 32,
+                  "yOffset": 16,
+                  "sourceQuad": [
+                    {
+                      "x": -140,
+                      "y": -95
+                    },
+                    {
+                      "x": 140,
+                      "y": -95
+                    },
+                    {
+                      "x": 140,
+                      "y": 95
+                    },
+                    {
+                      "x": -140,
+                      "y": 95
+                    }
+                  ],
+                  "destinationQuad": [
+                    {
+                      "x": -108,
+                      "y": -95
+                    },
+                    {
+                      "x": 140,
+                      "y": -79
+                    },
+                    {
+                      "x": 140,
+                      "y": 95
+                    },
+                    {
+                      "x": -140,
+                      "y": 95
+                    }
+                  ],
+                  "matrix": [
+                    0.9422118897376287,
+                    -0.08516142564981036,
+                    14.599800730654268,
+                    0.03155097974094988,
+                    0.9535038193291264,
+                    -1.0727333111922954,
+                    0.00033211557622052476,
+                    -0.0006082958974986454,
+                    1
+                  ]
+                }
+              },
+              "frontBack": "front",
+              "reversible": true,
+              "revision": 1
+            },
+            "subpaths": [
+              {
+                "id": "b4-native-path_s0",
+                "closed": true,
+                "role": "outer",
+                "anchors": [
+                  {
+                    "id": "v_mus4pfm2_eexma0s",
+                    "x": 140,
+                    "y": 3.195810853697242,
+                    "in": {
+                      "x": 0,
+                      "y": -46.48459478486833
+                    },
+                    "out": {
+                      "x": 0,
+                      "y": 49.40911075580743
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus4pfm3_vanjahx",
+                    "x": 6.908706379978851,
+                    "y": 94.99999999999999,
+                    "in": {
+                      "x": 75.08519545952872,
+                      "y": 1.4210854715202004e-14
+                    },
+                    "out": {
+                      "x": -79.29262305301744,
+                      "y": 0
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus4pfm3_0m4evh6",
+                    "x": -123.03030303030305,
+                    "y": -5.757575757575762,
+                    "in": {
+                      "x": -9.108992907649721,
+                      "y": 54.08464538917027
+                    },
+                    "out": {
+                      "x": 8.518953749493903,
+                      "y": -50.58128788762003
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus4pfm3_zgtc0hs",
+                    "x": 21.45054945054945,
+                    "y": -86.64835164835164,
+                    "in": {
+                      "x": -70.05157992199574,
+                      "y": -4.519456769161025
+                    },
+                    "out": {
+                      "x": 66.73101117023397,
+                      "y": 4.305226527111884
+                    },
+                    "mode": "smooth"
+                  }
+                ]
+              }
+            ],
+            "canvasBefore": "ca5e221b",
+            "canvasAfter": "4e17a235",
+            "previewBefore": "fnv1a32:a94d0df7",
+            "previewAfter": "fnv1a32:9f578833",
+            "historyLabel": "CHAT distort Path",
+            "historyStatus": "COMPLETED",
+            "undoRedoExact": true,
+            "resetExact": true,
+            "reapplicationFromBaseExact": true
+          },
+          "perspective": {
+            "stableId": "b4-native-path",
+            "baseSubpathsRetained": true,
+            "parameters": {
+              "projective": {
+                "mode": "perspective",
+                "xOffset": 32,
+                "yOffset": 16,
+                "sourceQuad": [
+                  {
+                    "x": -140,
+                    "y": -95
+                  },
+                  {
+                    "x": 140,
+                    "y": -95
+                  },
+                  {
+                    "x": 140,
+                    "y": 95
+                  },
+                  {
+                    "x": -140,
+                    "y": 95
+                  }
+                ],
+                "destinationQuad": [
+                  {
+                    "x": -108,
+                    "y": -79
+                  },
+                  {
+                    "x": 108,
+                    "y": -111
+                  },
+                  {
+                    "x": 172,
+                    "y": 111
+                  },
+                  {
+                    "x": -172,
+                    "y": 79
+                  }
+                ],
+                "matrix": [
+                  0.9477551020408164,
+                  -0.056731301939058176,
+                  -23.57894736842105,
+                  -0.02612244897959174,
+                  0.9716343490304711,
+                  -21.71428571428571,
+                  -0.0012030075187969924,
+                  -0.002406015037593985,
+                  1
+                ]
+              }
+            },
+            "deformation": {
+              "baseSubpaths": [
+                {
+                  "id": "b4-native-path_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_mus4pfm2_eexma0s",
+                      "x": 140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus4pfm3_vanjahx",
+                      "x": 0,
+                      "y": 95,
+                      "in": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus4pfm3_0m4evh6",
+                      "x": -140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus4pfm3_zgtc0hs",
+                      "x": 0,
+                      "y": -95,
+                      "in": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "type": "INK-NON-DESTRUCTIVE-DEFORMATION",
+              "version": "1.0",
+              "parameters": {
+                "projective": {
+                  "mode": "perspective",
+                  "xOffset": 32,
+                  "yOffset": 16,
+                  "sourceQuad": [
+                    {
+                      "x": -140,
+                      "y": -95
+                    },
+                    {
+                      "x": 140,
+                      "y": -95
+                    },
+                    {
+                      "x": 140,
+                      "y": 95
+                    },
+                    {
+                      "x": -140,
+                      "y": 95
+                    }
+                  ],
+                  "destinationQuad": [
+                    {
+                      "x": -108,
+                      "y": -79
+                    },
+                    {
+                      "x": 108,
+                      "y": -111
+                    },
+                    {
+                      "x": 172,
+                      "y": 111
+                    },
+                    {
+                      "x": -172,
+                      "y": 79
+                    }
+                  ],
+                  "matrix": [
+                    0.9477551020408164,
+                    -0.056731301939058176,
+                    -23.57894736842105,
+                    -0.02612244897959174,
+                    0.9716343490304711,
+                    -21.71428571428571,
+                    -0.0012030075187969924,
+                    -0.002406015037593985,
+                    1
+                  ]
+                }
+              },
+              "frontBack": "front",
+              "reversible": true,
+              "revision": 1
+            },
+            "subpaths": [
+              {
+                "id": "b4-native-path_s0",
+                "closed": true,
+                "role": "outer",
+                "anchors": [
+                  {
+                    "id": "v_mus4pfm2_eexma0s",
+                    "x": 131.20433996383363,
+                    "y": -30.50994575045206,
+                    "in": {
+                      "x": -14.184626319144215,
+                      "y": -49.2029225445315
+                    },
+                    "out": {
+                      "x": 19.261926927591816,
+                      "y": 66.81480903008426
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus4pfm3_vanjahx",
+                    "x": -37.55165692007797,
+                    "y": 91.5068226120858,
+                    "in": {
+                      "x": 102.86869567176674,
+                      "y": 9.569180992722494
+                    },
+                    "out": {
+                      "x": -80.73085202620155,
+                      "y": -7.50984670011178
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus4pfm3_0m4evh6",
+                    "x": -133.74002574002571,
+                    "y": -15.454311454311462,
+                    "in": {
+                      "x": -19.055549241708576,
+                      "y": 47.04338719046801
+                    },
+                    "out": {
+                      "x": 15.339499260807884,
+                      "y": -37.86938880011952
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus4pfm3_zgtc0hs",
+                    "x": -14.805385556915544,
+                    "y": -92.80660954712363,
+                    "in": {
+                      "x": -54.40664082997878,
+                      "y": 8.060243085922778
+                    },
+                    "out": {
+                      "x": 63.31983041192393,
+                      "y": -9.380715616581327
+                    },
+                    "mode": "smooth"
+                  }
+                ]
+              }
+            ],
+            "canvasBefore": "ca5e221b",
+            "canvasAfter": "b1149dd5",
+            "previewBefore": "fnv1a32:a94d0df7",
+            "previewAfter": "fnv1a32:5105c73e",
+            "historyLabel": "CHAT perspective Path",
+            "historyStatus": "COMPLETED",
+            "undoRedoExact": true,
+            "resetExact": true,
+            "reapplicationFromBaseExact": true
+          }
+        },
+        "distortDiffersFromPerspective": true,
+        "noPointerEmulation": true,
+        "original": [
+          {
+            "id": "b4-native-path_s0",
+            "closed": true,
+            "role": "outer",
+            "anchors": [
+              {
+                "id": "v_mus4pfm2_eexma0s",
+                "x": 140,
+                "y": 0,
+                "in": {
+                  "x": 0,
+                  "y": -52.46705123392539
+                },
+                "out": {
+                  "x": 0,
+                  "y": 52.46705123392539
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_mus4pfm3_vanjahx",
+                "x": 0,
+                "y": 95,
+                "in": {
+                  "x": 77.3198649763111,
+                  "y": 0
+                },
+                "out": {
+                  "x": -77.3198649763111,
+                  "y": 0
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_mus4pfm3_0m4evh6",
+                "x": -140,
+                "y": 0,
+                "in": {
+                  "x": 0,
+                  "y": 52.46705123392539
+                },
+                "out": {
+                  "x": 0,
+                  "y": -52.46705123392539
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_mus4pfm3_zgtc0hs",
+                "x": 0,
+                "y": -95,
+                "in": {
+                  "x": -77.3198649763111,
+                  "y": 0
+                },
+                "out": {
+                  "x": 77.3198649763111,
+                  "y": 0
+                },
+                "mode": "smooth"
+              }
+            ]
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "core-perf-spatial-batch-candidate-001-page-ops-c1",
+      "candidateSha": "28537865a90843b4176c103f09452177fedf2544",
+      "case": "page-ops-c1",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:34923/?sourceCandidate=28537865a90843b4176c103f09452177fedf2544",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operations": [
+          "page.create.v1",
+          "page.duplicate.v1",
+          "page.delete.v1",
+          "page.rename.v1",
+          "page.activate.v1"
+        ],
+        "initialPageId": "2e411b52-b325-4c2f-ab74-628cfedecdee",
+        "createdPageId": "57c6f1c5-07ef-4b92-9f72-c6c970871b5c",
+        "duplicatedPageId": "87aaf29b-69c6-493a-913d-e62b7835adfd",
+        "duplicateIdentity": {
+          "sourceLayerIds": [
+            "f3a58018-3ef7-462a-ad73-e9d54c243c3b"
+          ],
+          "sourceObjectIds": [
+            "qa-c1-page2-path"
+          ],
+          "duplicateLayerIds": [
+            "2f0f86b2-4d92-41a2-a525-bb4498fa7a73"
+          ],
+          "duplicateObjectIds": [
+            "a5e78a30-b738-4859-acff-c0e81a4a35b5"
+          ]
+        },
+        "noOpCodes": {
+          "rename": "CHAT_EDIT_NO_OP",
+          "activate": "CHAT_EDIT_NO_OP"
+        },
+        "staleCode": "CHAT_EDIT_STALE_PAGE",
+        "minimumPageCode": "CHAT_EDIT_MINIMUM_PAGE_REQUIRED",
+        "finalPageCount": 1,
+        "finalActivePageId": "2e411b52-b325-4c2f-ab74-628cfedecdee",
+        "historyLabels": [
+          "新增頁面",
+          "CHAT create Path",
+          "重新命名頁面",
+          "複製頁面",
+          "刪除頁面",
+          "新增頁面",
+          "刪除頁面",
+          "刪除頁面"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "core-perf-spatial-batch-candidate-001-snap-guides-c3",
+      "candidateSha": "28537865a90843b4176c103f09452177fedf2544",
+      "case": "snap-guides-c3",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:42507/?sourceCandidate=28537865a90843b4176c103f09452177fedf2544",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operations": [
+          "page.snap.set.v1",
+          "guide.add.v1",
+          "guide.move.v1",
+          "guide.remove.v1",
+          "guide.lock.set.v1",
+          "guide.visibility.set.v1"
+        ],
+        "baselineGrid": false,
+        "gridValue": true,
+        "staleCode": "CHAT_EDIT_STALE_PRECISION_LAYOUT",
+        "snapNoOp": "CHAT_EDIT_NO_OP",
+        "lockedMove": "CHAT_EDIT_GUIDE_LOCKED",
+        "hiddenNoOp": "CHAT_EDIT_NO_OP",
+        "snapEvidence": {
+          "delta": {
+            "x": 4,
+            "y": 0
+          },
+          "snapped": {
+            "x": true,
+            "y": false
+          },
+          "evidence": {
+            "x": {
+              "type": "guide",
+              "axis": "x",
+              "sourceRole": "start",
+              "targetRole": "guide",
+              "targetId": "qa-c3-guide-v",
+              "candidateKey": "guide:x:start:qa-c3-guide-v:guide",
+              "correction": 4,
+              "targetValue": 180,
+              "line": {
+                "axis": "x",
+                "value": 180
+              }
+            },
+            "y": null
+          },
+          "bypassed": false
+        },
+        "finalGuides": [],
+        "initialGuides": [],
+        "historyLabels": [
+          "新增參考線",
+          "移動參考線",
+          "鎖定參考線",
+          "鎖定參考線",
+          "顯示參考線",
+          "顯示參考線",
+          "刪除參考線"
+        ]
       },
       "status": "PASS"
     }
