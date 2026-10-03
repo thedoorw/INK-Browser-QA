@@ -16,6 +16,7 @@ import { paperProfileFingerprint } from '../render/paper-profile.js';
 import { eraseStrokeWithCircle } from '../stroke/edit.js';
 import { BrushPresetRegistry, BUILTIN_BRUSH_PRESETS, StrokeSessionRecorder, replayStrokeSession } from '../paint/paint-core.js';
 import { IMAGE_CAPABILITIES, LIQUIFY_OPERATIONS, burn, cloneStamp, colorRasterToRgba8, colorReplacementBrush, createAdjustment, createColorRaster, createFilter, createLayerEffect, createLiquifyFilter, deserializeColorRaster, dodge, healingBrush, localBlur, localSharpen, maskBounds, paintBucketFill, patchRaster, rasterizePathMask, serializeColorRaster, sponge, spotHealing } from '../image/image-core.js';
+import { createMaterialInstance, createMaterialTemplate, getMaterialTemplate } from '../material/material-library.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
 export const CHAT_STATE_SUMMARY_VERSION = 1;
@@ -301,8 +302,15 @@ export const CHAT_OBJECT_ALIGN_MODES = Object.freeze(['left', 'centerX', 'right'
 export const CHAT_SNAP_KEYS = Object.freeze(['enabled', 'guides', 'edges', 'centers', 'grid', 'angle', 'equalDistance']);
 export const CHAT_PRECISION_LAYOUT_OPERATIONS = Object.freeze(['page.snap.set.v1', 'guide.add.v1', 'guide.move.v1', 'guide.remove.v1', 'guide.lock.set.v1', 'guide.visibility.set.v1']);
 const CHAT_PRECISION_LAYOUT_OPERATION_SET = new Set(CHAT_PRECISION_LAYOUT_OPERATIONS);
+export const CHAT_MATERIAL_OPERATIONS = Object.freeze(['material.template.create.v1', 'material.instance.create.v1']);
+const CHAT_MATERIAL_OPERATION_SET = new Set(CHAT_MATERIAL_OPERATIONS);
+export const CHAT_RECIPE_OPERATIONS = Object.freeze(['recipe.studio.execute.v1']);
+const CHAT_RECIPE_OPERATION_SET = new Set(CHAT_RECIPE_OPERATIONS);
 
 export const CHAT_EDIT_OPERATIONS = Object.freeze([
+  'material.template.create.v1',
+  'material.instance.create.v1',
+  'recipe.studio.execute.v1',
   'path.repaint.v1',
   'path.material.apply.v1',
   'path.material.remove.v1',
@@ -1183,6 +1191,101 @@ function normalizeRepaintArguments(raw = {}) {
   return patch;
 }
 
+function validateMaterialTemplateTokens(value, field = 'arguments.template.geometry') {
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => validateMaterialTemplateTokens(item, `${field}[${index}]`));
+    return;
+  }
+  if (!value || typeof value !== 'object') return;
+  const keys = Object.keys(value);
+  const dollarKeys = keys.filter(key => key.startsWith('$'));
+  if (dollarKeys.length) {
+    if (keys.length !== 1 || !['$param', '$calc'].includes(keys[0])) editFail('MATERIAL_TOKEN_UNSUPPORTED', { field });
+    if (keys[0] === '$param') {
+      boundedText(value.$param, field + '.$param', { max: 160 });
+      return;
+    }
+    const calc = value.$calc;
+    if (!calc || typeof calc !== 'object' || Array.isArray(calc) || Object.keys(calc).some(key => !['op', 'args'].includes(key))) {
+      editFail('MATERIAL_TOKEN_INVALID', { field });
+    }
+    boundedEnum(calc.op, field + '.$calc.op', ['add', 'subtract', 'multiply', 'divide', 'negate', 'min', 'max', 'round', 'select']);
+    if (!Array.isArray(calc.args) || !calc.args.length || calc.args.length > 16) editFail('MATERIAL_TOKEN_INVALID', { field });
+    calc.args.forEach((item, index) => validateMaterialTemplateTokens(item, `${field}.$calc.args[${index}]`));
+    return;
+  }
+  for (const [key, item] of Object.entries(value)) validateMaterialTemplateTokens(item, `${field}.${key}`);
+}
+
+function normalizeMaterialTemplateCreateArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).some(key => key !== 'template')) editFail('ARGUMENTS_INVALID');
+  const template = normalizeBoundedJson(raw.template, 'arguments.template', { maxBytes: 32768, maxDepth: 12, maxKeys: 512, maxArray: 512, maxString: 1024 });
+  if (!template || typeof template !== 'object' || Array.isArray(template)) editFail('ARGUMENTS_INVALID');
+  const allowed = new Set(['templateId', 'templateVersion', 'materialType', 'geometry', 'defaultParameters', 'editableParameters', 'constraints', 'semanticRole', 'sourceBenchmark', 'validationState', 'metadata']);
+  if (Object.keys(template).some(key => !allowed.has(key))) editFail('ARGUMENTS_INVALID');
+  template.templateId = boundedText(template.templateId, 'arguments.template.templateId', { max: 160 });
+  if (!/^material[-_:]/i.test(template.templateId)) editFail('ARGUMENT_INVALID', { field: 'arguments.template.templateId' });
+  template.templateVersion = boundedText(template.templateVersion, 'arguments.template.templateVersion', { max: 80 });
+  template.materialType = boundedText(template.materialType, 'arguments.template.materialType', { max: 120 });
+  template.semanticRole = boundedText(template.semanticRole, 'arguments.template.semanticRole', { max: 160 });
+  if (!template.geometry || typeof template.geometry !== 'object' || Array.isArray(template.geometry)) editFail('ARGUMENT_INVALID', { field: 'arguments.template.geometry' });
+  if (!template.defaultParameters || typeof template.defaultParameters !== 'object' || Array.isArray(template.defaultParameters)) editFail('ARGUMENT_INVALID', { field: 'arguments.template.defaultParameters' });
+  if (!template.editableParameters || typeof template.editableParameters !== 'object' || Array.isArray(template.editableParameters)) editFail('ARGUMENT_INVALID', { field: 'arguments.template.editableParameters' });
+  if (!Array.isArray(template.constraints)) editFail('ARGUMENT_INVALID', { field: 'arguments.template.constraints' });
+  if (!template.sourceBenchmark || typeof template.sourceBenchmark !== 'object' || Array.isArray(template.sourceBenchmark)) editFail('ARGUMENT_INVALID', { field: 'arguments.template.sourceBenchmark' });
+  if (!template.validationState || typeof template.validationState !== 'object' || Array.isArray(template.validationState)) editFail('ARGUMENT_INVALID', { field: 'arguments.template.validationState' });
+  validateMaterialTemplateTokens(template.geometry);
+  const pathAppearance = template.metadata?.pathAppearance;
+  if (pathAppearance != null) {
+    if (!pathAppearance || typeof pathAppearance !== 'object' || Array.isArray(pathAppearance) || Object.keys(pathAppearance).some(key => !['fill', 'stroke'].includes(key))) {
+      editFail('ARGUMENT_INVALID', { field: 'arguments.template.metadata.pathAppearance' });
+    }
+    if (hasOwn(pathAppearance, 'fill')) pathAppearance.fill = boundedPaintToken(pathAppearance.fill, 'arguments.template.metadata.pathAppearance.fill');
+    if (hasOwn(pathAppearance, 'stroke')) pathAppearance.stroke = boundedPaintToken(pathAppearance.stroke, 'arguments.template.metadata.pathAppearance.stroke');
+  }
+  return { template };
+}
+
+function normalizeMaterialInstanceCreateArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const allowed = new Set(['templateId', 'templateVersion', 'instanceId', 'instanceKey', 'name', 'layerId', 'parameterOverrides', 'transform', 'semanticRole']);
+  if (Object.keys(raw).some(key => !allowed.has(key))) editFail('ARGUMENTS_INVALID');
+  const result = {
+    templateId: boundedText(raw.templateId, 'arguments.templateId', { max: 160 }),
+    templateVersion: boundedText(raw.templateVersion, 'arguments.templateVersion', { max: 80 }),
+    layerId: boundedText(raw.layerId, 'arguments.layerId', { max: 160 })
+  };
+  for (const key of ['instanceId', 'instanceKey', 'name', 'semanticRole']) {
+    const value = boundedText(raw[key], `arguments.${key}`, { required: false, max: 160 });
+    if (value) result[key] = value;
+  }
+  result.parameterOverrides = raw.parameterOverrides === undefined
+    ? {}
+    : normalizeBoundedJson(raw.parameterOverrides, 'arguments.parameterOverrides', { maxBytes: 8192, maxDepth: 6, maxKeys: 128, maxArray: 128, maxString: 512 });
+  if (!result.parameterOverrides || typeof result.parameterOverrides !== 'object' || Array.isArray(result.parameterOverrides)) editFail('ARGUMENTS_INVALID');
+  if (raw.transform !== undefined) {
+    if (!Array.isArray(raw.transform) || raw.transform.length !== 6) editFail('ARGUMENT_INVALID', { field: 'arguments.transform' });
+    result.transform = raw.transform.map((value, index) => boundedNumber(value, `arguments.transform[${index}]`));
+    if (!Matrix.isInvertible(result.transform)) editFail('TARGET_SINGULAR', { field: 'arguments.transform' });
+  }
+  return result;
+}
+
+function normalizeStudioRecipeExecuteArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const allowed = new Set(['recipeId', 'recipeVersion', 'parameters', 'roles']);
+  if (Object.keys(raw).some(key => !allowed.has(key))) editFail('ARGUMENTS_INVALID');
+  const recipeId = boundedText(raw.recipeId, 'arguments.recipeId', { max: 160 });
+  const recipeVersion = boundedText(raw.recipeVersion == null ? null : String(raw.recipeVersion), 'arguments.recipeVersion', { max: 80 });
+  const parameters = raw.parameters === undefined
+    ? {}
+    : normalizeBoundedJson(raw.parameters, 'arguments.parameters', { maxBytes: 8192, maxDepth: 5, maxKeys: 128, maxArray: 128, maxString: 512 });
+  if (!parameters || typeof parameters !== 'object' || Array.isArray(parameters)) editFail('ARGUMENTS_INVALID');
+  if (!Array.isArray(raw.roles) || !raw.roles.length || raw.roles.length > 64) editFail('ARGUMENT_INVALID', { field: 'arguments.roles' });
+  const roles = raw.roles.map((role, index) => boundedText(role, `arguments.roles[${index}]`, { max: 80 }));
+  return { recipeId, recipeVersion, parameters, roles };
+}
+
 function normalizeMaterialArguments(raw = {}) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
   const templateId = boundedText(raw.templateId ?? raw.materialRef?.templateId, 'arguments.templateId', { max: 160 });
@@ -1254,6 +1357,9 @@ function normalizeGuideIdArguments(raw, extra = []) {
 }
 
 function normalizeOperationArguments(operation, raw) {
+  if (operation === 'material.template.create.v1') return normalizeMaterialTemplateCreateArguments(raw);
+  if (operation === 'material.instance.create.v1') return normalizeMaterialInstanceCreateArguments(raw);
+  if (operation === 'recipe.studio.execute.v1') return normalizeStudioRecipeExecuteArguments(raw);
   if (operation === 'page.create.v1') return normalizeNoArguments(raw);
   if (operation === 'page.duplicate.v1' || operation === 'page.delete.v1' || operation === 'page.activate.v1') return normalizePageIdArguments(raw);
   if (operation === 'page.rename.v1') return normalizePageRenameArguments(raw);
@@ -1356,7 +1462,8 @@ function normalizeOperationArguments(operation, raw) {
 }
 
 function operationTargetRules(operation) {
-  if (CHAT_PAGE_OPERATION_SET.has(operation) || operation === 'page.paper.set.v1' || CHAT_PRECISION_LAYOUT_OPERATION_SET.has(operation)) return { exact: 0, min: 0, max: 0 };
+  if (CHAT_PAGE_OPERATION_SET.has(operation) || operation === 'page.paper.set.v1' || CHAT_PRECISION_LAYOUT_OPERATION_SET.has(operation) || CHAT_MATERIAL_OPERATION_SET.has(operation)) return { exact: 0, min: 0, max: 0 };
+  if (operation === 'recipe.studio.execute.v1') return { min: 1, max: 64 };
   if (operation === 'path.create.v1' || operation === 'stroke.create.v1' || operation === 'paint.session.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'image.adjustment.add.v1'
     || operation === 'image.filter.add.v1'
@@ -1401,6 +1508,8 @@ function normalizeExpected(raw) {
   const expected = {};
   if (raw.paperFingerprint != null) expected.paperFingerprint = boundedText(raw.paperFingerprint, 'expected.paperFingerprint', { max: 160 });
   if (raw.precisionFingerprint != null) expected.precisionFingerprint = boundedText(raw.precisionFingerprint, 'expected.precisionFingerprint', { max: 160 });
+  if (raw.materialLibraryFingerprint != null) expected.materialLibraryFingerprint = boundedText(raw.materialLibraryFingerprint, 'expected.materialLibraryFingerprint', { max: 160 });
+  if (raw.recipeRegistryFingerprint != null) expected.recipeRegistryFingerprint = boundedText(raw.recipeRegistryFingerprint, 'expected.recipeRegistryFingerprint', { max: 160 });
   if (raw.documentId != null) expected.documentId = boundedText(raw.documentId, 'expected.documentId', { max: 160 });
   if (raw.pageId != null) expected.pageId = boundedText(raw.pageId, 'expected.pageId', { max: 160 });
   if (hasOwn(raw, 'revisionId')) {
@@ -1495,6 +1604,12 @@ function currentTargetFingerprint(page, found, operation = null) {
   });
 }
 
+function recipeRegistryFingerprint(app) {
+  const engine = app?.studio?.engine;
+  if (!engine || typeof engine.list !== 'function') return null;
+  return chatStateFingerprint(engine.list());
+}
+
 function captureExpectedState(app, task, resolved) {
   const page = app.page();
   return {
@@ -1503,6 +1618,8 @@ function captureExpectedState(app, task, resolved) {
     revisionId: app?.revisions?.revisionIdFor?.(app.doc?.id) ?? null,
     ...(task.operation === 'page.paper.set.v1' ? { paperFingerprint: chatStateFingerprint(page.paper) } : {}),
     ...(CHAT_PRECISION_LAYOUT_OPERATION_SET.has(task.operation) ? { precisionFingerprint: precisionLayoutFingerprint(page) } : {}),
+    ...(CHAT_MATERIAL_OPERATION_SET.has(task.operation) ? { materialLibraryFingerprint: chatStateFingerprint(app.doc?.materialLibrary || null) } : {}),
+    ...(CHAT_RECIPE_OPERATION_SET.has(task.operation) ? { recipeRegistryFingerprint: recipeRegistryFingerprint(app) } : {}),
     targetFingerprints: Object.fromEntries(resolved
       .map(({ ref, found }) => [targetRefKey(ref), currentTargetFingerprint(page, found, task.operation)])
       .sort((a, b) => a[0].localeCompare(b[0])))
@@ -1522,6 +1639,53 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
   }
   if (preconditions?.pageId && preconditions.pageId !== page.id) {
     editFail('STALE_PAGE', { expected: preconditions.pageId, actual: page.id || null });
+  }
+  if (CHAT_MATERIAL_OPERATION_SET.has(task.operation)) {
+    if (!app.history?.pushScoped) editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+    const actualLibraryFingerprint = chatStateFingerprint(document.materialLibrary || null);
+    if (preconditions?.materialLibraryFingerprint && preconditions.materialLibraryFingerprint !== actualLibraryFingerprint) {
+      editFail('STALE_MATERIAL_LIBRARY', { expected: preconditions.materialLibraryFingerprint, actual: actualLibraryFingerprint });
+    }
+    if (task.operation === 'material.template.create.v1') {
+      try { createMaterialTemplate(clone(document), task.arguments.template, { replace: false }); }
+      catch (error) { editFail('MATERIAL_TEMPLATE_INVALID', { actual: error?.code || error?.message || 'UNKNOWN' }); }
+    } else {
+      const template = getMaterialTemplate(document, task.arguments.templateId);
+      if (!template) editFail('MATERIAL_TEMPLATE_MISSING', { actual: task.arguments.templateId });
+      if (String(template.templateVersion) !== String(task.arguments.templateVersion)) {
+        editFail('MATERIAL_TEMPLATE_VERSION_MISMATCH', { expected: task.arguments.templateVersion, actual: template.templateVersion ?? null });
+      }
+      if (!(page.layers || []).some(layer => layer.id === task.arguments.layerId)) editFail('LAYER_MISSING', { layerId: task.arguments.layerId });
+      try {
+        createMaterialInstance(clone(document), task.arguments.templateId, {
+          instanceId: task.arguments.instanceId,
+          instanceKey: task.arguments.instanceKey,
+          name: task.arguments.name,
+          parameterOverrides: task.arguments.parameterOverrides,
+          transform: task.arguments.transform,
+          layerId: task.arguments.layerId,
+          semanticRole: task.arguments.semanticRole
+        });
+      } catch (error) { editFail('MATERIAL_INSTANCE_INVALID', { actual: error?.code || error?.message || 'UNKNOWN' }); }
+    }
+  }
+  if (CHAT_RECIPE_OPERATION_SET.has(task.operation)) {
+    const engine = app?.studio?.engine;
+    if (!engine || typeof engine.describe !== 'function' || typeof engine.execute !== 'function' || typeof engine.replayReport !== 'function') {
+      editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+    }
+    const actualRegistryFingerprint = recipeRegistryFingerprint(app);
+    if (preconditions?.recipeRegistryFingerprint && preconditions.recipeRegistryFingerprint !== actualRegistryFingerprint) {
+      editFail('STALE_RECIPE_REGISTRY', { expected: preconditions.recipeRegistryFingerprint, actual: actualRegistryFingerprint });
+    }
+    let recipe;
+    try { recipe = engine.describe(task.arguments.recipeId); }
+    catch { editFail('RECIPE_NOT_FOUND', { actual: task.arguments.recipeId }); }
+    if (String(recipe.version) !== String(task.arguments.recipeVersion)) {
+      editFail('RECIPE_VERSION_MISMATCH', { expected: task.arguments.recipeVersion, actual: recipe.version ?? null });
+    }
+    if (!recipe.capabilities?.supported) editFail('RECIPE_CAPABILITY_UNSUPPORTED', { actual: recipe.capabilities?.unsupported || [] });
+    if (task.arguments.roles.length !== task.targets.length) editFail('RECIPE_ROLE_BINDING_COUNT_MISMATCH', { expected: task.targets.length, actual: task.arguments.roles.length });
   }
   if (CHAT_PAGE_OPERATION_SET.has(task.operation)) {
     const pages = Array.isArray(document.pages) ? document.pages : [];
@@ -1600,7 +1764,7 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     if (ref.pageId !== page.id) editFail('TARGET_PAGE_INACTIVE', { pageId: ref.pageId, actual: page.id || null });
     const found = findPageObject(page, ref);
     if (!found) editFail('TARGET_MISSING', { layerId: ref.layerId, objectId: ref.objectId });
-    if ((operationRequiresPath(task.operation) || task.operation === 'boolean.apply.v1') && found.object?.type !== 'path') {
+    if ((operationRequiresPath(task.operation) || task.operation === 'boolean.apply.v1' || task.operation === 'recipe.studio.execute.v1') && found.object?.type !== 'path') {
       editFail('PATH_REQUIRED', { objectId: found.object?.id || null });
     }
     if (task.operation === 'stroke.erase.circle.v1' && found.object?.type !== 'stroke') {
@@ -1760,6 +1924,115 @@ function withTemporarySelection(app, refs, operation) {
     app.selection = previous;
     app.refreshSelectionUI?.();
     app.renderer?.render?.();
+  }
+}
+
+function compactRecipeReceipt(report) {
+  if (!report) return null;
+  return {
+    format: report.format || null,
+    version: report.version ?? null,
+    id: report.id || null,
+    recipeId: report.recipeId || null,
+    recipeVersion: report.recipeVersion ?? null,
+    status: report.status || null,
+    input: clone(report.input || null),
+    warnings: clone(report.warnings || []),
+    errors: clone(report.errors || []),
+    states: clone(report.states || []),
+    checkpoints: (report.checkpoints || []).map(item => ({ step: item.step ?? null, hash: item.hash || null })),
+    result: clone(report.result || null),
+    replayDiff: clone(report.replayDiff || null),
+    rolledBack: Boolean(report.rolledBack)
+  };
+}
+
+function executeMaterialTemplateCreateTask(app, task) {
+  let created = null;
+  app.history.pushScoped('CHAT create Material template', [['materialLibrary']], () => {
+    created = createMaterialTemplate(app.doc, task.arguments.template, { replace: false });
+  });
+  app.refreshAll?.();
+  app.renderer?.render?.();
+  return {
+    changed: true,
+    template: {
+      templateId: created.templateId,
+      templateVersion: created.templateVersion,
+      materialType: created.materialType,
+      semanticRole: created.semanticRole
+    }
+  };
+}
+
+function executeMaterialInstanceCreateTask(app, task) {
+  let created = null;
+  app.history.pushScoped('CHAT create Material instance', structuralHistoryPaths(app, []), () => {
+    created = createMaterialInstance(app.doc, task.arguments.templateId, {
+      instanceId: task.arguments.instanceId,
+      instanceKey: task.arguments.instanceKey,
+      name: task.arguments.name,
+      parameterOverrides: task.arguments.parameterOverrides,
+      transform: task.arguments.transform,
+      layerId: task.arguments.layerId,
+      semanticRole: task.arguments.semanticRole
+    });
+  });
+  app.spatialDirty = true;
+  app.refreshAll?.();
+  app.renderer?.render?.();
+  const found = walkPageObjects(app.page()).find(item => item.object?.id === created?.id) || null;
+  return {
+    changed: true,
+    instanceId: created?.id || null,
+    templateId: task.arguments.templateId,
+    templateVersion: task.arguments.templateVersion,
+    resultRefs: found ? [chatObjectRef(app.page().id, found)] : []
+  };
+}
+
+function executeStudioRecipeTask(app, task) {
+  const engine = app?.studio?.engine;
+  const recipe = engine.describe(task.arguments.recipeId);
+  const page = app.page();
+  const resolved = task.targets.map((ref, index) => {
+    const found = findPageObject(page, ref);
+    if (!found || found.object?.type !== 'path') editFail('PATH_REQUIRED', { objectId: ref.objectId });
+    const role = task.arguments.roles[index];
+    return {
+      id: found.object.id,
+      role,
+      path: found.object,
+      metadata: { ...(clone(found.object.metadata || {})), role }
+    };
+  });
+  if (!app.history?.begin?.(`CHAT Recipe · ${recipe.name || recipe.id}`)) editFail('HISTORY_BUSY');
+  try {
+    const report = engine.execute(task.arguments.recipeId, {
+      document: app.doc,
+      inputs: resolved,
+      parameters: task.arguments.parameters
+    });
+    const committed = app.history.commit();
+    if (!committed || report?.replayDiff?.changed !== true) editFail('NO_OP');
+    app.spatialDirty = true;
+    app.refreshAll?.();
+    app.renderer?.render?.();
+    const resultRefs = task.targets.map(ref => {
+      const found = walkPageObjects(app.page()).find(item => item.object?.id === ref.objectId);
+      return found ? chatObjectRef(app.page().id, found) : null;
+    }).filter(Boolean);
+    return {
+      changed: true,
+      recipeId: recipe.id,
+      recipeVersion: String(recipe.version),
+      executionReceipt: compactRecipeReceipt(report),
+      replayReceipt: compactRecipeReceipt(engine.replayReport(report.id)),
+      resultRefs
+    };
+  } catch (error) {
+    if (app.history?.pending) app.history.cancel({ restore: false });
+    throw error;
   }
 }
 
@@ -3341,6 +3614,9 @@ function executePrecisionLayoutTask(app, task) {
 }
 
 function executeApprovedTask(app, task) {
+  if (task.operation === 'material.template.create.v1') return executeMaterialTemplateCreateTask(app, task);
+  if (task.operation === 'material.instance.create.v1') return executeMaterialInstanceCreateTask(app, task);
+  if (task.operation === 'recipe.studio.execute.v1') return executeStudioRecipeTask(app, task);
   if (CHAT_PAGE_OPERATION_SET.has(task.operation)) return executePageTask(app, task);
   if (CHAT_PRECISION_LAYOUT_OPERATION_SET.has(task.operation)) return executePrecisionLayoutTask(app, task);
   if (task.operation === 'path.repaint.v1'
@@ -3409,9 +3685,11 @@ ChatBoundedEditController.prototype.execute = function execute(proposalId, appro
   const resultRefs = Array.isArray(controllerResult?.resultRefs) ? controllerResult.resultRefs : null;
   const afterTargets = resultRefs ? snapshotRefs(this.app, resultRefs, proposal.task.operation) : snapshotTaskTargets(this.app, proposal.task);
   const afterUndoCount = this.app.history?.undoStack?.length ?? null;
-  const changed = proposal.task.operation === 'stroke.erase.circle.v1'
-    ? controllerResult?.changed === true
-    : (resultRefs ? resultRefs.length > 0 : targetSnapshotsChanged(beforeTargets, afterTargets));
+  const changed = controllerResult?.changed === true
+    ? true
+    : proposal.task.operation === 'stroke.erase.circle.v1'
+      ? false
+      : (resultRefs ? resultRefs.length > 0 : targetSnapshotsChanged(beforeTargets, afterTargets));
   const latestHistory = this.app.history?.undoStack?.at?.(-1) || null;
 
   proposal.state = 'EXECUTED';
