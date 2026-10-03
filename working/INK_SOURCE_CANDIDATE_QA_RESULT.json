@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterA-A4-targeted-eraser-candidate-006-regressions",
-  "candidateSha": "daff9553dfc8c433eadc6ee2119703c9770b49a6",
-  "case": "stroke-erase-a4",
+  "requestId": "clusterA-A5-blender-smudge-candidate-001-regressions",
+  "candidateSha": "f351c788e57b7d5ad034f156711d47d431179669",
+  "case": "blender-smudge-a5",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:42691/?sourceCandidate=daff9553dfc8c433eadc6ee2119703c9770b49a6",
+    "href": "http://127.0.0.1:45549/?sourceCandidate=f351c788e57b7d5ad034f156711d47d431179669",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,61 +13,83 @@
   },
   "result": {
     "passed": true,
-    "descriptorStatus": "COMPLETED",
-    "sourceId": "qa-a4-source-stroke",
-    "fragmentIds": [
-      "chat-erase-fnv1a32-659162db",
-      "chat-erase-fnv1a32-9c326998"
+    "operation": "stroke.create.v1",
+    "kinds": [
+      "blender",
+      "smudge"
     ],
-    "baselineCanvas": "52e1086e",
-    "erasedCanvas": "f8fd8c45",
-    "previewBefore": "fnv1a32:482bfe2b",
-    "previewAfter": "fnv1a32:786ce305",
-    "undoCanvas": "52e1086e",
-    "redoCanvas": "f8fd8c45",
-    "historyLabel": "CHAT erase Stroke",
-    "staleCode": "CHAT_EDIT_TARGET_STALE",
-    "noOpCode": "CHAT_EDIT_NO_OP",
-    "controllerResult": {
-      "changed": true,
-      "circle": {
-        "radius": 32,
-        "x": 0,
-        "y": 0
-      },
-      "erasedTargetCount": 1,
-      "fragmentCount": 2,
-      "removedRefs": [
-        {
-          "layerId": "4628f23c-ccef-483b-a20f-6bbbf2cb5d31",
-          "objectId": "qa-a4-source-stroke",
-          "pageId": "9b22415d-daf1-4274-bdf6-c94157a89ba6"
-        }
-      ],
-      "resultRefs": [
-        {
-          "layerId": "4628f23c-ccef-483b-a20f-6bbbf2cb5d31",
-          "objectId": "chat-erase-fnv1a32-659162db",
-          "pageId": "9b22415d-daf1-4274-bdf6-c94157a89ba6"
-        },
-        {
-          "layerId": "4628f23c-ccef-483b-a20f-6bbbf2cb5d31",
-          "objectId": "chat-erase-fnv1a32-9c326998",
-          "pageId": "9b22415d-daf1-4274-bdf6-c94157a89ba6"
-        }
-      ]
-    }
+    "baseline": {
+      "status": "COMPLETED",
+      "fingerprint": "fnv1a32:1c7b7b41",
+      "bounds": {
+        "h": 192.4,
+        "w": 452.4,
+        "x": -226.2,
+        "y": -94.2
+      }
+    },
+    "afterBlender": {
+      "status": "COMPLETED",
+      "fingerprint": "fnv1a32:3e594331",
+      "bounds": {
+        "h": 197.8,
+        "w": 452.4,
+        "x": -226.2,
+        "y": -97.4
+      }
+    },
+    "afterSmudge": {
+      "status": "COMPLETED",
+      "fingerprint": "fnv1a32:06e7d736",
+      "bounds": {
+        "h": 224.6,
+        "w": 452.4,
+        "x": -226.2,
+        "y": -97.4
+      }
+    },
+    "historyLabels": [
+      "CHAT create Stroke",
+      "CHAT create Stroke"
+    ],
+    "diagnostics": {
+      "activeBackend": "canvas2d-multichannel",
+      "mixingRuns": 10,
+      "multiChannelCanvas2d": {
+        "backend": "canvas2d-multichannel",
+        "runs": 11,
+        "strokes": 29,
+        "mixingStrokes": 9,
+        "stamps": 1256,
+        "mixerStamps": 288,
+        "transportedPigment": 192521.06028555412,
+        "pixels": 451273,
+        "cacheHits": 9,
+        "cacheMisses": 11,
+        "evictions": 0,
+        "skipped": 0,
+        "cacheEntries": 8
+      }
+    },
+    "undoStatus": [
+      "COMPLETED",
+      "COMPLETED"
+    ],
+    "redoStatus": [
+      "COMPLETED",
+      "COMPLETED"
+    ]
   },
   "status": "PASS",
   "regressions": [
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterA-A4-targeted-eraser-candidate-006-regressions-paint-session-create",
-      "candidateSha": "daff9553dfc8c433eadc6ee2119703c9770b49a6",
+      "requestId": "clusterA-A5-blender-smudge-candidate-001-regressions-paint-session-create",
+      "candidateSha": "f351c788e57b7d5ad034f156711d47d431179669",
       "case": "paint-session-create",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:40323/?sourceCandidate=daff9553dfc8c433eadc6ee2119703c9770b49a6",
+        "href": "http://127.0.0.1:42549/?sourceCandidate=f351c788e57b7d5ad034f156711d47d431179669",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -78,15 +100,15 @@
         "before": {
           "count": 0,
           "undo": 0,
-          "canvas": "1e347074"
+          "canvas": "308b5875"
         },
         "after": {
           "count": 1,
           "undo": 1,
-          "canvas": "60958bc9",
+          "canvas": "c81fe871",
           "id": "chat-paint-fnv1a32-c7900103",
           "strokes": 2,
-          "replayHash": "cec9cf5d"
+          "replayHash": "66ff5f9c"
         },
         "previewStatus": "COMPLETED",
         "previewBounds": {
@@ -104,11 +126,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterA-A4-targeted-eraser-candidate-006-regressions-stroke-create-a2",
-      "candidateSha": "daff9553dfc8c433eadc6ee2119703c9770b49a6",
+      "requestId": "clusterA-A5-blender-smudge-candidate-001-regressions-stroke-create-a2",
+      "candidateSha": "f351c788e57b7d5ad034f156711d47d431179669",
       "case": "stroke-create-a2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:46445/?sourceCandidate=daff9553dfc8c433eadc6ee2119703c9770b49a6",
+        "href": "http://127.0.0.1:38789/?sourceCandidate=f351c788e57b7d5ad034f156711d47d431179669",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -119,25 +141,25 @@
         "operation": "stroke.create.v1",
         "created": [
           {
-            "id": "chat-stroke-fnv1a32-305b66ac",
+            "id": "chat-stroke-fnv1a32-bb21046a",
             "kind": "pencil",
             "mediaModel": null,
             "pointCount": 3
           },
           {
-            "id": "chat-stroke-fnv1a32-4aee2959",
+            "id": "chat-stroke-fnv1a32-ba3b2301",
             "kind": "brush",
             "mediaModel": "natural-v2",
             "pointCount": 3
           },
           {
-            "id": "chat-stroke-fnv1a32-201f5261",
+            "id": "chat-stroke-fnv1a32-9d7b788f",
             "kind": "airbrush",
             "mediaModel": "natural-v2",
             "pointCount": 3
           },
           {
-            "id": "chat-stroke-fnv1a32-391cb2bc",
+            "id": "chat-stroke-fnv1a32-4b41deb2",
             "kind": "drybrush",
             "mediaModel": "natural-v2",
             "pointCount": 3
@@ -151,7 +173,7 @@
         "after": {
           "count": 4,
           "undo": 4,
-          "canvas": "9773ed10"
+          "canvas": "e70b7919"
         },
         "historyLabels": [
           "CHAT create Stroke",
@@ -168,7 +190,7 @@
         },
         "undoStatus": "COMPLETED",
         "redoStatus": "COMPLETED",
-        "redoCanvas": "9773ed10",
+        "redoCanvas": "e70b7919",
         "naturalMedia": {
           "preference": "auto",
           "floraReferenceBackend": "canvas2d",
@@ -178,15 +200,16 @@
           "forcedReason": null,
           "fallbacks": 0,
           "batchFallbacks": 0,
+          "mixingRuns": 0,
           "webgl": {
             "backend": "webgl2",
             "drawCalls": 3,
-            "cacheHits": 24,
+            "cacheHits": 25,
             "cacheMisses": 3,
             "evictions": 0,
             "contextLosses": 0,
             "restores": 0,
-            "vertices": 1722,
+            "vertices": 1740,
             "state": "ready",
             "available": true,
             "cacheEntries": 3,
@@ -209,14 +232,14 @@
               "releases": 0,
               "evictions": 0,
               "rejected": 0,
-              "peakBytes": 736892,
+              "peakBytes": 742548,
               "budgetBytes": 100663296,
-              "usedBytes": 736892,
-              "availableBytes": 99926404,
-              "utilization": 0.0073203643163045245,
+              "usedBytes": 742548,
+              "availableBytes": 99920748,
+              "utilization": 0.007376551628112793,
               "resources": 3,
               "byType": {
-                "raster-cache": 736892
+                "raster-cache": 742548
               }
             },
             "selfTest": null
@@ -255,14 +278,14 @@
               "releases": 10,
               "evictions": 0,
               "rejected": 0,
-              "peakBytes": 758708,
+              "peakBytes": 766152,
               "budgetBytes": 167772160,
-              "usedBytes": 470196,
-              "availableBytes": 167301964,
-              "utilization": 0.002802586555480957,
+              "usedBytes": 473576,
+              "availableBytes": 167298584,
+              "utilization": 0.002822732925415039,
               "resources": 6,
               "byType": {
-                "raster-cache": 262900,
+                "raster-cache": 266280,
                 "mrt-target": 207296
               }
             },
@@ -272,7 +295,10 @@
             "backend": "canvas2d-multichannel",
             "runs": 0,
             "strokes": 0,
+            "mixingStrokes": 0,
             "stamps": 0,
+            "mixerStamps": 0,
+            "transportedPigment": 0,
             "pixels": 0,
             "cacheHits": 0,
             "cacheMisses": 0,
@@ -297,11 +323,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterA-A4-targeted-eraser-candidate-006-regressions-page-paper-a3",
-      "candidateSha": "daff9553dfc8c433eadc6ee2119703c9770b49a6",
+      "requestId": "clusterA-A5-blender-smudge-candidate-001-regressions-page-paper-a3",
+      "candidateSha": "f351c788e57b7d5ad034f156711d47d431179669",
       "case": "page-paper-a3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:38473/?sourceCandidate=daff9553dfc8c433eadc6ee2119703c9770b49a6",
+        "href": "http://127.0.0.1:37301/?sourceCandidate=f351c788e57b7d5ad034f156711d47d431179669",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -337,9 +363,9 @@
           "seed": 1337,
           "textureVisible": true
         },
-        "baseline": "fnv1a32:7369ca9a",
-        "roughPreview": "fnv1a32:9a583508",
-        "changedPreview": "fnv1a32:a859823d",
+        "baseline": "fnv1a32:05b5d299",
+        "roughPreview": "fnv1a32:8a0d1881",
+        "changedPreview": "fnv1a32:400ea8b1",
         "undoRedoRenderExact": true,
         "scopedPaperEntries": [
           {
@@ -365,6 +391,7 @@
           "forcedReason": null,
           "fallbacks": 0,
           "batchFallbacks": 0,
+          "mixingRuns": 0,
           "webgl": {
             "backend": "webgl2",
             "drawCalls": 4,
@@ -373,7 +400,7 @@
             "evictions": 0,
             "contextLosses": 0,
             "restores": 0,
-            "vertices": 1284,
+            "vertices": 1272,
             "state": "ready",
             "available": true,
             "cacheEntries": 2,
@@ -396,14 +423,14 @@
               "releases": 2,
               "evictions": 0,
               "rejected": 0,
-              "peakBytes": 1592244,
+              "peakBytes": 1637668,
               "budgetBytes": 100663296,
-              "usedBytes": 1592244,
-              "availableBytes": 99071052,
-              "utilization": 0.01581752300262451,
+              "usedBytes": 1637668,
+              "availableBytes": 99025628,
+              "utilization": 0.01626876990000407,
               "resources": 2,
               "byType": {
-                "raster-cache": 1592244
+                "raster-cache": 1637668
               }
             },
             "selfTest": null
@@ -414,7 +441,7 @@
             "strokes": 32,
             "drawCalls": 32,
             "simulationPasses": 68,
-            "cacheHits": 18,
+            "cacheHits": 16,
             "cacheMisses": 17,
             "evictions": 0,
             "contextLosses": 0,
@@ -423,7 +450,7 @@
             "available": true,
             "cacheEntries": 6,
             "lastError": null,
-            "targets": "306x207",
+            "targets": "312x212",
             "capabilities": {
               "maxTextureSize": 8192,
               "maxRenderbufferSize": 8192,
@@ -442,15 +469,15 @@
               "releases": 36,
               "evictions": 0,
               "rejected": 0,
-              "peakBytes": 4278288,
+              "peakBytes": 4468380,
               "budgetBytes": 167772160,
-              "usedBytes": 2864880,
-              "availableBytes": 164907280,
-              "utilization": 0.01707601547241211,
+              "usedBytes": 2991900,
+              "availableBytes": 164780260,
+              "utilization": 0.01783311367034912,
               "resources": 8,
               "byType": {
-                "raster-cache": 1851408,
-                "mrt-target": 1013472
+                "raster-cache": 1933596,
+                "mrt-target": 1058304
               }
             },
             "selfTest": null
@@ -459,7 +486,10 @@
             "backend": "canvas2d-multichannel",
             "runs": 0,
             "strokes": 0,
+            "mixingStrokes": 0,
             "stamps": 0,
+            "mixerStamps": 0,
+            "transportedPigment": 0,
             "pixels": 0,
             "cacheHits": 0,
             "cacheMisses": 0,
@@ -484,11 +514,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterA-A4-targeted-eraser-candidate-006-regressions-raster-stack-adjustment-b2",
-      "candidateSha": "daff9553dfc8c433eadc6ee2119703c9770b49a6",
+      "requestId": "clusterA-A5-blender-smudge-candidate-001-regressions-raster-stack-adjustment-b2",
+      "candidateSha": "f351c788e57b7d5ad034f156711d47d431179669",
       "case": "raster-stack-adjustment-b2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:42583/?sourceCandidate=daff9553dfc8c433eadc6ee2119703c9770b49a6",
+        "href": "http://127.0.0.1:43779/?sourceCandidate=f351c788e57b7d5ad034f156711d47d431179669",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -498,9 +528,9 @@
         "passed": true,
         "operation": "image.adjustment.add.v1",
         "adjustmentType": "brightnessContrast",
-        "objectId": "18d52ec3-470f-4c47-b0fa-0691537aa4d3",
-        "beforeFingerprint": "fnv1a32:de95bafa",
-        "afterFingerprint": "fnv1a32:9919ac97",
+        "objectId": "95d4e84d-81e4-429a-96e1-ece07d1ce34e",
+        "beforeFingerprint": "fnv1a32:cee771cb",
+        "afterFingerprint": "fnv1a32:3bd18b9e",
         "beforeHash": "7883b22",
         "afterHash": "9cd23fe",
         "undoHash": "7883b22",
@@ -513,12 +543,12 @@
           "adjustmentCount": 1,
           "resultRefs": [
             {
-              "layerId": "dbe75693-cdbb-4cc5-8d80-90f7f1db8ea7",
-              "objectId": "18d52ec3-470f-4c47-b0fa-0691537aa4d3",
-              "pageId": "db698bde-bffe-4806-8dad-4a71fd7b40b9"
+              "layerId": "f0ce8ce2-f51c-4c91-b2a6-02ef06ccfce9",
+              "objectId": "95d4e84d-81e4-429a-96e1-ece07d1ce34e",
+              "pageId": "25ccebbe-3efc-4aaf-a3d4-626e1c55fa59"
             }
           ],
-          "stackItemId": "adj_86suxc",
+          "stackItemId": "adj_eifxyp",
           "stackItemType": "brightnessContrast"
         }
       },
