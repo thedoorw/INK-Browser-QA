@@ -1,3 +1,4 @@
+import { IMAGE_STACK_CACHE_REVIEW_CASE } from '../shared/image-stack-cache-review-case.mjs';
 import { NATURAL_MEDIA_CACHE_REVIEW_CASE } from '../shared/natural-media-cache-review-case.mjs';
 import { B4_BROWSER_CASE } from '../shared/b4-browser-case.mjs';
 import assert from 'node:assert/strict';
@@ -434,6 +435,13 @@ async function run() {
       if (probe.exceptionDetails) throw new Error(probe.exceptionDetails.exception?.description || probe.exceptionDetails.text);
       assert.equal(probe.result?.value?.passed, true, 'B4 formal Live qualification failed');
       executionResult = { discovery: executionResult, qualification: probe.result.value };
+    }
+
+    if (request.imageStackCacheReview === true) {
+      const probe=await cdp.send('Runtime.evaluate',{expression:IMAGE_STACK_CACHE_REVIEW_CASE,returnByValue:true,awaitPromise:true},sessionId,90000);
+      if(probe.exceptionDetails)throw new Error(probe.exceptionDetails.exception?.description||probe.exceptionDetails.text);
+      assert.equal(probe.result?.value?.passed,true,'Image stack cache Live review failed');
+      executionResult={...executionResult,imageStackCacheReview:probe.result.value};
     }
 
     if (request.naturalMediaCacheReview === true) {

@@ -1,8 +1,9 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterC-C2-align-distribute-candidate-003-regressions",
-  "candidateSha": "6994160cae577f57e858919e261a57aa7f5fea18",
-  "case": "align-distribute-c2",
+  "requestId": "core-perf-image-cache-candidate-001",
+  "candidateSha": "d61e278c17fae1cd49687d8ad3b4a6e3f6d330cc",
+  "case": "raster-stack-b2",
+  "imageStackCacheReview": true,
   "regressions": true
 }
