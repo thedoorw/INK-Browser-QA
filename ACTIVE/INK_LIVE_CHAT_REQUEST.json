@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B3-source-retouch-live-001a",
+  "requestId": "clusterB-B3-source-retouch-live-001b",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "0794cd5aa0567314ec6c240acdef57de7ef314d6",
   "steps": [
@@ -17,9 +17,9 @@
       "tool": "import_ink_raster",
       "input": {
         "options": {
-          "name": "B3 Source Retouch Raster A",
+          "name": "B3 Source Retouch Raster B",
           "type": "image/png",
-          "intent": "B3 source-dependent retouch formal Live A"
+          "intent": "B3 source-dependent retouch formal Live B"
         }
       },
       "file": {
@@ -38,13 +38,13 @@
       }
     },
     {
-      "id": "stalePropose",
+      "id": "patchPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-b3-source-stale",
+          "taskId": "live-b3-source-patch",
           "operation": "image.raster.sourceRetouch.v1",
           "targets": [
             {
@@ -52,81 +52,62 @@
             }
           ],
           "arguments": {
-            "type": "cloneStamp",
-            "sourceX": 220,
-            "sourceY": 420,
-            "targetX": 760,
-            "targetY": 760,
-            "radius": 24,
+            "type": "patch",
+            "sourceRegion": {
+              "x": 180,
+              "y": 260,
+              "width": 32,
+              "height": 32
+            },
+            "targetRegion": {
+              "x": 720,
+              "y": 880,
+              "width": 32,
+              "height": 32
+            },
             "opacity": 1,
-            "hardness": 0.9
+            "feather": 4
           }
         }
       }
     },
     {
-      "id": "bucketPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-b3-source-intervening",
-          "operation": "image.raster.paintBucket.v1",
-          "targets": [
-            {
-              "$ref": "importRaster.createdRefs.0"
-            }
-          ],
-          "arguments": {
-            "x": 5,
-            "y": 5,
-            "color": "#20b86a",
-            "tolerance": 0,
-            "contiguous": true,
-            "opacity": 1
-          }
-        }
-      }
-    },
-    {
-      "id": "bucketApprove",
+      "id": "patchApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "bucketPropose.result.result.proposalId"
+          "$ref": "patchPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "bucketExecute",
+      "id": "patchExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "bucketPropose.result.result.proposalId"
+          "$ref": "patchPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "bucketApprove.result.result.approvalToken"
+          "$ref": "patchApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "staleApprove",
-      "tool": "approve_ink_edit",
-      "allowFailure": true,
+      "id": "patchPreview",
+      "tool": "get_ink_preview",
       "input": {
-        "proposalId": {
-          "$ref": "stalePropose.result.result.proposalId"
-        }
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
       }
     },
     {
-      "id": "undoBucket",
+      "id": "patchUndo",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "previewRestored",
+      "id": "patchUndoPreview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -135,83 +116,12 @@
       }
     },
     {
-      "id": "clonePropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-b3-source-clone",
-          "operation": "image.raster.sourceRetouch.v1",
-          "targets": [
-            {
-              "$ref": "importRaster.createdRefs.0"
-            }
-          ],
-          "arguments": {
-            "type": "cloneStamp",
-            "sourceX": 220,
-            "sourceY": 420,
-            "targetX": 760,
-            "targetY": 760,
-            "radius": 24,
-            "opacity": 1,
-            "hardness": 0.9
-          }
-        }
-      }
-    },
-    {
-      "id": "cloneApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "clonePropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "cloneExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "clonePropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "cloneApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "clonePreview",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "cloneUndo",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "cloneUndoPreview",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "cloneRedo",
+      "id": "patchRedo",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "cloneRedoPreview",
+      "id": "patchRedoPreview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -220,18 +130,62 @@
       }
     },
     {
-      "id": "cloneRestore",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "healPropose",
+      "id": "noopPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-b3-source-heal",
+          "taskId": "live-b3-source-noop",
+          "operation": "image.raster.sourceRetouch.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "type": "cloneStamp",
+            "sourceX": 400,
+            "sourceY": 500,
+            "targetX": 400,
+            "targetY": 500,
+            "radius": 20,
+            "opacity": 1,
+            "hardness": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "noopApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "noopPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "noopExecute",
+      "tool": "execute_ink_edit",
+      "allowFailure": true,
+      "input": {
+        "proposalId": {
+          "$ref": "noopPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "noopApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "rangePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-b3-source-range",
           "operation": "image.raster.sourceRetouch.v1",
           "targets": [
             {
@@ -240,73 +194,37 @@
           ],
           "arguments": {
             "type": "healingBrush",
-            "sourceX": 260,
-            "sourceY": 360,
-            "targetX": 720,
-            "targetY": 860,
-            "radius": 24,
+            "sourceX": 2000,
+            "sourceY": 12,
+            "targetX": 580,
+            "targetY": 715,
+            "radius": 20,
             "opacity": 1,
-            "hardness": 0.9
+            "hardness": 1
           }
         }
       }
     },
     {
-      "id": "healApprove",
+      "id": "rangeApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "healPropose.result.result.proposalId"
+          "$ref": "rangePropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "healExecute",
+      "id": "rangeExecute",
       "tool": "execute_ink_edit",
+      "allowFailure": true,
       "input": {
         "proposalId": {
-          "$ref": "healPropose.result.result.proposalId"
+          "$ref": "rangePropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "healApprove.result.result.approvalToken"
+          "$ref": "rangeApprove.result.result.approvalToken"
         }
-      }
-    },
-    {
-      "id": "healPreview",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "healUndo",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "healUndoPreview",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "healRedo",
-      "tool": "redo_ink",
-      "input": {}
-    },
-    {
-      "id": "healRedoPreview",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
       }
     },
     {
