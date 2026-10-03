@@ -1,22 +1,257 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "c019-text-path-formal-live-001",
+  "requestId": "cluster-d-material-recipe-formal-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "ff6e329e372a0b3c8b756cd74cc881b28fa404f9",
+  "expectedSourceSha": "4188e9cc7673313726abd7986310d758912f63cf",
   "steps": [
     {
       "id": "contextBefore",
       "tool": "get_ink_context",
       "input": {
-        "maxObjects": 20
+        "maxObjects": 30
       }
     },
     {
-      "id": "describeTextPath",
+      "id": "describeMaterialTemplate",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "text.path.set.v1"
+        "idOrToolName": "material.template.create.v1"
+      }
+    },
+    {
+      "id": "materialTemplatePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-d1-material-template",
+          "operation": "material.template.create.v1",
+          "targets": [],
+          "arguments": {
+            "template": {
+              "templateId": "material:chat:formal-live-d1",
+              "templateVersion": "1",
+              "materialType": "vector",
+              "geometry": {
+                "id": "material-d1-petal",
+                "type": "path",
+                "name": "Formal Live Material Petal",
+                "matrix": [
+                  1,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "fill": "#c46d78",
+                "stroke": "#6f3740",
+                "strokeWidth": 3,
+                "fillRule": "evenodd",
+                "subpaths": [
+                  {
+                    "closed": true,
+                    "role": "outer",
+                    "anchors": [
+                      {
+                        "x": -90,
+                        "y": 20,
+                        "in": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "out": {
+                          "x": 35,
+                          "y": -55
+                        },
+                        "mode": "smooth"
+                      },
+                      {
+                        "x": 0,
+                        "y": -85,
+                        "in": {
+                          "x": -45,
+                          "y": 20
+                        },
+                        "out": {
+                          "x": 45,
+                          "y": 20
+                        },
+                        "mode": "smooth"
+                      },
+                      {
+                        "x": 90,
+                        "y": 20,
+                        "in": {
+                          "x": -35,
+                          "y": -55
+                        },
+                        "out": {
+                          "x": -30,
+                          "y": 55
+                        },
+                        "mode": "smooth"
+                      },
+                      {
+                        "x": 0,
+                        "y": 95,
+                        "in": {
+                          "x": 45,
+                          "y": -15
+                        },
+                        "out": {
+                          "x": -45,
+                          "y": -15
+                        },
+                        "mode": "smooth"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "defaultParameters": {},
+              "editableParameters": {},
+              "constraints": [],
+              "semanticRole": "petal",
+              "sourceBenchmark": {
+                "source": "CHAT_FORMAL_LIVE",
+                "case": "Cluster D D1"
+              },
+              "validationState": {
+                "status": "BOUNDED"
+              },
+              "metadata": {
+                "pathAppearance": {
+                  "fill": "#c46d78",
+                  "stroke": "#6f3740"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "materialTemplateApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "materialTemplatePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "materialTemplateExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "materialTemplatePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "materialTemplateApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "materialLibrarySearch",
+      "tool": "search_ink_library",
+      "input": {
+        "action": "search",
+        "query": "formal-live-d1",
+        "types": [
+          "material"
+        ],
+        "limit": 10
+      }
+    },
+    {
+      "id": "materialInstancePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-d1-material-instance",
+          "operation": "material.instance.create.v1",
+          "targets": [],
+          "arguments": {
+            "templateId": "material:chat:formal-live-d1",
+            "templateVersion": "1",
+            "instanceId": "live-d1-material-instance",
+            "name": "Formal Live Material Instance",
+            "layerId": {
+              "$ref": "contextBefore.result.result.active.layer.id"
+            },
+            "parameterOverrides": {},
+            "transform": [
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "semanticRole": "petal"
+          }
+        }
+      }
+    },
+    {
+      "id": "materialInstanceApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "materialInstancePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "materialInstanceExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "materialInstancePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "materialInstanceApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "previewMaterial",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "artboard",
+        "maxDimension": 1200
+      }
+    },
+    {
+      "id": "undoMaterialInstance",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "redoMaterialInstance",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "recipeInventory",
+      "tool": "get_ink_recipe_inventory",
+      "input": {
+        "recipeId": "ink.flower.common.v1"
+      }
+    },
+    {
+      "id": "describeRecipeExecute",
+      "tool": "describe_ink_capability",
+      "input": {
+        "idOrToolName": "recipe.studio.execute.v1"
       }
     },
     {
@@ -26,58 +261,71 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-c019-path-create",
+          "taskId": "live-d3-petal-path",
           "operation": "path.create.v1",
           "targets": [],
           "arguments": {
             "shape": "path",
-            "objectId": "live-c019-path",
-            "name": "C019 curve",
-            "fill": "none",
-            "stroke": "#8a8a8a",
-            "strokeWidth": 1.5,
+            "objectId": "live-d3-petal",
+            "name": "Formal Live Recipe Petal",
+            "fill": "#e2a1ad",
+            "stroke": "#67414a",
+            "strokeWidth": 2.5,
             "opacity": 1,
             "subpaths": [
               {
-                "closed": false,
+                "closed": true,
                 "role": "outer",
                 "anchors": [
                   {
-                    "x": -180,
-                    "y": 60,
+                    "x": -140,
+                    "y": 20,
                     "in": {
                       "x": 0,
                       "y": 0
                     },
                     "out": {
-                      "x": 80,
-                      "y": -130
+                      "x": 50,
+                      "y": -90
                     },
                     "mode": "smooth"
                   },
                   {
                     "x": 0,
-                    "y": -100,
+                    "y": -130,
                     "in": {
-                      "x": -80,
-                      "y": 0
+                      "x": -65,
+                      "y": 15
                     },
                     "out": {
-                      "x": 80,
-                      "y": 0
+                      "x": 65,
+                      "y": 15
                     },
                     "mode": "smooth"
                   },
                   {
-                    "x": 180,
-                    "y": 60,
+                    "x": 140,
+                    "y": 20,
                     "in": {
-                      "x": -80,
-                      "y": -130
+                      "x": -50,
+                      "y": -90
                     },
                     "out": {
-                      "x": 0,
-                      "y": 0
+                      "x": -40,
+                      "y": 85
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "x": 0,
+                    "y": 150,
+                    "in": {
+                      "x": 70,
+                      "y": -20
+                    },
+                    "out": {
+                      "x": -70,
+                      "y": -20
                     },
                     "mode": "smooth"
                   }
@@ -110,52 +358,7 @@
       }
     },
     {
-      "id": "textPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c019-text-create",
-          "operation": "text.create.v1",
-          "targets": [],
-          "arguments": {
-            "text": "CURVED TEXT",
-            "x": -100,
-            "y": 0,
-            "color": "#202020",
-            "fontSize": 30,
-            "fontFamily": "system-ui",
-            "fontWeight": 600,
-            "lineHeight": 1.2,
-            "opacity": 1
-          }
-        }
-      }
-    },
-    {
-      "id": "textApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "textPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "textExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "textPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "textApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "previewStraight",
+      "id": "previewPathBeforeRecipe",
       "tool": "get_ink_preview",
       "input": {
         "scope": "artboard",
@@ -163,52 +366,59 @@
       }
     },
     {
-      "id": "attachPropose",
+      "id": "recipePropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-c019-attach",
-          "operation": "text.path.set.v1",
+          "taskId": "live-d3-recipe-execute",
+          "operation": "recipe.studio.execute.v1",
           "targets": [
             {
-              "$ref": "textExecute.result.result.controllerResult.resultRefs.0"
+              "$ref": "pathExecute.result.result.controllerResult.resultRefs.0"
             }
           ],
           "arguments": {
-            "pathRef": {
-              "$ref": "pathExecute.result.result.controllerResult.resultRefs.0"
+            "recipeId": "ink.flower.common.v1",
+            "recipeVersion": "1",
+            "parameters": {
+              "fillHue": "#d76e86",
+              "stroke": "#57323b",
+              "strokeScale": 0.02,
+              "texture": 10,
+              "contrast": 12
             },
-            "startOffset": 18,
-            "overflow": "clip"
+            "roles": [
+              "petal"
+            ]
           }
         }
       }
     },
     {
-      "id": "attachApprove",
+      "id": "recipeApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "attachPropose.result.result.proposalId"
+          "$ref": "recipePropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "attachExecute",
+      "id": "recipeExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "attachPropose.result.result.proposalId"
+          "$ref": "recipePropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "attachApprove.result.result.approvalToken"
+          "$ref": "recipeApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "previewCurved",
+      "id": "previewRecipe",
       "tool": "get_ink_preview",
       "input": {
         "scope": "artboard",
@@ -216,17 +426,17 @@
       }
     },
     {
-      "id": "historyCurved",
+      "id": "historyAfterRecipe",
       "tool": "get_ink_history",
       "input": {}
     },
     {
-      "id": "undoAttach",
+      "id": "undoRecipe",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "previewUndoStraight",
+      "id": "previewUndoRecipe",
       "tool": "get_ink_preview",
       "input": {
         "scope": "artboard",
@@ -234,126 +444,16 @@
       }
     },
     {
-      "id": "redoAttach",
+      "id": "redoRecipe",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "previewRedoCurved",
+      "id": "previewRedoRecipe",
       "tool": "get_ink_preview",
       "input": {
         "scope": "artboard",
         "maxDimension": 1200
-      }
-    },
-    {
-      "id": "textEditPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c019-text-edit",
-          "operation": "text.edit.v1",
-          "targets": [
-            {
-              "$ref": "textExecute.result.result.controllerResult.resultRefs.0"
-            }
-          ],
-          "arguments": {
-            "text": "CURVED EDITABLE TEXT"
-          }
-        }
-      }
-    },
-    {
-      "id": "textEditApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "textEditPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "textEditExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "textEditPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "textEditApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "previewEdited",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "artboard",
-        "maxDimension": 1200
-      }
-    },
-    {
-      "id": "pathWarpPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c019-path-warp",
-          "operation": "path.warp.v1",
-          "targets": [
-            {
-              "$ref": "pathExecute.result.result.controllerResult.resultRefs.0"
-            }
-          ],
-          "arguments": {
-            "strength": 0.45,
-            "maxDisplacement": 0.35
-          }
-        }
-      }
-    },
-    {
-      "id": "pathWarpApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "pathWarpPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "pathWarpExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "pathWarpPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "pathWarpApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "previewWarped",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "artboard",
-        "maxDimension": 1200
-      }
-    },
-    {
-      "id": "inspectTextPath",
-      "tool": "inspect_ink_objects",
-      "input": {
-        "refs": [
-          {
-            "$ref": "textExecute.result.result.controllerResult.resultRefs.0"
-          }
-        ]
       }
     },
     {
@@ -363,7 +463,7 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-c019-c4-regression",
+          "taskId": "live-d-c4-regression",
           "operation": "page.artboard.set.v1",
           "targets": [],
           "arguments": {
@@ -403,7 +503,7 @@
       "id": "contextFinal",
       "tool": "get_ink_context",
       "input": {
-        "maxObjects": 20
+        "maxObjects": 30
       }
     }
   ]
