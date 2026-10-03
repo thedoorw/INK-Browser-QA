@@ -1271,3 +1271,11 @@ NEW_DOCUMENT_A4_REDESIGN = OUTSIDE_SCOPE
 SECOND_AUTHORITY = NONE
 FORMAT_VERSION_CHANGE = NONE
 ```
+
+
+
+## Core image-stack cache optimization 002 — CLOSED 2026-10-03
+
+PR #146 accepted, merged and formally Live-qualified at exact source f56e492af4954ae6da3be39cf10d2dbe2859d87e. Browser candidate 87158d5c372cfd40deff5ee6c887ddecbc7a4e69; final integrated product tree exact. Local 23/23, candidate five-family B2 and affected regressions, Formal Live B2/cache/Natural Media/B4/C1 PASS. [Authority closure](../working/INK_CORE_PERFORMANCE_STABILITY_002_AUTHORITY_CLOSURE_20261003.md).
+
+The old full-B2 opaque dropShadow unchanged-render assertion also fails on unchanged baseline; separate existing finding retained, no dropShadow qualification claimed. UI ownership and FORMAT_VERSION remain unchanged. Existing capability owners continue. This package is CLOSED; do not restart the DEV branch or automatically open another optimization.

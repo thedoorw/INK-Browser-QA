@@ -1,5 +1,11 @@
 # INK Current Work Order
 
+## Core image-stack cache optimization 002 — CLOSED 2026-10-03
+
+PR #146 accepted, merged and formally Live-qualified at exact source f56e492af4954ae6da3be39cf10d2dbe2859d87e. Browser candidate 87158d5c372cfd40deff5ee6c887ddecbc7a4e69; final integrated product tree exact. Local 23/23, candidate five-family B2 and affected regressions, Formal Live B2/cache/Natural Media/B4/C1 PASS. [Authority closure](../working/INK_CORE_PERFORMANCE_STABILITY_002_AUTHORITY_CLOSURE_20261003.md).
+
+The old full-B2 opaque dropShadow unchanged-render assertion also fails on unchanged baseline; separate existing finding retained, no dropShadow qualification claimed. UI ownership and FORMAT_VERSION remain unchanged. Existing capability owners continue. This package is CLOSED; do not restart the DEV branch or automatically open another optimization.
+
 ## Core warm-cache optimization closure — 2026-10-03
 
 PR #142 is accepted, merged and formally Live-qualified at exact source `e095ee54a51f8562d03af248dca658cf321e6479`. Revised candidate `0ac6e236a2baff587224398bc6f3e3aff35f5318` supersedes the submitted DEV candidate after a precision invalidation repair. Local24/24, candidate/integrated browser regressions, Formal Live cache/A5/B4 and combined Draw/Reference/A1 PASS. [Authority closure](../working/INK_CORE_PERFORMANCE_STABILITY_AUTHORITY_CLOSURE_20261003.md).

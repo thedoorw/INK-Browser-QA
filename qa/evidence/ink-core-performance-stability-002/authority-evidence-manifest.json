@@ -1,0 +1,170 @@
+{
+  "schema": "INK_CORE_PERFORMANCE_STABILITY_002_AUTHORITY_EVIDENCE",
+  "version": 1,
+  "originalDevCandidate": "f2dd755e54d53cd1d5f2f67b77f6d17917ade31a",
+  "originalDevReturn": "72a4850d42fd58a5289eaf3d4e69e19c3272334d",
+  "browserTestedCandidate": "87158d5c372cfd40deff5ee6c887ddecbc7a4e69",
+  "integrationCandidate": "6d426f75f852e86528d39d71548f16a3fa7c6a2c",
+  "mergedSource": "f56e492af4954ae6da3be39cf10d2dbe2859d87e",
+  "productTree": "80a88d1ea0cd14d6891d923e644ebfadeea2ebb8",
+  "productSourceTree": "ed54c54c458859b1f39f785fa4cd45cde07d6d3f",
+  "sourceEntryBlob": "413f5eb4c5f1de8baa04b4eabd699e22f23a5fae",
+  "pr": 146,
+  "localChecks": {
+    "passed": 23,
+    "total": 23
+  },
+  "candidate": {
+    "run": 37107672964,
+    "requestCommit": "39235f0ea86923d0ad35b2ac092fe919a291b141",
+    "artifacts": [
+      {
+        "id": 11268232713,
+        "node_id": "MDg6QXJ0aWZhY3QxMTI2ODIzMjcxMw==",
+        "name": "ink-source-candidate-37107672964",
+        "size_in_bytes": 35710,
+        "url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11268232713",
+        "archive_download_url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11268232713/zip",
+        "expired": false,
+        "digest": "sha256:1104ecc8d78facf5680670e77ad7df64f24e1c2a31780995ce87d18f85a72654",
+        "created_at": "2026-10-03T07:51:16Z",
+        "updated_at": "2026-10-03T07:51:16Z",
+        "expires_at": "2026-11-02T07:51:16Z",
+        "workflow_run": {
+          "id": 37107672964,
+          "repository_id": 1366312755,
+          "head_repository_id": 1366312755,
+          "head_branch": "main",
+          "head_sha": "39235f0ea86923d0ad35b2ac092fe919a291b141"
+        }
+      }
+    ]
+  },
+  "deployment": {
+    "commit": "c78c122d2257ecb352694f500b3f1e3f32b5d4c5",
+    "pagesRun": 37107901593,
+    "wrapper": "existing accepted CSP/base adaptation preserved"
+  },
+  "formalLive": {
+    "run": 37107942149,
+    "requestCommit": "d4932758768cf2382c802881cc49e8b10209b0ee",
+    "artifacts": [
+      {
+        "id": 11268014431,
+        "node_id": "MDg6QXJ0aWZhY3QxMTI2ODAxNDQzMQ==",
+        "name": "ink-live-chat-37107942149",
+        "size_in_bytes": 49712,
+        "url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11268014431",
+        "archive_download_url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11268014431/zip",
+        "expired": false,
+        "digest": "sha256:55115c7632bcc7207e98a4acfce44d71b0cecd23d5e80cc061ace250812f5386",
+        "created_at": "2026-10-03T07:55:42Z",
+        "updated_at": "2026-10-03T07:55:42Z",
+        "expires_at": "2026-11-02T07:55:41Z",
+        "workflow_run": {
+          "id": 37107942149,
+          "repository_id": 1366312755,
+          "head_repository_id": 1366312755,
+          "head_branch": "main",
+          "head_sha": "d4932758768cf2382c802881cc49e8b10209b0ee"
+        }
+      }
+    ],
+    "sourceIdentity": {
+      "href": "https://thedoorw.github.io/INK/",
+      "readyState": "complete",
+      "apiReady": true,
+      "sourceSha": "f56e492af4954ae6da3be39cf10d2dbe2859d87e",
+      "toolCount": 23
+    },
+    "cache": {
+      "passed": true,
+      "checks": [
+        "unrelated-document-warm-hit",
+        "adjustment-invalidation",
+        "stack-state-roundtrip",
+        "source-invalidation",
+        "raster-invalidation",
+        "raster-external-transition",
+        "clear-rebuild"
+      ],
+      "coldMs": 3.7000000000116415,
+      "warmMs": [
+        0.29999999998835847,
+        0.20000000001164153,
+        0.20000000001164153,
+        0.20000000001164153
+      ],
+      "hashes": {
+        "base": 210025285,
+        "changed": 3281711301,
+        "replaced": 2554060229,
+        "rasterBefore": 3870283610,
+        "rasterAfter": 410848709
+      },
+      "canvas": [
+        64,
+        48
+      ],
+      "measurement": "real browser Canvas2D; no baseline browser speedup claim"
+    },
+    "b2": [
+      {
+        "operation": "image.adjustment.add.v1",
+        "passed": true,
+        "beforeHash": "295257af",
+        "afterHash": "752bcb87",
+        "undoHash": "295257af",
+        "redoHash": "752bcb87",
+        "previewStatus": "COMPLETED"
+      },
+      {
+        "operation": "image.blend.set.v1",
+        "passed": true,
+        "beforeHash": "295257af",
+        "afterHash": "c7373a24",
+        "undoHash": "295257af",
+        "redoHash": "c7373a24",
+        "previewStatus": "COMPLETED"
+      },
+      {
+        "operation": "image.effect.add.v1",
+        "passed": true,
+        "beforeHash": "295257af",
+        "afterHash": "fa93d91f",
+        "undoHash": "295257af",
+        "redoHash": "fa93d91f",
+        "previewStatus": "COMPLETED"
+      },
+      {
+        "operation": "image.filter.add.v1",
+        "passed": true,
+        "beforeHash": "295257af",
+        "afterHash": "2c2959ed",
+        "undoHash": "295257af",
+        "redoHash": "2c2959ed",
+        "previewStatus": "COMPLETED"
+      },
+      {
+        "operation": "image.liquify.add.v1",
+        "passed": true,
+        "beforeHash": "295257af",
+        "afterHash": "e75866c4",
+        "undoHash": "295257af",
+        "redoHash": "e75866c4",
+        "previewStatus": "COMPLETED"
+      }
+    ],
+    "b4Passed": true,
+    "c1PageLifecyclePassed": true,
+    "naturalMediaCachePassed": true
+  },
+  "initialFailure": {
+    "candidateRun": 37107512936,
+    "baselineRun": 37107617887,
+    "classification": "PRE_EXISTING_OPAQUE_DROP_SHADOW_RENDER_UNCHANGED",
+    "productRegression": false,
+    "dropShadowQualification": false
+  },
+  "disposition": "CLOSED / ACCEPTED / MERGED / DEPLOYED / FORMAL_LIVE_QUALIFIED"
+}
