@@ -1,0 +1,88 @@
+{
+  "schema": "INK_PWA_CACHE_FRESHNESS_SUPERVISOR_GATES_EVIDENCE",
+  "version": 1,
+  "date": "2026-10-03",
+  "status": "BLOCKED_ON_REPOSITORY_PAGES_ADMIN_GATE",
+  "branch": "work/pwa-cache-freshness-supervisor-gates-001",
+  "latest_main_at_return": "9c5915eaf9a67149e94cad7dc6e87552609e4de3",
+  "latest_main_reconcile_base": "b0bd825a8d8ce97763ec45046219ce78f799b4ed",
+  "latest_main_intervening_change": {
+    "product_source_changed": false,
+    "files": [
+      "working/INK_LIVE_CHAT_RESULT.json"
+    ]
+  },
+  "exact_product_candidate": "60c0bdbd5576667a9888cba7584039432cdb28f8",
+  "exact_pages_gate_attempt_head": "4ab56be3b9205fedafaeccf093d39875135f0401",
+  "build_identity": "src-27c5b9ef87d1227f3afde10b",
+  "gate_1": {
+    "requirement": "bind deterministic build identity to authoritative main/GitHub Pages publication path",
+    "source_implementation": "READY",
+    "repository_publication_binding": "BLOCKED",
+    "generator": "product/source/generate-build-identity.mjs",
+    "publication_workflow": ".github/workflows/ink-pages-publication.yml",
+    "publication_behavior": "workflow generates build-identity.js immediately before staging Pages artifact and writes exact PAGES_BUILD_INFO.json",
+    "blocking_fact": "Repository still runs GitHub dynamic pages build and deployment from main; custom Pages deployment from task branch is rejected and GITHUB_TOKEN cannot change repository Pages/admin policy.",
+    "dynamic_pages_evidence": {
+      "workflow_name": "pages build and deployment",
+      "workflow_path": "dynamic/pages/pages-build-deployment",
+      "latest_observed_run_id": 37117195536,
+      "source_branch": "main",
+      "source_sha": "9c5915eaf9a67149e94cad7dc6e87552609e4de3",
+      "conclusion": "success"
+    },
+    "required_admin_transition": "Pages source/publication must be switched from legacy main-branch publication to the workflow publication path, with deployment policy allowing the evidence candidate or equivalent Supervisor-authorized same-origin route.",
+    "closed": false
+  },
+  "gate_2": {
+    "requirement": "actual deployed QA ordinary open/F5, close-reopen, offline evidence",
+    "actual_url": "https://thedoorw.github.io/INK-Browser-QA/product/source/",
+    "deployed_baseline_capture": "PASS",
+    "baseline": {
+      "run_id": 37117127162,
+      "artifact_id": 11272585365,
+      "artifact_digest": "sha256:45c4f671f13a941adf924e582ab7bfbbdc740dffabcc61e9ad359719e2905011",
+      "identity_source": "app-build-id-fallback",
+      "build_id": "20261002-c04-two-state-repair",
+      "controller_script_url": "https://thedoorw.github.io/INK-Browser-QA/product/source/service-worker.js",
+      "caches": [
+        "ink-build-20261002-c04-two-state-repair-shell"
+      ],
+      "ctrl_f5_used": false,
+      "devtools_clear_cache_used": false,
+      "unregister_used": false
+    },
+    "candidate_deployment_attempt": {
+      "run_id": 37117127162,
+      "source_sha": "4ab56be3b9205fedafaeccf093d39875135f0401",
+      "generated_build_id": "src-27c5b9ef87d1227f3afde10b",
+      "pages_artifact_id": 11271927264,
+      "pages_artifact_digest": "sha256:faa88e6e6b911cef259a272de5befbed5a8a998d09fdf138890b692ab182aab9",
+      "deploy_result": "BLOCKED_BY_GITHUB",
+      "exact_error": "Invalid deployment branch and no branch protection rules set in the environment. Deployments are only allowed from main"
+    },
+    "candidate_live_open_f5_reopen_offline": "NOT_RUN_BECAUSE_DEPLOYMENT_WAS_REJECTED_BEFORE_LIVE_BYTES_CHANGED",
+    "closed": false
+  },
+  "local_regression": {
+    "run_id": 37116899538,
+    "source_sha": "60c0bdbd5576667a9888cba7584039432cdb28f8",
+    "conclusion": "success",
+    "artifact_id": 11271991742,
+    "artifact_digest": "sha256:584db80fc9486862ec760ff7320bbcdcc17c36b07c6ea76da4bccdda86e3241f",
+    "deterministic_identity": "PASS",
+    "source_and_syntax_guards": "PASS",
+    "latest_main_baseline": "PASS",
+    "chromium_lifecycle_A": "PASS",
+    "chromium_lifecycle_B": "PASS"
+  },
+  "boundaries": {
+    "whole_old_branch_merged": false,
+    "main_modified": false,
+    "live_repo_modified": false,
+    "format_version_changed": false,
+    "unrelated_ui_changed": false,
+    "drawing_render_changed": false
+  },
+  "disposition": "STOP_TO_SUPERVISOR_FOR_REPOSITORY_PAGES_ADMIN_GATE"
+}
