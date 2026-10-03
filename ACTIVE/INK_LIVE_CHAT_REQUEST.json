@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "ink-qa-c-draw-combined-001",
+  "requestId": "ink-qa-b-reference-combined-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "ab84aafc3006f0f14a74d231ca862200bd0b5d94",
   "steps": [
@@ -11,284 +11,177 @@
       "input": {}
     },
     {
-      "id": "describeStroke",
+      "id": "describeTranslate",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "stroke.create.v1"
+        "idOrToolName": "object.translate.v1"
       }
     },
     {
-      "id": "describePaper",
+      "id": "describeAdjustment",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "page.paper.set.v1"
+        "idOrToolName": "image.adjustment.add.v1"
       }
     },
     {
-      "id": "historyBefore",
+      "id": "importReference",
+      "tool": "import_ink_reference",
+      "input": {
+        "options": {
+          "name": "rose-window-primary.png",
+          "type": "image/png",
+          "intent": "INK-QA-B reference intake combined qualification"
+        }
+      },
+      "file": {
+        "path": "qa/fixtures/rose-window/rose-window-primary.png",
+        "name": "rose-window-primary.png",
+        "type": "image/png"
+      }
+    },
+    {
+      "id": "importRaster",
+      "tool": "import_ink_raster",
+      "input": {
+        "options": {
+          "name": "INK-QA-B Editable Raster",
+          "type": "image/png",
+          "intent": "INK-QA-B editable raster state from reference fixture"
+        }
+      },
+      "file": {
+        "path": "qa/fixtures/rose-window/rose-window-primary.png",
+        "name": "rose-window-primary.png",
+        "type": "image/png"
+      }
+    },
+    {
+      "id": "inspectRaster",
+      "tool": "inspect_ink_objects",
+      "input": {
+        "refs": [
+          {
+            "$ref": "importRaster.createdRefs.0"
+          }
+        ],
+        "options": {}
+      }
+    },
+    {
+      "id": "contextImported",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 12
+      }
+    },
+    {
+      "id": "historyImported",
       "tool": "get_ink_history",
       "input": {}
     },
     {
-      "id": "paperPropose",
+      "id": "translatePropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "ink-qa-c-paper-001",
-          "operation": "page.paper.set.v1",
-          "targets": [],
+          "taskId": "ink-qa-b-translate-raster-001",
+          "operation": "object.translate.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
           "arguments": {
-            "key": "absorbency",
-            "value": 0.05
+            "dx": 72,
+            "dy": 36
           }
         }
       }
     },
     {
-      "id": "paperApprove",
+      "id": "translateApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "paperPropose.result.result.proposalId"
+          "$ref": "translatePropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "paperExecute",
+      "id": "translateExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "paperPropose.result.result.proposalId"
+          "$ref": "translatePropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "paperApprove.result.result.approvalToken"
+          "$ref": "translateApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "brushPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "ink-qa-c-brush-001",
-          "operation": "stroke.create.v1",
-          "targets": [],
-          "arguments": {
-            "kind": "brush",
-            "color": "#6b3f4f",
-            "size": 68,
-            "opacity": 0.86,
-            "flow": 0.74,
-            "wetness": 0.78,
-            "grain": 0.42,
-            "bristle": 0.45,
-            "samples": [
-              {
-                "x": -150,
-                "y": -35,
-                "pressure": 0.32,
-                "timestamp": 0
-              },
-              {
-                "x": -60,
-                "y": 55,
-                "pressure": 0.82,
-                "timestamp": 24
-              },
-              {
-                "x": 40,
-                "y": 18,
-                "pressure": 0.72,
-                "timestamp": 48
-              },
-              {
-                "x": 135,
-                "y": -60,
-                "pressure": 0.48,
-                "timestamp": 72
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "id": "brushApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "brushPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "brushExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "brushPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "brushApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "drybrushPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "ink-qa-c-drybrush-001",
-          "operation": "stroke.create.v1",
-          "targets": [],
-          "arguments": {
-            "kind": "drybrush",
-            "color": "#3f6178",
-            "size": 54,
-            "opacity": 0.74,
-            "flow": 0.58,
-            "wetness": 0.08,
-            "grain": 0.84,
-            "bristle": 0.78,
-            "samples": [
-              {
-                "x": -135,
-                "y": 72,
-                "pressure": 0.36,
-                "timestamp": 0
-              },
-              {
-                "x": -40,
-                "y": -28,
-                "pressure": 0.88,
-                "timestamp": 26
-              },
-              {
-                "x": 60,
-                "y": 70,
-                "pressure": 0.64,
-                "timestamp": 52
-              },
-              {
-                "x": 145,
-                "y": 22,
-                "pressure": 0.44,
-                "timestamp": 78
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "id": "drybrushApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "drybrushPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "drybrushExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "drybrushPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "drybrushApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "previewInitial",
+      "id": "previewBeforeCorrection",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 900,
+        "maxDimension": 850,
         "background": true
       }
     },
     {
-      "id": "contextInitial",
-      "tool": "get_ink_context",
+      "id": "baselineRevision",
+      "tool": "capture_ink_revision",
       "input": {
-        "maxObjects": 20
+        "reason": "INK-QA-B",
+        "label": "Reference editable baseline after transform"
       }
     },
     {
-      "id": "historyInitial",
-      "tool": "get_ink_history",
-      "input": {}
-    },
-    {
-      "id": "airbrushCorrectionPropose",
+      "id": "adjustPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "ink-qa-c-airbrush-correction-001",
-          "operation": "stroke.create.v1",
-          "targets": [],
+          "taskId": "ink-qa-b-correction-brightness-001",
+          "operation": "image.adjustment.add.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
           "arguments": {
-            "kind": "airbrush",
-            "color": "#c58d76",
-            "size": 88,
-            "opacity": 0.24,
-            "softness": 0.88,
-            "flow": 0.5,
-            "smoothing": 0.68,
-            "pressure": 0.62,
-            "samples": [
-              {
-                "x": -40,
-                "y": 95,
-                "pressure": 0.24,
-                "timestamp": 0
-              },
-              {
-                "x": 20,
-                "y": 110,
-                "pressure": 0.58,
-                "timestamp": 28
-              },
-              {
-                "x": 80,
-                "y": 88,
-                "pressure": 0.38,
-                "timestamp": 56
-              }
-            ]
+            "type": "brightnessContrast",
+            "params": {
+              "brightness": 14,
+              "contrast": 24
+            },
+            "opacity": 1
           }
         }
       }
     },
     {
-      "id": "airbrushCorrectionApprove",
+      "id": "adjustApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "airbrushCorrectionPropose.result.result.proposalId"
+          "$ref": "adjustPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "airbrushCorrectionExecute",
+      "id": "adjustExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "airbrushCorrectionPropose.result.result.proposalId"
+          "$ref": "adjustPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "airbrushCorrectionApprove.result.result.approvalToken"
+          "$ref": "adjustApprove.result.result.approvalToken"
         }
       }
     },
@@ -297,16 +190,22 @@
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 900,
+        "maxDimension": 850,
         "background": true
       }
     },
     {
-      "id": "contextCorrected",
-      "tool": "get_ink_context",
+      "id": "correctedRevision",
+      "tool": "capture_ink_revision",
       "input": {
-        "maxObjects": 20
+        "reason": "INK-QA-B",
+        "label": "Reference corrected brightness contrast"
       }
+    },
+    {
+      "id": "revisionsAfter",
+      "tool": "get_ink_revisions",
+      "input": {}
     },
     {
       "id": "historyCorrected",
@@ -323,7 +222,7 @@
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 900,
+        "maxDimension": 850,
         "background": true
       }
     },
@@ -331,7 +230,7 @@
       "id": "contextUndo",
       "tool": "get_ink_context",
       "input": {
-        "maxObjects": 20
+        "maxObjects": 12
       }
     },
     {
@@ -344,7 +243,7 @@
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 900,
+        "maxDimension": 850,
         "background": true
       }
     },
@@ -352,7 +251,7 @@
       "id": "contextFinal",
       "tool": "get_ink_context",
       "input": {
-        "maxObjects": 20
+        "maxObjects": 12
       }
     },
     {
@@ -368,6 +267,15 @@
         "scope": "artboard",
         "ppi": 144,
         "background": true
+      }
+    },
+    {
+      "id": "inspectExport",
+      "tool": "inspect_ink_output",
+      "input": {
+        "handleId": {
+          "$ref": "exportPng.result.handleId"
+        }
       }
     }
   ]
