@@ -19,7 +19,7 @@ test('service worker is online-first and keeps build-scoped offline caches', asy
   assert.match(source, /event\.request\.mode === 'navigate'/);
   assert.match(source, /buildConsistentNavigation/);
   assert.match(source, /networkFirstAsset/);
-  assert.match(source, /await self\.skipWaiting\(\)/);
+  assert.match(source, /const takeover = self\.skipWaiting\(\)/);
   assert.match(source, /key\.startsWith\(CACHE_PREFIX\)/);
   assert.match(source, /replacingPreviousBuild/);
   assert.match(source, /client\.navigate\?\.\(client\.url\)/);
