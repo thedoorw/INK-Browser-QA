@@ -95,6 +95,13 @@ function rasterMaskFingerprint(mask) {
   return `fnv1a32:${(hash >>> 0).toString(16).padStart(8, '0')}`;
 }
 
+function precisionLayoutFingerprint(page) {
+  return chatStateFingerprint({
+    snap: clone(page?.snap || null),
+    guides: clone(Array.isArray(page?.guides) ? page.guides : [])
+  });
+}
+
 export function chatObjectRef(pageId, found) {
   return {
     pageId: pageId || null,
@@ -291,6 +298,9 @@ export const CHAT_IMAGE_SOURCE_RETOUCH_TYPES = Object.freeze(['cloneStamp', 'hea
 export const CHAT_PAGE_OPERATIONS = Object.freeze(['page.create.v1', 'page.duplicate.v1', 'page.delete.v1', 'page.rename.v1', 'page.activate.v1']);
 const CHAT_PAGE_OPERATION_SET = new Set(CHAT_PAGE_OPERATIONS);
 export const CHAT_OBJECT_ALIGN_MODES = Object.freeze(['left', 'centerX', 'right', 'top', 'centerY', 'bottom', 'distributeX', 'distributeY']);
+export const CHAT_SNAP_KEYS = Object.freeze(['enabled', 'guides', 'edges', 'centers', 'grid', 'angle', 'equalDistance']);
+export const CHAT_PRECISION_LAYOUT_OPERATIONS = Object.freeze(['page.snap.set.v1', 'guide.add.v1', 'guide.move.v1', 'guide.remove.v1', 'guide.lock.set.v1', 'guide.visibility.set.v1']);
+const CHAT_PRECISION_LAYOUT_OPERATION_SET = new Set(CHAT_PRECISION_LAYOUT_OPERATIONS);
 
 export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.repaint.v1',
@@ -309,6 +319,12 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'page.rename.v1',
   'page.activate.v1',
   'page.paper.set.v1',
+  'page.snap.set.v1',
+  'guide.add.v1',
+  'guide.move.v1',
+  'guide.remove.v1',
+  'guide.lock.set.v1',
+  'guide.visibility.set.v1',
   'paint.session.create.v1',
   'image.adjustment.add.v1',
   'image.filter.add.v1',
@@ -1211,11 +1227,52 @@ function normalizePaperSetArguments(raw) {
   return { key, value };
 }
 
+function normalizeSnapSetArguments(raw) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).some(key => !['key', 'value'].includes(key))) editFail('ARGUMENTS_INVALID');
+  return {
+    key: boundedEnum(raw.key, 'arguments.key', CHAT_SNAP_KEYS),
+    value: boundedBoolean(raw.value, 'arguments.value')
+  };
+}
+
+function normalizeGuideAddArguments(raw) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).some(key => !['id', 'orientation', 'position', 'locked', 'visible'].includes(key))) editFail('ARGUMENTS_INVALID');
+  const result = {
+    orientation: boundedEnum(raw.orientation, 'arguments.orientation', ['horizontal', 'vertical']),
+    position: boundedNumber(raw.position, 'arguments.position')
+  };
+  const id = boundedText(raw.id, 'arguments.id', { required: false, max: 160 });
+  if (id) result.id = id;
+  if (raw.locked != null) result.locked = boundedBoolean(raw.locked, 'arguments.locked');
+  if (raw.visible != null) result.visible = boundedBoolean(raw.visible, 'arguments.visible');
+  return result;
+}
+
+function normalizeGuideIdArguments(raw, extra = []) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).some(key => !['guideId', ...extra].includes(key))) editFail('ARGUMENTS_INVALID');
+  return { guideId: boundedText(raw.guideId, 'arguments.guideId', { max: 160 }) };
+}
+
 function normalizeOperationArguments(operation, raw) {
   if (operation === 'page.create.v1') return normalizeNoArguments(raw);
   if (operation === 'page.duplicate.v1' || operation === 'page.delete.v1' || operation === 'page.activate.v1') return normalizePageIdArguments(raw);
   if (operation === 'page.rename.v1') return normalizePageRenameArguments(raw);
   if (operation === 'page.paper.set.v1') return normalizePaperSetArguments(raw);
+  if (operation === 'page.snap.set.v1') return normalizeSnapSetArguments(raw);
+  if (operation === 'guide.add.v1') return normalizeGuideAddArguments(raw);
+  if (operation === 'guide.move.v1') {
+    const base = normalizeGuideIdArguments(raw, ['position']);
+    return { ...base, position: boundedNumber(raw.position, 'arguments.position') };
+  }
+  if (operation === 'guide.remove.v1') return normalizeGuideIdArguments(raw);
+  if (operation === 'guide.lock.set.v1') {
+    const base = normalizeGuideIdArguments(raw, ['locked']);
+    return { ...base, locked: boundedBoolean(raw.locked, 'arguments.locked') };
+  }
+  if (operation === 'guide.visibility.set.v1') {
+    const base = normalizeGuideIdArguments(raw, ['visible']);
+    return { ...base, visible: boundedBoolean(raw.visible, 'arguments.visible') };
+  }
   if (operation === 'path.repaint.v1') return normalizeRepaintArguments(raw);
   if (operation === 'path.material.apply.v1') return normalizeMaterialArguments(raw);
   if (operation === 'path.material.remove.v1') {
@@ -1299,7 +1356,7 @@ function normalizeOperationArguments(operation, raw) {
 }
 
 function operationTargetRules(operation) {
-  if (CHAT_PAGE_OPERATION_SET.has(operation) || operation === 'page.paper.set.v1') return { exact: 0, min: 0, max: 0 };
+  if (CHAT_PAGE_OPERATION_SET.has(operation) || operation === 'page.paper.set.v1' || CHAT_PRECISION_LAYOUT_OPERATION_SET.has(operation)) return { exact: 0, min: 0, max: 0 };
   if (operation === 'path.create.v1' || operation === 'stroke.create.v1' || operation === 'paint.session.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'image.adjustment.add.v1'
     || operation === 'image.filter.add.v1'
@@ -1343,6 +1400,7 @@ function normalizeExpected(raw) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('EXPECTED_INVALID');
   const expected = {};
   if (raw.paperFingerprint != null) expected.paperFingerprint = boundedText(raw.paperFingerprint, 'expected.paperFingerprint', { max: 160 });
+  if (raw.precisionFingerprint != null) expected.precisionFingerprint = boundedText(raw.precisionFingerprint, 'expected.precisionFingerprint', { max: 160 });
   if (raw.documentId != null) expected.documentId = boundedText(raw.documentId, 'expected.documentId', { max: 160 });
   if (raw.pageId != null) expected.pageId = boundedText(raw.pageId, 'expected.pageId', { max: 160 });
   if (hasOwn(raw, 'revisionId')) {
@@ -1444,6 +1502,7 @@ function captureExpectedState(app, task, resolved) {
     pageId: page?.id || null,
     revisionId: app?.revisions?.revisionIdFor?.(app.doc?.id) ?? null,
     ...(task.operation === 'page.paper.set.v1' ? { paperFingerprint: chatStateFingerprint(page.paper) } : {}),
+    ...(CHAT_PRECISION_LAYOUT_OPERATION_SET.has(task.operation) ? { precisionFingerprint: precisionLayoutFingerprint(page) } : {}),
     targetFingerprints: Object.fromEntries(resolved
       .map(({ ref, found }) => [targetRefKey(ref), currentTargetFingerprint(page, found, task.operation)])
       .sort((a, b) => a[0].localeCompare(b[0])))
@@ -1493,6 +1552,42 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     if (typeof app.changePaper !== 'function' || !page.paper) editFail('CONTROLLER_UNAVAILABLE');
     if (preconditions?.paperFingerprint && preconditions.paperFingerprint !== chatStateFingerprint(page.paper)) editFail('STALE_PAPER');
     if (page.paper[task.arguments.key] === task.arguments.value) editFail('NO_OP');
+  }
+  if (CHAT_PRECISION_LAYOUT_OPERATION_SET.has(task.operation)) {
+    if (preconditions?.precisionFingerprint && preconditions.precisionFingerprint !== precisionLayoutFingerprint(page)) editFail('STALE_PRECISION_LAYOUT');
+    const guideById = id => (Array.isArray(page.guides) ? page.guides : []).find(guide => guide?.id === id) || null;
+    if (task.operation === 'page.snap.set.v1') {
+      const { key, value } = task.arguments;
+      if (key === 'enabled') {
+        if (typeof app.setSnapEnabledState !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+        if ((page.snap?.enabled !== false) === value) editFail('NO_OP');
+      } else {
+        if (typeof app.setSnapCategoryState !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+        const defaults = { guides: true, edges: true, centers: true, grid: false, angle: true, equalDistance: true };
+        const current = page.snap?.categories?.[key] ?? defaults[key];
+        if (Boolean(current) === value) editFail('NO_OP');
+      }
+    } else if (task.operation === 'guide.add.v1') {
+      if (typeof app.addGuide !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+      if (task.arguments.id && guideById(task.arguments.id)) editFail('GUIDE_ID_DUPLICATE', { guideId: task.arguments.id });
+    } else {
+      const guide = guideById(task.arguments.guideId);
+      if (!guide) editFail('GUIDE_NOT_FOUND', { guideId: task.arguments.guideId });
+      if (task.operation === 'guide.move.v1') {
+        if (typeof app.moveGuide !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+        if (guide.locked) editFail('GUIDE_LOCKED', { guideId: guide.id });
+        if (Number(guide.position) === task.arguments.position) editFail('NO_OP');
+      }
+      if (task.operation === 'guide.remove.v1' && typeof app.removeGuide !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+      if (task.operation === 'guide.lock.set.v1') {
+        if (typeof app.setGuideLocked !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+        if (Boolean(guide.locked) === task.arguments.locked) editFail('NO_OP');
+      }
+      if (task.operation === 'guide.visibility.set.v1') {
+        if (typeof app.setGuideVisible !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+        if ((guide.visible !== false) === task.arguments.visible) editFail('NO_OP');
+      }
+    }
   }
   if (preconditions && hasOwn(preconditions, 'revisionId')) {
     const actualRevisionId = app?.revisions?.revisionIdFor?.(document.id) ?? null;
@@ -1644,6 +1739,7 @@ function snapshotTaskTargets(app, task) {
     })
   }];
   if (task.operation === 'page.paper.set.v1') return [{ ref: { pageId: app.page().id }, stateFingerprint: chatStateFingerprint(app.page().paper) }];
+  if (CHAT_PRECISION_LAYOUT_OPERATION_SET.has(task.operation)) return [{ ref: { pageId: app.page().id }, stateFingerprint: precisionLayoutFingerprint(app.page()) }];
   return snapshotRefs(app, task.targets, task.operation);
 }
 
@@ -3212,8 +3308,41 @@ function executePageTask(app, task) {
   editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
 }
 
+function executePrecisionLayoutTask(app, task) {
+  const page = app.page();
+  const guideById = id => (Array.isArray(page.guides) ? page.guides : []).find(guide => guide?.id === id) || null;
+  if (task.operation === 'page.snap.set.v1') {
+    const snap = task.arguments.key === 'enabled'
+      ? app.setSnapEnabledState(task.arguments.value)
+      : app.setSnapCategoryState(task.arguments.key, task.arguments.value);
+    return { changed: true, pageId: page.id, snap: clone(snap), precisionFingerprint: precisionLayoutFingerprint(page) };
+  }
+  if (task.operation === 'guide.add.v1') {
+    const guide = app.addGuide(task.arguments);
+    return { changed: true, pageId: page.id, guide: clone(guide), guides: clone(page.guides || []), precisionFingerprint: precisionLayoutFingerprint(page) };
+  }
+  const guideId = task.arguments.guideId;
+  const before = clone(guideById(guideId));
+  if (!before) editFail('GUIDE_NOT_FOUND', { guideId });
+  if (task.operation === 'guide.move.v1') app.moveGuide(guideId, task.arguments.position);
+  else if (task.operation === 'guide.remove.v1') app.removeGuide(guideId);
+  else if (task.operation === 'guide.lock.set.v1') app.setGuideLocked(guideId, task.arguments.locked);
+  else if (task.operation === 'guide.visibility.set.v1') app.setGuideVisible(guideId, task.arguments.visible);
+  else editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
+  return {
+    changed: true,
+    pageId: page.id,
+    guideId,
+    before,
+    guide: clone(guideById(guideId)),
+    guides: clone(page.guides || []),
+    precisionFingerprint: precisionLayoutFingerprint(page)
+  };
+}
+
 function executeApprovedTask(app, task) {
   if (CHAT_PAGE_OPERATION_SET.has(task.operation)) return executePageTask(app, task);
+  if (CHAT_PRECISION_LAYOUT_OPERATION_SET.has(task.operation)) return executePrecisionLayoutTask(app, task);
   if (task.operation === 'path.repaint.v1'
     || task.operation === 'path.material.apply.v1'
     || task.operation === 'path.material.remove.v1') {
