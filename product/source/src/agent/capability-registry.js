@@ -285,6 +285,18 @@ const editSchemas = {
     }, ['type'], 'Existing image-core createLayerEffect() arguments.'),
     1
   ),
+  'image.raster.paintBucket.v1': editTaskSchema(
+    { type: 'string', const: 'image.raster.paintBucket.v1', description: 'Destructively fill one bounded region of an editable native 8-bit RGB raster image through the existing paintBucketFill() pixel authority.' },
+    obj({
+      x: num('Raster-local seed X.', { minimum: 0, maximum: 1000000 }),
+      y: num('Raster-local seed Y.', { minimum: 0, maximum: 1000000 }),
+      color: str('Fill color as #RRGGBB or #RRGGBBAA.'),
+      tolerance: num('Existing magic-wand color tolerance.', { minimum: 0, maximum: 255, default: 0 }),
+      contiguous: bool('Limit fill to the connected seed region.', { default: true }),
+      opacity: num('Fill opacity.', { minimum: 0, maximum: 1, default: 1 })
+    }, ['x','y','color'], 'Raster-local Paint Bucket arguments. The seed must fall within the raster dimensions at execution time.'),
+    1
+  ),
   'image.liquify.add.v1': editTaskSchema(
     { type: 'string', const: 'image.liquify.add.v1', description: 'Append one existing native Liquify filter to an editable raster image.' },
     obj({
@@ -998,12 +1010,13 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'paint.session.create.v1') operationConstraints.push('Uses only the qualified built-in Brush Engine preset subset and the existing StrokeSessionRecorder/replay authority; Blender, Smudge, Eraser, and pointer emulation are intentionally not exposed here.');
   if (operation === 'stroke.create.v1') operationConstraints.push('Blender/Smudge are native run-only mixer strokes. They require a contiguous multi-channel run containing at least one Brush/DryBrush depositor; mixing runs use the existing Canvas2D multi-channel surface until GPU transport parity is separately implemented.');
   if (operation === 'stroke.erase.circle.v1') operationConstraints.push('Explicit stable Stroke targets only; existing proposal target fingerprints and revision checks reject stale edits. Uses eraseStrokeWithCircle() directly and never calls interactive hit-test, pointer, or area-wide eraseAt().');
-  if (imageOnly) operationConstraints.push('Image stack params are structurally bounded to 8 KiB, depth 4, 64 object keys, array length 128, finite numbers and 512-character strings.');
+  if (imageOnly && operation !== 'image.raster.paintBucket.v1') operationConstraints.push('Image stack params are structurally bounded to 8 KiB, depth 4, 64 object keys, array length 128, finite numbers and 512-character strings.');
   if (operation === 'image.adjustment.add.v1') operationConstraints.push('Initial qualified adjustment allowlist: brightnessContrast, levels, curves, hueSaturation.');
   if (operation === 'image.filter.add.v1') operationConstraints.push('Initial qualified filter allowlist: gaussianBlur, sharpen, noiseGrain, textureOverlay.');
   if (operation === 'image.blend.set.v1') operationConstraints.push('Uses the existing IMAGE_CAPABILITIES blend-mode allowlist and rejects no-op assignment.');
   if (operation === 'image.effect.add.v1') operationConstraints.push('Initial effect allowlist: dropShadow, innerShadow, outerGlow, colorOverlay, stroke; qualification coverage is recorded per tested effect type.');
   if (operation === 'image.liquify.add.v1') operationConstraints.push('Maximum 32 operations; uses existing LIQUIFY_OPERATIONS/createLiquifyFilter/liquifyRaster. Arbitrary freeze-mask pixel arrays are excluded from CHAT exposure.');
+  if (operation === 'image.raster.paintBucket.v1') operationConstraints.push('Destructive local raster edit. Reuses existing paintBucketFill()/magicWandSelection and existing rasterState.colorRaster. Current direct-raster qualification is limited to 8-bit RGB; no pointer emulation or automatic target discovery.');
   if (operation === 'path.warp.v1') operationConstraints.push('Uses existing createWarpDeformationPlan() + applyNonDestructiveDeformation(); stable Path identity and editable anchor structure are preserved.');
   if (operation === 'path.distort.v1' || operation === 'path.perspective.v1') operationConstraints.push('Uses existing projective planner and applyNonDestructiveDeformation(); recomputes anchors and handles from retained baseSubpaths with serializable reversible state. Distort offsets independent corners; Perspective constrains opposing edges toward a shared center. Invalid folded quads are rejected.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
