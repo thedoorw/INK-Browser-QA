@@ -29,6 +29,8 @@ test('legacy worker URL forces one bounded identity navigation with network fres
 test('runtime worker is online-first with build-scoped offline fallback', async () => {
   const source = await read('product/source/service-worker-runtime.js');
   assert.match(source, /importScripts\('\.\/build-identity\.js'\)/);
+  assert.match(source, /WORKER_URL\.searchParams\.get\('build'\)/);
+  assert.match(source, /PUBLISHED_REVISION/);
   assert.match(source, /new Request\(request, \{ cache: 'no-store' \}\)/);
   assert.match(source, /event\.request\.mode === 'navigate'/);
   assert.match(source, /buildConsistentNavigation/);
@@ -40,13 +42,19 @@ test('runtime worker is online-first with build-scoped offline fallback', async 
   assert.doesNotMatch(source, /if \(cached\) return cached;/);
 });
 
-test('application runtime exposes the same generated build identity', async () => {
+test('application runtime exposes source fallback and Pages publication identity', async () => {
   const config = await read('product/source/src/config.js');
   const template = await read('product/source/shell.template.html');
   const web = await read('product/source/index.html');
+  const appSource = await read('product/source/src/ink.js');
+  const pagesIdentity = await read('pwa-pages-build-identity.txt');
   assert.match(config, /BUILD_ID = globalThis\.INK_BUILD_ID \|\| 'ink-build-unidentified'/);
   assert.match(template, /<script src="build-identity\.js"><\/script>/);
   assert.match(web, /<script src="build-identity\.js"><\/script>/);
+  assert.match(appSource, /deploymentIdentityURL:'\.\/pages-build-identity\.txt'/);
+  assert.match(appSource, /window\.INK_ARCHITECTURE\.buildId=status\.buildId/);
+  assert.match(pagesIdentity, /permalink: \/product\/source\/pages-build-identity\.txt/);
+  assert.match(pagesIdentity, /site\.github\.build_revision/);
 });
 
 test('update manager targets runtime worker and auto-activates updates', async () => {
@@ -54,6 +62,11 @@ test('update manager targets runtime worker and auto-activates updates', async (
   const appSource = await read('product/source/src/ink.js');
   assert.match(source, /scriptURL = '\.\/service-worker-runtime\.js'/);
   assert.match(appSource, /scriptURL:'\.\/service-worker-runtime\.js'/);
+  assert.match(source, /deploymentIdentityURL = '\.\/pages-build-identity\.txt'/);
+  assert.match(source, /pages-jekyll-build-revision/);
+  assert.match(source, /url\.searchParams\.set\('build', buildId\)/);
+  assert.match(source, /cache: 'no-store'/);
+  assert.match(source, /reuseOfflineRegistration/);
   assert.match(source, /updateViaCache: 'none'/);
   assert.match(source, /await this\.registration\.update\(\)/);
   assert.match(source, /this\.autoActivate/);
