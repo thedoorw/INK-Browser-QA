@@ -9,15 +9,14 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil((async () => {
-    // Claim first so the migration fetch policy governs the forced reload and
-    // every bootstrap dependency. Keep previous caches until the runtime worker
-    // has installed a complete coherent shell; they remain the offline fallback.
-    await self.clients.claim();
-    await new Promise(resolve => setTimeout(resolve, 250));
-    const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    await Promise.all(windows.map(client => client.navigate?.(client.url).catch(() => null)));
-  })());
+  // Finish activation first. WindowClient.navigate() can wait on the active
+  // worker, so awaiting navigation inside activate risks an activation cycle.
+  event.waitUntil(self.clients.claim());
+  setTimeout(() => {
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true })
+      .then(windows => Promise.all(windows.map(client => client.navigate?.(client.url).catch(() => null))))
+      .catch(() => null);
+  }, 0);
 });
 
 async function migrationNetworkFirst(request) {
