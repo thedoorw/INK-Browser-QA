@@ -1,12 +1,22 @@
 # INK Current Work Order
 
-## INK Architecture Recomposition R&D — USER PRIORITY / RESEARCH ONLY 2026-10-03
+## INK Architecture Recomposition R&D — R&D COMPLETE / STOP → USER DECISION 2026-10-03
 
 USER opened a new architecture question: determine whether continuing bounded repair or structurally recomposing INK around its already mature capabilities is faster and safer.
 
 Authority:
 - `research/INK_ARCHITECTURE_RECOMPOSITION_R_AND_D_v0.1.md`
 - `ACTIVE/INK_ARCHITECTURE_RECOMPOSITION_NEW_WINDOW_HANDOFF_v0.1.md`
+
+Completed assessment:
+- `research/INK_ARCHITECTURE_RECOMPOSITION_ASSESSMENT_v0.1.md`
+
+Decision status:
+```text
+OPTION_B_ARCHITECTURE_RECOMPOSITION = RECOMMENDED
+PRODUCT_SOURCE_MUTATION = NOT AUTHORIZED
+NEXT = STOP → USER DECISION
+```
 
 Current scope:
 ```text
