@@ -1014,3 +1014,83 @@ B3_OVERALL = PARTIAL
 SECOND_AUTHORITY = NONE
 FORMAT_VERSION_CHANGE = NONE
 ```
+
+
+## B3.4 Non-source Local Retouch — merged / deployed / formal Live qualified 2026-10-03
+
+Classification:
+```text
+B3_LOCAL_RETOUCH_NON_SOURCE = PRODUCT EXISTS / CHAT EXPOSURE GAP → REPAIRED
+B3_SOURCE_DEPENDENT_RETOUCH = OPEN / SEPARATE
+B3_OVERALL = PARTIAL
+```
+
+Authority:
+- bounded operation: `image.raster.localRetouch.v1`;
+- qualified types: `dodge / burn / sponge / localBlur / localSharpen / colorReplacement`;
+- exactly one stable editable native 8-bit RGB image target;
+- existing raster-retouch functions remain sole pixel algorithm authority;
+- mutation stays on existing `rasterState.colorRaster`;
+- existing raster pixel + rasterMask target fingerprints provide optimistic-concurrency stale protection;
+- existing scoped History and Renderer cache invalidation are reused;
+- no pointer stroke, source-point inference, raw mask input, second raster/retouch/Renderer/History authority, UI change, or FORMAT_VERSION change;
+- Clone Stamp / Healing Brush / Patch / Pattern Stamp remain explicitly excluded because they require a separate bounded source-point/source-region/pattern contract.
+
+Source/candidate:
+- PR #141 merged.
+- exact candidate: `865a1b7ec3f023e25d13814a234e6efe6d793074`.
+- merged/deployed source: `ca4bf6913efe1564eb572988a306120b3c008539`.
+- candidate request: `clusterB-B3-local-retouch-candidate-001-regressions`.
+- candidate request commit: `8737e794c08b2a75e88bf1a3291799a6769923bf`.
+- candidate result commit: `904ebd4a8f0f73036d10c656a2d94f0f8022e77b`.
+- candidate run: `37097624056`; artifact `11264912328`; digest `sha256:40be9a176c8adfadc5d87e04d7c45111846550b5a17e668a7e122a0314a48690`.
+- all six variants produced raster + Preview deltas with exact Undo/Redo.
+- candidate stale protection and NO_OP rejection PASS.
+- exact-SHA regressions B3.3 Spot Healing / B3.2 Raster Mask / B3.1 Paint Bucket / B2 brightnessContrast: PASS.
+
+Formal Live was split to stay within the existing runner's 32-step bound and to keep raster work bounded:
+
+A — stale + Dodge + Burn:
+- request `clusterB-B3-local-retouch-live-002a-rerun2`;
+- request commit `39ae78eb87000a850bd9b19bf5e0a6296a05a3fb`;
+- result commit `3d613aa5c4730a62e7b3c342095b8299a2440aab`;
+- run `37098314665`; artifact `11264763385`; digest `sha256:ea7171ed10917cb4d12d3562aa8eb32f4e0b226b1a0f9052a974350b9a6c7cc2`;
+- exact source verified; `apiReady=true`; 23 named tools;
+- baseline/restored Preview `fnv1a32:34d01658`;
+- Dodge `fnv1a32:bc3c479d`; Undo `34d01658`; Redo `bc3c479d`;
+- Burn `fnv1a32:e1e479ef`; Undo `34d01658`; Redo `e1e479ef`;
+- intervening Paint Bucket made the earlier retouch proposal stale; approval rejected `CHAT_EDIT_TARGET_STALE`.
+
+B — Sponge + Local Blur:
+- request `clusterB-B3-local-retouch-live-002b`;
+- request commit `1491b05f6b8284c8b982911c69b7a1f55971eeb3`;
+- result commit `65789febcdbe422f050f340f54235b5cc277bb2a`;
+- run `37098427440`; artifact `11265241534`; digest `sha256:618464cd9d419f22da880d865476f124522fee5a1af68a422b525f8e7f86e62a`;
+- Sponge `fnv1a32:f496a2ca`; exact Undo/Redo against `34d01658`;
+- Local Blur `fnv1a32:0aa47f36`; exact Undo/Redo against `34d01658`.
+
+C — Local Sharpen + Color Replacement + NO_OP:
+- request `clusterB-B3-local-retouch-live-002c`;
+- request commit `065048a65374118a0d0e0e19c5a639411d73cf38`;
+- result commit `0921948c60c308d842fadb939145fdb321b230b7`;
+- run `37098536114`; artifact `11264848600`; digest `sha256:64e38d3b961c2fcaa7ac7889f71a7d0e6b603dc8a6bac65f7dadcf8ca85f4065`;
+- Local Sharpen `fnv1a32:57ec08d4`; exact Undo/Redo against `34d01658`;
+- Color Replacement `fnv1a32:5db0211e`; exact Undo/Redo against `34d01658`;
+- zero-strength Dodge rejected `CHAT_EDIT_NO_OP`.
+
+QA-only attempts before the successful split are not product failures:
+- the original 68-step request was rejected before browser execution by the existing 32-step runner bound;
+- the first split used a disallowed non-fixture attachment path and was rejected before browser execution;
+- the first approved-fixture run used an excessive `radius=400` workload and hit `CDP timeout: Runtime.evaluate`; the same deployed source passed after reducing the bounded local radius to 48.
+
+```text
+B3_PAINT_BUCKET = CLOSED / FORMAL LIVE QUALIFIED
+B3_RASTER_MASK = CLOSED / FORMAL LIVE QUALIFIED
+B3_SPOT_HEAL = CLOSED / FORMAL LIVE QUALIFIED
+B3_LOCAL_RETOUCH_NON_SOURCE = CLOSED / FORMAL LIVE QUALIFIED
+NEXT_B3 = SOURCE_DEPENDENT_RETOUCH
+B3_SOURCE_DEPENDENT_RETOUCH = OPEN
+SECOND_AUTHORITY = NONE
+POINTER_SIMULATION = NONE
+FORMAT_VERSION_CHANGE = NONE
+```
