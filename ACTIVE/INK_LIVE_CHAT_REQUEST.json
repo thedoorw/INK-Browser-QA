@@ -1,9 +1,9 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterC-C2-align-distribute-live-001",
+  "requestId": "clusterC-C3-snap-guides-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "f56e492af4954ae6da3be39cf10d2dbe2859d87e",
+  "expectedSourceSha": "3aa4c8268851d778aeea9fadcc99b53c4aed8ad0",
   "steps": [
     {
       "id": "contextBefore",
@@ -13,333 +13,462 @@
       }
     },
     {
-      "id": "describeAlign",
+      "id": "describeSnap",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "object.align.v1"
+        "idOrToolName": "page.snap.set.v1"
       }
     },
     {
-      "id": "createAPropose",
+      "id": "describeGuideAdd",
+      "tool": "describe_ink_capability",
+      "input": {
+        "idOrToolName": "guide.add.v1"
+      }
+    },
+    {
+      "id": "staleSnapPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-c2-create-a",
-          "operation": "path.create.v1",
+          "taskId": "live-c3-stale-snap",
+          "operation": "page.snap.set.v1",
           "targets": [],
           "arguments": {
-            "objectId": "live-c2-a",
-            "name": "Live C2 A",
-            "shape": "rectangle",
-            "x": 10,
-            "y": 20,
-            "width": 40,
-            "height": 30,
-            "fill": "#d4878b",
-            "stroke": "#49383b",
-            "strokeWidth": 2,
-            "opacity": 1
+            "key": "grid",
+            "value": true
           }
         }
       }
     },
     {
-      "id": "createAApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "createAPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "createAExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "createAPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "createAApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "createBPropose",
+      "id": "tempGuidePropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-c2-create-b",
-          "operation": "path.create.v1",
+          "taskId": "live-c3-tempGuide",
+          "operation": "guide.add.v1",
           "targets": [],
           "arguments": {
-            "objectId": "live-c2-b",
-            "name": "Live C2 B",
-            "shape": "rectangle",
-            "x": 90,
-            "y": 70,
-            "width": 50,
-            "height": 30,
-            "fill": "#8aa6c1",
-            "stroke": "#35495b",
-            "strokeWidth": 2,
-            "opacity": 1
+            "id": "live-c3-temp-guide",
+            "orientation": "vertical",
+            "position": 44
           }
         }
       }
     },
     {
-      "id": "createBApprove",
+      "id": "tempGuideApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "createBPropose.result.result.proposalId"
+          "$ref": "tempGuidePropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "createBExecute",
+      "id": "tempGuideExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "createBPropose.result.result.proposalId"
+          "$ref": "tempGuidePropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "createBApprove.result.result.approvalToken"
+          "$ref": "tempGuideApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "createCPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c2-create-c",
-          "operation": "path.create.v1",
-          "targets": [],
-          "arguments": {
-            "objectId": "live-c2-c",
-            "name": "Live C2 C",
-            "shape": "rectangle",
-            "x": 260,
-            "y": 125,
-            "width": 60,
-            "height": 30,
-            "fill": "#9caf88",
-            "stroke": "#40543b",
-            "strokeWidth": 2,
-            "opacity": 1
-          }
-        }
-      }
-    },
-    {
-      "id": "createCApprove",
+      "id": "staleSnapApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "createCPropose.result.result.proposalId"
+          "$ref": "staleSnapPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "createCExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "createCPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "createCApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "previewBaseline",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "leftPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c2-left",
-          "operation": "object.align.v1",
-          "targets": [
-            {
-              "$ref": "createAExecute.result.result.controllerResult.resultRefs.0"
-            },
-            {
-              "$ref": "createBExecute.result.result.controllerResult.resultRefs.0"
-            },
-            {
-              "$ref": "createCExecute.result.result.controllerResult.resultRefs.0"
-            }
-          ],
-          "arguments": {
-            "mode": "left"
-          }
-        }
-      }
-    },
-    {
-      "id": "leftApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "leftPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "leftExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "leftPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "leftApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "previewLeft",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "undoLeft",
+      "id": "undoTempGuide",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "previewUndoLeft",
-      "tool": "get_ink_preview",
+      "id": "snapGridPropose",
+      "tool": "propose_ink_edit",
       "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c3-snapGrid",
+          "operation": "page.snap.set.v1",
+          "targets": [],
+          "arguments": {
+            "key": "grid",
+            "value": true
+          }
+        }
       }
     },
     {
-      "id": "redoLeft",
+      "id": "snapGridApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "snapGridPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "snapGridExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "snapGridPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "snapGridApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "undoSnap",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "redoSnap",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "previewRedoLeft",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "undoLeftReset",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "distributePropose",
+      "id": "guideAddPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-c2-distribute-x",
-          "operation": "object.align.v1",
-          "targets": [
-            {
-              "$ref": "createAExecute.result.result.controllerResult.resultRefs.0"
-            },
-            {
-              "$ref": "createBExecute.result.result.controllerResult.resultRefs.0"
-            },
-            {
-              "$ref": "createCExecute.result.result.controllerResult.resultRefs.0"
-            }
-          ],
+          "taskId": "live-c3-guideAdd",
+          "operation": "guide.add.v1",
+          "targets": [],
           "arguments": {
-            "mode": "distributeX"
+            "id": "live-c3-guide-v",
+            "orientation": "vertical",
+            "position": 120
           }
         }
       }
     },
     {
-      "id": "distributeApprove",
+      "id": "guideAddApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "distributePropose.result.result.proposalId"
+          "$ref": "guideAddPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "distributeExecute",
+      "id": "guideAddExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "distributePropose.result.result.proposalId"
+          "$ref": "guideAddPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "distributeApprove.result.result.approvalToken"
+          "$ref": "guideAddApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "previewDistribute",
-      "tool": "get_ink_preview",
+      "id": "guideMovePropose",
+      "tool": "propose_ink_edit",
       "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c3-guideMove",
+          "operation": "guide.move.v1",
+          "targets": [],
+          "arguments": {
+            "guideId": "live-c3-guide-v",
+            "position": 180
+          }
+        }
       }
     },
     {
-      "id": "undoDistribute",
+      "id": "guideMoveApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideMovePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "guideMoveExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideMovePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "guideMoveApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "guideLockPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c3-guideLock",
+          "operation": "guide.lock.set.v1",
+          "targets": [],
+          "arguments": {
+            "guideId": "live-c3-guide-v",
+            "locked": true
+          }
+        }
+      }
+    },
+    {
+      "id": "guideLockApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideLockPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "guideLockExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideLockPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "guideLockApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "lockedMoveProbe",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c3-locked-move",
+          "operation": "guide.move.v1",
+          "targets": [],
+          "arguments": {
+            "guideId": "live-c3-guide-v",
+            "position": 220
+          }
+        }
+      }
+    },
+    {
+      "id": "guideUnlockPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c3-guideUnlock",
+          "operation": "guide.lock.set.v1",
+          "targets": [],
+          "arguments": {
+            "guideId": "live-c3-guide-v",
+            "locked": false
+          }
+        }
+      }
+    },
+    {
+      "id": "guideUnlockApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideUnlockPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "guideUnlockExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideUnlockPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "guideUnlockApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "guideHidePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c3-guideHide",
+          "operation": "guide.visibility.set.v1",
+          "targets": [],
+          "arguments": {
+            "guideId": "live-c3-guide-v",
+            "visible": false
+          }
+        }
+      }
+    },
+    {
+      "id": "guideHideApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideHidePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "guideHideExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideHidePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "guideHideApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "guideShowPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c3-guideShow",
+          "operation": "guide.visibility.set.v1",
+          "targets": [],
+          "arguments": {
+            "guideId": "live-c3-guide-v",
+            "visible": true
+          }
+        }
+      }
+    },
+    {
+      "id": "guideShowApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideShowPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "guideShowExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideShowPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "guideShowApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "guideRemovePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c3-guideRemove",
+          "operation": "guide.remove.v1",
+          "targets": [],
+          "arguments": {
+            "guideId": "live-c3-guide-v"
+          }
+        }
+      }
+    },
+    {
+      "id": "guideRemoveApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideRemovePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "guideRemoveExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "guideRemovePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "guideRemoveApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "undoRemove",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "previewUndoDistribute",
-      "tool": "get_ink_preview",
+      "id": "restoredGuideProbe",
+      "tool": "propose_ink_edit",
       "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c3-restored-guide-probe",
+          "operation": "guide.move.v1",
+          "targets": [],
+          "arguments": {
+            "guideId": "live-c3-guide-v",
+            "position": 190
+          }
+        }
       }
     },
     {
-      "id": "redoDistribute",
+      "id": "redoRemove",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "previewRedoDistribute",
-      "tool": "get_ink_preview",
+      "id": "missingGuideProbe",
+      "tool": "propose_ink_edit",
       "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c3-missing-guide-probe",
+          "operation": "guide.move.v1",
+          "targets": [],
+          "arguments": {
+            "guideId": "live-c3-guide-v",
+            "position": 190
+          }
+        }
       }
     },
     {
