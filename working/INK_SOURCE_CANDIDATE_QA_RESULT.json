@@ -1,10 +1,1225 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterC-C2-align-distribute-candidate-002-regressions",
+  "requestId": "clusterC-C2-align-distribute-candidate-003-regressions",
   "candidateSha": "6994160cae577f57e858919e261a57aa7f5fea18",
   "case": "align-distribute-c2",
-  "status": "FAIL",
-  "error": "Error: SELECTION_NOT_RESTORED_CENTER\n    at <anonymous>:55:60",
-  "stderr": "ix\")\n[2669:2697:1003/074623.496499:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2669:2669:1003/074624.978097:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2669:2669:1003/074624.978147:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2669:2697:1003/074624.978193:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2669:2697:1003/074624.978212:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2669:2669:1003/074625.027279:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2669:2669:1003/074625.075415:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2669:2697:1003/074625.082532:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2669:2669:1003/074625.437982:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2669:2669:1003/074625.449603:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2669:2697:1003/074625.450137:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2669:2669:1003/074625.507686:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2669:2669:1003/074625.631560:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files\n[2669:2669:1003/074625.632187:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2669:2697:1003/074625.632255:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2669:2669:1003/074625.730650:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2669:2697:1003/074625.730863:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2669:2669:1003/074625.794226:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2707:2707:1003/074626.641747:ERROR:gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc:1210] []Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.\n[2707:2707:1003/074626.792460:ERROR:gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc:1210] []Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.\nCorrupt JPEG data: premature end of data segment\n"
+  "runtimeIdentity": {
+    "href": "http://127.0.0.1:38325/?sourceCandidate=6994160cae577f57e858919e261a57aa7f5fea18",
+    "readyState": "complete",
+    "apiReady": true,
+    "toolCount": 23,
+    "appVersion": "0.1"
+  },
+  "result": {
+    "passed": true,
+    "operation": "object.align.v1",
+    "modes": [
+      "left",
+      "centerX",
+      "distributeX"
+    ],
+    "baseline": [
+      {
+        "x": 10,
+        "y": 19.999999999999996,
+        "w": 40,
+        "h": 30.000000000000004
+      },
+      {
+        "x": 90,
+        "y": 69.99999999999999,
+        "w": 50,
+        "h": 30.000000000000043
+      },
+      {
+        "x": 260,
+        "y": 125,
+        "w": 60,
+        "h": 30
+      }
+    ],
+    "left": [
+      {
+        "x": 10,
+        "y": 19.999999999999996,
+        "w": 40,
+        "h": 30.000000000000004
+      },
+      {
+        "x": 10,
+        "y": 69.99999999999999,
+        "w": 50,
+        "h": 30.000000000000043
+      },
+      {
+        "x": 10,
+        "y": 125,
+        "w": 60,
+        "h": 30
+      }
+    ],
+    "center": [
+      {
+        "x": 145,
+        "y": 19.999999999999996,
+        "w": 40,
+        "h": 30.000000000000004
+      },
+      {
+        "x": 140,
+        "y": 69.99999999999999,
+        "w": 50,
+        "h": 30.000000000000043
+      },
+      {
+        "x": 135,
+        "y": 125,
+        "w": 60,
+        "h": 30
+      }
+    ],
+    "distributed": [
+      {
+        "x": 10,
+        "y": 19.999999999999996,
+        "w": 40,
+        "h": 30.000000000000004
+      },
+      {
+        "x": 130,
+        "y": 69.99999999999999,
+        "w": 50,
+        "h": 30.000000000000043
+      },
+      {
+        "x": 260,
+        "y": 125,
+        "w": 60,
+        "h": 30
+      }
+    ],
+    "gaps": [
+      80,
+      80
+    ],
+    "selectionRestored": true,
+    "distributionGuard": "CHAT_EDIT_TARGET_COUNT_INVALID",
+    "historyLabel": "對齊物件"
+  },
+  "status": "PASS",
+  "regressions": [
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterC-C2-align-distribute-candidate-003-regressions-page-ops-c1",
+      "candidateSha": "6994160cae577f57e858919e261a57aa7f5fea18",
+      "case": "page-ops-c1",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:33977/?sourceCandidate=6994160cae577f57e858919e261a57aa7f5fea18",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operations": [
+          "page.create.v1",
+          "page.duplicate.v1",
+          "page.delete.v1",
+          "page.rename.v1",
+          "page.activate.v1"
+        ],
+        "initialPageId": "11b9d81a-260f-4f52-a6c2-a0a4e99dec23",
+        "createdPageId": "f67f534c-85eb-4c00-956f-a095c95126a8",
+        "duplicatedPageId": "8ef9ec2b-4daf-4069-a77e-aa4e5b2b2b88",
+        "duplicateIdentity": {
+          "sourceLayerIds": [
+            "dd6bd023-e4a5-45ee-a2eb-695aa9c768b5"
+          ],
+          "sourceObjectIds": [
+            "qa-c1-page2-path"
+          ],
+          "duplicateLayerIds": [
+            "de4e3149-faf2-4518-92c2-1eecd175947b"
+          ],
+          "duplicateObjectIds": [
+            "f0fd9de4-bc1f-4ffa-8004-0d99e15ff9ae"
+          ]
+        },
+        "noOpCodes": {
+          "rename": "CHAT_EDIT_NO_OP",
+          "activate": "CHAT_EDIT_NO_OP"
+        },
+        "staleCode": "CHAT_EDIT_STALE_PAGE",
+        "minimumPageCode": "CHAT_EDIT_MINIMUM_PAGE_REQUIRED",
+        "finalPageCount": 1,
+        "finalActivePageId": "11b9d81a-260f-4f52-a6c2-a0a4e99dec23",
+        "historyLabels": [
+          "新增頁面",
+          "CHAT create Path",
+          "重新命名頁面",
+          "複製頁面",
+          "刪除頁面",
+          "新增頁面",
+          "刪除頁面",
+          "刪除頁面"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterC-C2-align-distribute-candidate-003-regressions-path-deformation-b4",
+      "candidateSha": "6994160cae577f57e858919e261a57aa7f5fea18",
+      "case": "path-deformation-b4",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:35027/?sourceCandidate=6994160cae577f57e858919e261a57aa7f5fea18",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "inventory": [
+          "get_ink_capabilities",
+          "get_ink_context",
+          "get_ink_selection",
+          "inspect_ink_objects",
+          "decompose_ink_reference",
+          "propose_ink_edit",
+          "approve_ink_edit",
+          "execute_ink_edit",
+          "get_ink_history",
+          "undo_ink",
+          "redo_ink",
+          "get_ink_revisions",
+          "capture_ink_revision",
+          "restore_ink_revision",
+          "get_ink_preview",
+          "inspect_ink_output",
+          "release_ink_output",
+          "describe_ink_capability",
+          "use_ink",
+          "import_ink_reference",
+          "import_ink_raster",
+          "export_ink_asset",
+          "search_ink_library"
+        ],
+        "receipts": [
+          {
+            "operation": "path.create.v1",
+            "proposed": "PROPOSED",
+            "approved": "APPROVED",
+            "executed": "EXECUTED"
+          },
+          {
+            "operation": "path.warp.v1",
+            "proposed": "PROPOSED",
+            "approved": "APPROVED",
+            "executed": "EXECUTED"
+          },
+          {
+            "operation": "path.distort.v1",
+            "proposed": "PROPOSED",
+            "approved": "APPROVED",
+            "executed": "EXECUTED"
+          },
+          {
+            "operation": "path.perspective.v1",
+            "proposed": "PROPOSED",
+            "approved": "APPROVED",
+            "executed": "EXECUTED"
+          }
+        ],
+        "outcomes": {
+          "warp": {
+            "stableId": "b4-native-path",
+            "baseSubpathsRetained": true,
+            "parameters": {
+              "bend": 67.2
+            },
+            "deformation": {
+              "baseSubpaths": [
+                {
+                  "id": "b4-native-path_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_mus3akrm_06bxlq0",
+                      "x": 140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus3akrm_usj4iy2",
+                      "x": 0,
+                      "y": 95,
+                      "in": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus3akrm_lcampq3",
+                      "x": -140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus3akrm_11cjpy3",
+                      "x": 0,
+                      "y": -95,
+                      "in": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "type": "INK-NON-DESTRUCTIVE-DEFORMATION",
+              "version": "1.0",
+              "parameters": {
+                "bend": 67.2
+              },
+              "frontBack": "front",
+              "reversible": true,
+              "revision": 1
+            },
+            "subpaths": [
+              {
+                "id": "b4-native-path_s0",
+                "closed": true,
+                "role": "outer",
+                "anchors": [
+                  {
+                    "id": "v_mus3akrm_06bxlq0",
+                    "x": 207.2,
+                    "y": 0,
+                    "in": {
+                      "x": -23.740760834938527,
+                      "y": -52.46705123392539
+                    },
+                    "out": {
+                      "x": -23.740760834938527,
+                      "y": 52.46705123392539
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus3akrm_usj4iy2",
+                    "x": 8.229626490270214e-15,
+                    "y": 95,
+                    "in": {
+                      "x": 77.3198649763111,
+                      "y": 0
+                    },
+                    "out": {
+                      "x": -77.3198649763111,
+                      "y": 0
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus3akrm_lcampq3",
+                    "x": -72.8,
+                    "y": 0,
+                    "in": {
+                      "x": -23.74076083493854,
+                      "y": 52.46705123392539
+                    },
+                    "out": {
+                      "x": -23.74076083493854,
+                      "y": -52.46705123392539
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus3akrm_11cjpy3",
+                    "x": 0,
+                    "y": -95,
+                    "in": {
+                      "x": -77.3198649763111,
+                      "y": 0
+                    },
+                    "out": {
+                      "x": 77.3198649763111,
+                      "y": 0
+                    },
+                    "mode": "smooth"
+                  }
+                ]
+              }
+            ],
+            "canvasBefore": "ca5e221b",
+            "canvasAfter": "ac22a30d",
+            "previewBefore": "fnv1a32:a94d0df7",
+            "previewAfter": "fnv1a32:08317eb1",
+            "historyLabel": "CHAT warp Path",
+            "historyStatus": "COMPLETED",
+            "undoRedoExact": true,
+            "resetExact": true,
+            "reapplicationFromBaseExact": true
+          },
+          "distort": {
+            "stableId": "b4-native-path",
+            "baseSubpathsRetained": true,
+            "parameters": {
+              "projective": {
+                "mode": "distort",
+                "xOffset": 32,
+                "yOffset": 16,
+                "sourceQuad": [
+                  {
+                    "x": -140,
+                    "y": -95
+                  },
+                  {
+                    "x": 140,
+                    "y": -95
+                  },
+                  {
+                    "x": 140,
+                    "y": 95
+                  },
+                  {
+                    "x": -140,
+                    "y": 95
+                  }
+                ],
+                "destinationQuad": [
+                  {
+                    "x": -108,
+                    "y": -95
+                  },
+                  {
+                    "x": 140,
+                    "y": -79
+                  },
+                  {
+                    "x": 140,
+                    "y": 95
+                  },
+                  {
+                    "x": -140,
+                    "y": 95
+                  }
+                ],
+                "matrix": [
+                  0.9422118897376287,
+                  -0.08516142564981036,
+                  14.599800730654268,
+                  0.03155097974094988,
+                  0.9535038193291264,
+                  -1.0727333111922954,
+                  0.00033211557622052476,
+                  -0.0006082958974986454,
+                  1
+                ]
+              }
+            },
+            "deformation": {
+              "baseSubpaths": [
+                {
+                  "id": "b4-native-path_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_mus3akrm_06bxlq0",
+                      "x": 140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus3akrm_usj4iy2",
+                      "x": 0,
+                      "y": 95,
+                      "in": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus3akrm_lcampq3",
+                      "x": -140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus3akrm_11cjpy3",
+                      "x": 0,
+                      "y": -95,
+                      "in": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "type": "INK-NON-DESTRUCTIVE-DEFORMATION",
+              "version": "1.0",
+              "parameters": {
+                "projective": {
+                  "mode": "distort",
+                  "xOffset": 32,
+                  "yOffset": 16,
+                  "sourceQuad": [
+                    {
+                      "x": -140,
+                      "y": -95
+                    },
+                    {
+                      "x": 140,
+                      "y": -95
+                    },
+                    {
+                      "x": 140,
+                      "y": 95
+                    },
+                    {
+                      "x": -140,
+                      "y": 95
+                    }
+                  ],
+                  "destinationQuad": [
+                    {
+                      "x": -108,
+                      "y": -95
+                    },
+                    {
+                      "x": 140,
+                      "y": -79
+                    },
+                    {
+                      "x": 140,
+                      "y": 95
+                    },
+                    {
+                      "x": -140,
+                      "y": 95
+                    }
+                  ],
+                  "matrix": [
+                    0.9422118897376287,
+                    -0.08516142564981036,
+                    14.599800730654268,
+                    0.03155097974094988,
+                    0.9535038193291264,
+                    -1.0727333111922954,
+                    0.00033211557622052476,
+                    -0.0006082958974986454,
+                    1
+                  ]
+                }
+              },
+              "frontBack": "front",
+              "reversible": true,
+              "revision": 1
+            },
+            "subpaths": [
+              {
+                "id": "b4-native-path_s0",
+                "closed": true,
+                "role": "outer",
+                "anchors": [
+                  {
+                    "id": "v_mus3akrm_06bxlq0",
+                    "x": 140,
+                    "y": 3.195810853697242,
+                    "in": {
+                      "x": 0,
+                      "y": -46.48459478486833
+                    },
+                    "out": {
+                      "x": 0,
+                      "y": 49.40911075580743
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus3akrm_usj4iy2",
+                    "x": 6.908706379978851,
+                    "y": 94.99999999999999,
+                    "in": {
+                      "x": 75.08519545952872,
+                      "y": 1.4210854715202004e-14
+                    },
+                    "out": {
+                      "x": -79.29262305301744,
+                      "y": 0
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus3akrm_lcampq3",
+                    "x": -123.03030303030305,
+                    "y": -5.757575757575762,
+                    "in": {
+                      "x": -9.108992907649721,
+                      "y": 54.08464538917027
+                    },
+                    "out": {
+                      "x": 8.518953749493903,
+                      "y": -50.58128788762003
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus3akrm_11cjpy3",
+                    "x": 21.45054945054945,
+                    "y": -86.64835164835164,
+                    "in": {
+                      "x": -70.05157992199574,
+                      "y": -4.519456769161025
+                    },
+                    "out": {
+                      "x": 66.73101117023397,
+                      "y": 4.305226527111884
+                    },
+                    "mode": "smooth"
+                  }
+                ]
+              }
+            ],
+            "canvasBefore": "ca5e221b",
+            "canvasAfter": "4e17a235",
+            "previewBefore": "fnv1a32:a94d0df7",
+            "previewAfter": "fnv1a32:9f578833",
+            "historyLabel": "CHAT distort Path",
+            "historyStatus": "COMPLETED",
+            "undoRedoExact": true,
+            "resetExact": true,
+            "reapplicationFromBaseExact": true
+          },
+          "perspective": {
+            "stableId": "b4-native-path",
+            "baseSubpathsRetained": true,
+            "parameters": {
+              "projective": {
+                "mode": "perspective",
+                "xOffset": 32,
+                "yOffset": 16,
+                "sourceQuad": [
+                  {
+                    "x": -140,
+                    "y": -95
+                  },
+                  {
+                    "x": 140,
+                    "y": -95
+                  },
+                  {
+                    "x": 140,
+                    "y": 95
+                  },
+                  {
+                    "x": -140,
+                    "y": 95
+                  }
+                ],
+                "destinationQuad": [
+                  {
+                    "x": -108,
+                    "y": -79
+                  },
+                  {
+                    "x": 108,
+                    "y": -111
+                  },
+                  {
+                    "x": 172,
+                    "y": 111
+                  },
+                  {
+                    "x": -172,
+                    "y": 79
+                  }
+                ],
+                "matrix": [
+                  0.9477551020408164,
+                  -0.056731301939058176,
+                  -23.57894736842105,
+                  -0.02612244897959174,
+                  0.9716343490304711,
+                  -21.71428571428571,
+                  -0.0012030075187969924,
+                  -0.002406015037593985,
+                  1
+                ]
+              }
+            },
+            "deformation": {
+              "baseSubpaths": [
+                {
+                  "id": "b4-native-path_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_mus3akrm_06bxlq0",
+                      "x": 140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus3akrm_usj4iy2",
+                      "x": 0,
+                      "y": 95,
+                      "in": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus3akrm_lcampq3",
+                      "x": -140,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": 52.46705123392539
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -52.46705123392539
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "v_mus3akrm_11cjpy3",
+                      "x": 0,
+                      "y": -95,
+                      "in": {
+                        "x": -77.3198649763111,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 77.3198649763111,
+                        "y": 0
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "type": "INK-NON-DESTRUCTIVE-DEFORMATION",
+              "version": "1.0",
+              "parameters": {
+                "projective": {
+                  "mode": "perspective",
+                  "xOffset": 32,
+                  "yOffset": 16,
+                  "sourceQuad": [
+                    {
+                      "x": -140,
+                      "y": -95
+                    },
+                    {
+                      "x": 140,
+                      "y": -95
+                    },
+                    {
+                      "x": 140,
+                      "y": 95
+                    },
+                    {
+                      "x": -140,
+                      "y": 95
+                    }
+                  ],
+                  "destinationQuad": [
+                    {
+                      "x": -108,
+                      "y": -79
+                    },
+                    {
+                      "x": 108,
+                      "y": -111
+                    },
+                    {
+                      "x": 172,
+                      "y": 111
+                    },
+                    {
+                      "x": -172,
+                      "y": 79
+                    }
+                  ],
+                  "matrix": [
+                    0.9477551020408164,
+                    -0.056731301939058176,
+                    -23.57894736842105,
+                    -0.02612244897959174,
+                    0.9716343490304711,
+                    -21.71428571428571,
+                    -0.0012030075187969924,
+                    -0.002406015037593985,
+                    1
+                  ]
+                }
+              },
+              "frontBack": "front",
+              "reversible": true,
+              "revision": 1
+            },
+            "subpaths": [
+              {
+                "id": "b4-native-path_s0",
+                "closed": true,
+                "role": "outer",
+                "anchors": [
+                  {
+                    "id": "v_mus3akrm_06bxlq0",
+                    "x": 131.20433996383363,
+                    "y": -30.50994575045206,
+                    "in": {
+                      "x": -14.184626319144215,
+                      "y": -49.2029225445315
+                    },
+                    "out": {
+                      "x": 19.261926927591816,
+                      "y": 66.81480903008426
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus3akrm_usj4iy2",
+                    "x": -37.55165692007797,
+                    "y": 91.5068226120858,
+                    "in": {
+                      "x": 102.86869567176674,
+                      "y": 9.569180992722494
+                    },
+                    "out": {
+                      "x": -80.73085202620155,
+                      "y": -7.50984670011178
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus3akrm_lcampq3",
+                    "x": -133.74002574002571,
+                    "y": -15.454311454311462,
+                    "in": {
+                      "x": -19.055549241708576,
+                      "y": 47.04338719046801
+                    },
+                    "out": {
+                      "x": 15.339499260807884,
+                      "y": -37.86938880011952
+                    },
+                    "mode": "smooth"
+                  },
+                  {
+                    "id": "v_mus3akrm_11cjpy3",
+                    "x": -14.805385556915544,
+                    "y": -92.80660954712363,
+                    "in": {
+                      "x": -54.40664082997878,
+                      "y": 8.060243085922778
+                    },
+                    "out": {
+                      "x": 63.31983041192393,
+                      "y": -9.380715616581327
+                    },
+                    "mode": "smooth"
+                  }
+                ]
+              }
+            ],
+            "canvasBefore": "ca5e221b",
+            "canvasAfter": "b1149dd5",
+            "previewBefore": "fnv1a32:a94d0df7",
+            "previewAfter": "fnv1a32:5105c73e",
+            "historyLabel": "CHAT perspective Path",
+            "historyStatus": "COMPLETED",
+            "undoRedoExact": true,
+            "resetExact": true,
+            "reapplicationFromBaseExact": true
+          }
+        },
+        "distortDiffersFromPerspective": true,
+        "noPointerEmulation": true,
+        "original": [
+          {
+            "id": "b4-native-path_s0",
+            "closed": true,
+            "role": "outer",
+            "anchors": [
+              {
+                "id": "v_mus3akrm_06bxlq0",
+                "x": 140,
+                "y": 0,
+                "in": {
+                  "x": 0,
+                  "y": -52.46705123392539
+                },
+                "out": {
+                  "x": 0,
+                  "y": 52.46705123392539
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_mus3akrm_usj4iy2",
+                "x": 0,
+                "y": 95,
+                "in": {
+                  "x": 77.3198649763111,
+                  "y": 0
+                },
+                "out": {
+                  "x": -77.3198649763111,
+                  "y": 0
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_mus3akrm_lcampq3",
+                "x": -140,
+                "y": 0,
+                "in": {
+                  "x": 0,
+                  "y": 52.46705123392539
+                },
+                "out": {
+                  "x": 0,
+                  "y": -52.46705123392539
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_mus3akrm_11cjpy3",
+                "x": 0,
+                "y": -95,
+                "in": {
+                  "x": -77.3198649763111,
+                  "y": 0
+                },
+                "out": {
+                  "x": 77.3198649763111,
+                  "y": 0
+                },
+                "mode": "smooth"
+              }
+            ]
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterC-C2-align-distribute-candidate-003-regressions-stroke-create-a2",
+      "candidateSha": "6994160cae577f57e858919e261a57aa7f5fea18",
+      "case": "stroke-create-a2",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:41335/?sourceCandidate=6994160cae577f57e858919e261a57aa7f5fea18",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "stroke.create.v1",
+        "created": [
+          {
+            "id": "chat-stroke-fnv1a32-bb21046a",
+            "kind": "pencil",
+            "mediaModel": null,
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-ba3b2301",
+            "kind": "brush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-9d7b788f",
+            "kind": "airbrush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-4b41deb2",
+            "kind": "drybrush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          }
+        ],
+        "before": {
+          "count": 0,
+          "undo": 0,
+          "canvas": "1e347074"
+        },
+        "after": {
+          "count": 4,
+          "undo": 4,
+          "canvas": "e70b7919"
+        },
+        "historyLabels": [
+          "CHAT create Stroke",
+          "CHAT create Stroke",
+          "CHAT create Stroke",
+          "CHAT create Stroke"
+        ],
+        "previewStatus": "COMPLETED",
+        "previewBounds": {
+          "h": 350.6,
+          "w": 451,
+          "x": -233.6,
+          "y": -182
+        },
+        "undoStatus": "COMPLETED",
+        "redoStatus": "COMPLETED",
+        "redoCanvas": "e70b7919",
+        "naturalMedia": {
+          "preference": "auto",
+          "floraReferenceBackend": "canvas2d",
+          "activeBackend": "webgl2-multichannel",
+          "gpuAvailable": true,
+          "gpuState": "ready",
+          "forcedReason": null,
+          "fallbacks": 0,
+          "batchFallbacks": 0,
+          "mixingRuns": 0,
+          "webgl": {
+            "backend": "webgl2",
+            "drawCalls": 3,
+            "cacheHits": 24,
+            "cacheMisses": 3,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "vertices": 1740,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 3,
+            "lastError": null,
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "maxTextureUnits": 32,
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+              "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 3,
+              "releases": 0,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 742548,
+              "budgetBytes": 100663296,
+              "usedBytes": 742548,
+              "availableBytes": 99920748,
+              "utilization": 0.007376551628112793,
+              "resources": 3,
+              "byType": {
+                "raster-cache": 742548
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelWebgl": {
+            "backend": "webgl2-multichannel",
+            "runs": 6,
+            "strokes": 6,
+            "drawCalls": 6,
+            "simulationPasses": 24,
+            "cacheHits": 24,
+            "cacheMisses": 6,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 4,
+            "lastError": null,
+            "targets": "164x79",
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxDrawBuffers": 8,
+              "maxColorAttachments": 8,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 16,
+              "releases": 10,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 766152,
+              "budgetBytes": 167772160,
+              "usedBytes": 473576,
+              "availableBytes": 167298584,
+              "utilization": 0.002822732925415039,
+              "resources": 6,
+              "byType": {
+                "raster-cache": 266280,
+                "mrt-target": 207296
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelCanvas2d": {
+            "backend": "canvas2d-multichannel",
+            "runs": 0,
+            "strokes": 0,
+            "mixingStrokes": 0,
+            "stamps": 0,
+            "mixerStamps": 0,
+            "transportedPigment": 0,
+            "pixels": 0,
+            "cacheHits": 0,
+            "cacheMisses": 0,
+            "preparations": 0,
+            "preparationSkips": 0,
+            "evictions": 0,
+            "skipped": 0,
+            "cacheEntries": 0
+          },
+          "canvas2d": {
+            "backend": "canvas2d",
+            "surfaceRevision": "WP8B-1",
+            "drawCalls": 0,
+            "frequencyVisibility": {
+              "low": true,
+              "mid": true,
+              "high": true
+            }
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterC-C2-align-distribute-candidate-003-regressions-raster-stack-adjustment-b2",
+      "candidateSha": "6994160cae577f57e858919e261a57aa7f5fea18",
+      "case": "raster-stack-adjustment-b2",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:45379/?sourceCandidate=6994160cae577f57e858919e261a57aa7f5fea18",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "image.adjustment.add.v1",
+        "adjustmentType": "brightnessContrast",
+        "objectId": "d63fb396-5d0c-4c68-babd-ea81bc073e2e",
+        "beforeFingerprint": "fnv1a32:d8fc24d4",
+        "afterFingerprint": "fnv1a32:e7d3d35a",
+        "beforeHash": "7883b22",
+        "afterHash": "9cd23fe",
+        "undoHash": "7883b22",
+        "redoHash": "9cd23fe",
+        "historyLabel": "CHAT add image adjustment: brightnessContrast",
+        "previewStatus": "COMPLETED",
+        "undoStatus": "COMPLETED",
+        "redoStatus": "COMPLETED",
+        "controllerResult": {
+          "adjustmentCount": 1,
+          "resultRefs": [
+            {
+              "layerId": "5e6b7cee-de04-4710-8052-b12910c6a651",
+              "objectId": "d63fb396-5d0c-4c68-babd-ea81bc073e2e",
+              "pageId": "3ee30a6b-5ed4-41a9-8e8f-9f251682728d"
+            }
+          ],
+          "stackItemId": "adj_iqxfxz",
+          "stackItemType": "brightnessContrast"
+        }
+      },
+      "status": "PASS"
+    }
+  ]
 }
