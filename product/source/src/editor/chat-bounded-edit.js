@@ -13,6 +13,7 @@ import { applyNonDestructiveDeformation, deformationReport } from '../vector/def
 import { booleanPaths, createAnchor, createPath, createRepeat, createVectorGroup, dividePaths, importSVGDocument } from '../vector/vector-core.js';
 import { documentFingerprint } from '../document/integrity.js';
 import { paperProfileFingerprint } from '../render/paper-profile.js';
+import { eraseStrokeWithCircle } from '../stroke/edit.js';
 import { BrushPresetRegistry, BUILTIN_BRUSH_PRESETS, StrokeSessionRecorder, replayStrokeSession } from '../paint/paint-core.js';
 import { IMAGE_CAPABILITIES, LIQUIFY_OPERATIONS, createAdjustment, createFilter, createLayerEffect, createLiquifyFilter } from '../image/image-core.js';
 
@@ -243,6 +244,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.refine.v1',
   'path.create.v1',
   'stroke.create.v1',
+  'stroke.erase.circle.v1',
   'page.paper.set.v1',
   'paint.session.create.v1',
   'image.adjustment.add.v1',
@@ -1037,6 +1039,14 @@ function normalizeOperationArguments(operation, raw) {
   }
   if (operation === 'path.create.v1') return normalizePathCreateArguments(raw);
   if (operation === 'stroke.create.v1') return normalizeStrokeCreateArguments(raw);
+  if (operation === 'stroke.erase.circle.v1') {
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+    return {
+      x: boundedNumber(raw.x, 'arguments.x'),
+      y: boundedNumber(raw.y, 'arguments.y'),
+      radius: boundedNumber(raw.radius, 'arguments.radius', { min: Number.EPSILON, max: 1e6 })
+    };
+  }
   if (operation === 'paint.session.create.v1') return normalizePaintSessionCreateArguments(raw);
   if (operation === 'image.adjustment.add.v1') return normalizeImageAdjustmentArguments(raw);
   if (operation === 'image.filter.add.v1') return normalizeImageFilterArguments(raw);
@@ -1235,6 +1245,9 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     if (!found) editFail('TARGET_MISSING', { layerId: ref.layerId, objectId: ref.objectId });
     if ((operationRequiresPath(task.operation) || task.operation === 'boolean.apply.v1') && found.object?.type !== 'path') {
       editFail('PATH_REQUIRED', { objectId: found.object?.id || null });
+    }
+    if (task.operation === 'stroke.erase.circle.v1' && found.object?.type !== 'stroke') {
+      editFail('STROKE_REQUIRED', { objectId: found.object?.id || null });
     }
     if (task.operation === 'text.edit.v1' && found.object?.type !== 'text') {
       editFail('TEXT_REQUIRED', { objectId: found.object?.id || null });
@@ -1592,6 +1605,80 @@ function executeStrokeCreateTask(app, task) {
     kind: object.kind,
     pointCount: object.points.length,
     mediaModel: object.mediaModel || null
+  };
+}
+
+function executeStrokeEraseCircleTask(app, task) {
+  const page = app.page();
+  const foundItems = task.targets.map(ref => findPageObject(page, ref));
+  if (foundItems.some(found => !found || found.object?.type !== 'stroke')) editFail('STROKE_REQUIRED');
+  const args = task.arguments;
+  const prepared = foundItems.map((found, targetIndex) => {
+    const worldMatrix = found.worldMatrix || found.object.matrix || Matrix.identity();
+    const inverse = Matrix.tryInvert(worldMatrix);
+    if (!inverse) editFail('TARGET_SINGULAR', { objectId: found.object.id });
+    const localCenter = Matrix.point(inverse, { x: args.x, y: args.y });
+    const scale = Math.hypot(worldMatrix[0], worldMatrix[1]) || 1;
+    const localRadius = args.radius / scale;
+    let fragmentIndex = 0;
+    const result = eraseStrokeWithCircle(found.object, localCenter, localRadius, () =>
+      `chat-erase-${chatStateFingerprint({
+        taskId: task.taskId,
+        sourceObjectId: found.object.id,
+        targetIndex,
+        fragmentIndex: fragmentIndex++
+      }).replace(':', '-')}`);
+    return { found, result };
+  });
+  if (!prepared.some(item => item.result.changed)) editFail('NO_OP', { operation: task.operation });
+
+  const targetIds = new Set(foundItems.map(found => found.object.id));
+  const generatedIds = new Set();
+  for (const item of prepared) {
+    if (!item.result.changed) continue;
+    for (const fragment of item.result.fragments) {
+      if (generatedIds.has(fragment.id)) editFail('OBJECT_ID_COLLISION', { objectId: fragment.id });
+      generatedIds.add(fragment.id);
+      const collision = findPageObject(page, fragment.id);
+      if (collision && !targetIds.has(fragment.id)) editFail('OBJECT_ID_COLLISION', { objectId: fragment.id });
+    }
+  }
+
+  const resultRefs = [];
+  const removedRefs = [];
+  app.history.pushScoped('CHAT erase Stroke', structuralHistoryPaths(app, foundItems), () => {
+    for (let index = 0; index < prepared.length; index += 1) {
+      const { found, result } = prepared[index];
+      const originalRef = task.targets[index];
+      if (!result.changed) {
+        resultRefs.push(clone(originalRef));
+        continue;
+      }
+      const objectIndex = found.parentArray.indexOf(found.object);
+      if (objectIndex < 0) editFail('TARGET_MISSING', { objectId: found.object.id });
+      for (const fragment of result.fragments) {
+        if (found.parentObject) fragment.parentId = found.parentObject.id;
+        else delete fragment.parentId;
+      }
+      found.parentArray.splice(objectIndex, 1, ...result.fragments);
+      removedRefs.push(clone(originalRef));
+      for (const fragment of result.fragments) {
+        resultRefs.push({ pageId: page.id, layerId: found.layer.id, objectId: fragment.id });
+      }
+    }
+    if (Array.isArray(app.selection) && removedRefs.length) {
+      const removedIds = new Set(removedRefs.map(ref => ref.objectId));
+      app.selection = app.selection.filter(ref => !removedIds.has(ref.objectId));
+    }
+  });
+  finishStructuralMutation(app);
+  return {
+    changed: true,
+    removedRefs,
+    resultRefs,
+    erasedTargetCount: removedRefs.length,
+    fragmentCount: resultRefs.length,
+    circle: { x: args.x, y: args.y, radius: args.radius }
   };
 }
 
@@ -2336,6 +2423,7 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1' || task.operation === 'path.edit.v1') return executePathEditTask(app, task);
   if (task.operation === 'path.create.v1') return executePathCreateTask(app, task);
   if (task.operation === 'stroke.create.v1') return executeStrokeCreateTask(app, task);
+  if (task.operation === 'stroke.erase.circle.v1') return executeStrokeEraseCircleTask(app, task);
   if (task.operation === 'page.paper.set.v1') {
     app.changePaper(task.arguments.key, task.arguments.value);
     return { pageId: app.page().id, paper: clone(app.page().paper), paperProfileFingerprint: paperProfileFingerprint(app.page().paper) };
@@ -2386,7 +2474,9 @@ ChatBoundedEditController.prototype.execute = function execute(proposalId, appro
   const resultRefs = Array.isArray(controllerResult?.resultRefs) ? controllerResult.resultRefs : null;
   const afterTargets = resultRefs ? snapshotRefs(this.app, resultRefs) : snapshotTaskTargets(this.app, proposal.task);
   const afterUndoCount = this.app.history?.undoStack?.length ?? null;
-  const changed = resultRefs ? resultRefs.length > 0 : targetSnapshotsChanged(beforeTargets, afterTargets);
+  const changed = typeof controllerResult?.changed === 'boolean'
+    ? controllerResult.changed
+    : (resultRefs ? resultRefs.length > 0 : targetSnapshotsChanged(beforeTargets, afterTargets));
   const latestHistory = this.app.history?.undoStack?.at?.(-1) || null;
 
   proposal.state = 'EXECUTED';
