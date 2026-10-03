@@ -1,5 +1,9 @@
 # INK Current Work Order
 
+## Active Core warm-cache Formal Live qualification — 2026-10-03
+
+Authority currently owns the serialized Live request queue and deployment checkpoint for PR #142 / exact source `e095ee54a51f8562d03af248dca658cf321e6479`. Revised candidate and integrated browser QA passed. Formal cache/A5/B4, combined Draw/Reference and A1 qualification are being completed. Preserve this deployed identity until closure; do not promote another source over this active checkpoint. Concurrent B3 DEV/source QA remains separate and its evidence is preserved. Submit hosted requests sequentially: GitHub concurrency can replace older pending requests even with cancel-in-progress=false. This reservation ends when the authority closure below is recorded; it does not reassign B3 implementation or UI ownership.
+
 ## CHAT / Core / Live next dispatch — 2026-10-03
 
 A5 is formally Live-qualified (source `20b06020bbb6b6142dc1f6952ebf26e14ed268dd`, run `37094249144`). Next bounded optimization package: [Main-program performance / stability DEV dispatch](INK_CORE_PERFORMANCE_STABILITY_DEV_DISPATCH_v1.0.md). Status: READY FOR EXECUTION; no executor start claimed. Existing UI/capability ownership remains unchanged.
