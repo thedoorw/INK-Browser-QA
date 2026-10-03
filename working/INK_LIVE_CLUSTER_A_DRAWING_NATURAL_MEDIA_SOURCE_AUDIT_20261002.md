@@ -286,3 +286,26 @@ This checkpoint does not authorize implementation. The source audit disposition 
 - A3 Paper: existing product authority, missing CHAT exposure;
 - A1: remains closed and regression-clean;
 - Paint Session 49×49 content-bounds fallback remains a separate known integration/usability gap.
+
+## A2 native Stroke / Natural Media — Live closure 2026-10-03
+
+- Source: `d0248e9661cc242081507e4bf73fc8b73aeb6256` (PR #127).
+- Request: `clusterA-A2-native-stroke-live-002`; request commit `fce87d4a853d9e209665cb581a33e024cf74bf63`.
+- Result commit: `e1967d7342a3b72f9bba72e683d1a4a92d863e9e`.
+- Hosted run: `37041501266`; artifact: `11242318263`, digest `sha256:542d205593213f8f79a7471435cc31bdd598c33faa8c23a9923234f9476a9ef8`.
+- `apiReady=true`; exact source verified; 23 named tools.
+- Pencil / Brush / Airbrush / DryBrush proposal → approval → execution: PASS.
+- Four native Stroke objects / four scoped `CHAT create Stroke` entries.
+- Content Preview: 451×351; bounds `x=-233.6 y=-182 w=451 h=350.6`; fingerprint `fnv1a32:28606ccc`.
+- Four Undo operations remove all strokes; four Redo operations restore identical stable refs and Preview fingerprint.
+- Preserved result: `qa/evidence/live-a2-20261003/ink-live-chat-result.json`.
+- Candidate QA separately proved existing NaturalMediaController/WebGL path, Canvas delta, A1 and B2 brightnessContrast regression.
+- Live runner screenshot captures the shell with no open document canvas; no live visible-canvas screenshot PASS is inferred from that screenshot. Renderer-backed content Preview and candidate Canvas evidence establish the tested rendering path.
+- Initial `-001` stopped before readiness with new exact-SHA module transport failures; same-source warm `-002` completed.
+
+```text
+A2 = PASS / MERGED / DEPLOYED / LIVE QUALIFIED
+A3_PAPER = NEXT / EXPOSURE_GAP
+A4_ERASER = SEPARATE
+A5_BLENDER_SMUDGE = SEPARATE PRODUCT_RENDER_INTEGRATION_GAP
+```
