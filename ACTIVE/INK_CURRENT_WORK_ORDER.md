@@ -1,33 +1,38 @@
 # INK Current Work Order
 
-## Runtime Bridge + GitHub Connector — NEW R&D LANE 2026-10-03
+## Runtime Bridge + GitHub Connector — PHASE 0 COMPLETE / STOP → USER DECISION 2026-10-03
 
-USER authorized planning and new-window handoff for replacing the current daily hosted-browser transport with a direct user's-INK-Web Runtime Bridge while retaining GitHub as transport/SSOT.
+USER authorized Phase 0 architecture/security R&D for replacing the current daily hosted-browser transport with a direct user's-INK-Web Runtime Bridge while retaining GitHub as SSOT and retaining the hosted runner as QA infrastructure.
 
 Authority:
-- `research/INK_RUNTIME_BRIDGE_GITHUB_CONNECTOR_PLAN_v0.1.md`
-- `ACTIVE/INK_RUNTIME_BRIDGE_CONNECTOR_NEW_WINDOW_HANDOFF_v0.1.md`
+- research/INK_RUNTIME_BRIDGE_GITHUB_CONNECTOR_PLAN_v0.1.md
+- ACTIVE/INK_RUNTIME_BRIDGE_CONNECTOR_NEW_WINDOW_HANDOFF_v0.1.md
 
-Current authorization:
+Phase 0 deliverables:
+- research/INK_RUNTIME_BRIDGE_GITHUB_CONNECTOR_ARCHITECTURE_v0.1.md
+- working/INK_RUNTIME_BRIDGE_GITHUB_CONNECTOR_PHASE1_WORKPACK_v0.1.md
 
-```text
-PHASE_0_ARCHITECTURE_AND_SECURITY_R&D = AUTHORIZED
-PRODUCT_MUTATION = NOT YET AUTHORIZED
-HOSTED_BROWSER_RUNNER = RETAIN AS QA
+Phase 0 decision:
+
+~~~text
+DIRECT_RUNTIME_ARCHITECTURE = FEASIBLE
 INK_PUBLIC_API = REUSE / DO NOT REPLACE
-GITHUB = SSOT / PROPOSED TRANSPORT
+PRODUCT_AUTHORITY_FORK = PROHIBITED
+HOSTED_BROWSER_RUNNER = RETAIN AS QA
+GITHUB = SSOT / MAILBOX TRANSPORT
+FINAL_AUTH_RECOMMENDATION = GITHUB_APP + THIN_RELAY
+ZERO_BACKEND_FALLBACK = GITHUB_APP + EXTENSION/LOCAL_HELPER
+PUBLIC_INK_WEB_GITHUB_CREDENTIAL = PROHIBITED
+PHASE_1 = READ_ONLY / GET_INK_CONTEXT ONLY
+PRODUCT_MUTATION = NOT YET AUTHORIZED
 FORMAT_VERSION = 4 / UNCHANGED
-```
+NEXT = STOP → USER / MR REVIEW
+~~~
 
-First deliverables:
-- current → target transport map;
-- safe browser authentication decision;
-- GitHub mailbox protocol;
-- Runtime/session/idempotency/expiry/source-SHA guards;
-- exact Phase 1 read-only implementation workpack;
-- STOP → USER / MR review.
-
-Do not touch UI PR #109, PWA, C06, New Document or closed capability lines.
+Important Phase 0 finding:
+- Phase 1 can prove GitHub request discovery in the user's normal INK Web with no credential by using bounded/on-demand public-repo reads.
+- Authenticated GitHub result write belongs to Phase 2 and requires USER choice of the recommended thin relay or the local-helper fallback.
+- No UI PR #109 / PWA / C06 / New Document / hosted-runner change is authorized by this lane.
 
 ## INK Architecture Recomposition R&D — R&D COMPLETE / STOP → USER DECISION 2026-10-03
 
