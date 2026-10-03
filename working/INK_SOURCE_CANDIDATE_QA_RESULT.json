@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterB-B4-candidate-regressions-002",
-  "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
+  "requestId": "clusterB-B4-final-candidate-regressions-003",
+  "candidateSha": "938016b79e10c6ac1c06ad930be35a67654c381b",
   "case": "path-deformation-b4",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:33231/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
+    "href": "http://127.0.0.1:45535/?sourceCandidate=938016b79e10c6ac1c06ad930be35a67654c381b",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -79,7 +79,7 @@
               "role": "outer",
               "anchors": [
                 {
-                  "id": "v_murqvzpp_46cflyg",
+                  "id": "v_murqyjl6_9zx3imz",
                   "x": 140,
                   "y": 0,
                   "in": {
@@ -93,7 +93,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqvzpp_0u0039j",
+                  "id": "v_murqyjl6_dw4c218",
                   "x": 0,
                   "y": 95,
                   "in": {
@@ -107,7 +107,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqvzpp_nuohi2u",
+                  "id": "v_murqyjl6_atz3nr0",
                   "x": -140,
                   "y": 0,
                   "in": {
@@ -121,7 +121,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqvzpp_pgwlk9b",
+                  "id": "v_murqyjl6_8wlba26",
                   "x": 0,
                   "y": -95,
                   "in": {
@@ -153,7 +153,7 @@
             "role": "outer",
             "anchors": [
               {
-                "id": "v_murqvzpp_46cflyg",
+                "id": "v_murqyjl6_9zx3imz",
                 "x": 207.2,
                 "y": 0,
                 "in": {
@@ -167,7 +167,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqvzpp_0u0039j",
+                "id": "v_murqyjl6_dw4c218",
                 "x": 8.229626490270214e-15,
                 "y": 95,
                 "in": {
@@ -181,7 +181,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqvzpp_nuohi2u",
+                "id": "v_murqyjl6_atz3nr0",
                 "x": -72.8,
                 "y": 0,
                 "in": {
@@ -195,7 +195,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqvzpp_pgwlk9b",
+                "id": "v_murqyjl6_8wlba26",
                 "x": 0,
                 "y": -95,
                 "in": {
@@ -257,23 +257,23 @@
                 "y": -79
               },
               {
-                "x": 108,
+                "x": 140,
                 "y": 95
               },
               {
                 "x": -140,
-                "y": 79
+                "y": 95
               }
             ],
             "matrix": [
-              0.8857142857142858,
-              -0.16842105263157894,
-              0,
-              0.05714285714285716,
-              0.9157894736842105,
-              0,
-              0,
-              0,
+              0.9422118897376287,
+              -0.08516142564981036,
+              14.599800730654268,
+              0.03155097974094988,
+              0.9535038193291264,
+              -1.0727333111922954,
+              0.00033211557622052476,
+              -0.0006082958974986454,
               1
             ]
           }
@@ -286,7 +286,7 @@
               "role": "outer",
               "anchors": [
                 {
-                  "id": "v_murqvzpp_46cflyg",
+                  "id": "v_murqyjl6_9zx3imz",
                   "x": 140,
                   "y": 0,
                   "in": {
@@ -300,7 +300,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqvzpp_0u0039j",
+                  "id": "v_murqyjl6_dw4c218",
                   "x": 0,
                   "y": 95,
                   "in": {
@@ -314,7 +314,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqvzpp_nuohi2u",
+                  "id": "v_murqyjl6_atz3nr0",
                   "x": -140,
                   "y": 0,
                   "in": {
@@ -328,7 +328,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqvzpp_pgwlk9b",
+                  "id": "v_murqyjl6_8wlba26",
                   "x": 0,
                   "y": -95,
                   "in": {
@@ -379,23 +379,23 @@
                   "y": -79
                 },
                 {
-                  "x": 108,
+                  "x": 140,
                   "y": 95
                 },
                 {
                   "x": -140,
-                  "y": 79
+                  "y": 95
                 }
               ],
               "matrix": [
-                0.8857142857142858,
-                -0.16842105263157894,
-                0,
-                0.05714285714285716,
-                0.9157894736842105,
-                0,
-                0,
-                0,
+                0.9422118897376287,
+                -0.08516142564981036,
+                14.599800730654268,
+                0.03155097974094988,
+                0.9535038193291264,
+                -1.0727333111922954,
+                0.00033211557622052476,
+                -0.0006082958974986454,
                 1
               ]
             }
@@ -411,58 +411,58 @@
             "role": "outer",
             "anchors": [
               {
-                "id": "v_murqvzpp_46cflyg",
-                "x": 124.00000000000001,
-                "y": 8.000000000000004,
+                "id": "v_murqyjl6_9zx3imz",
+                "x": 140,
+                "y": 3.195810853697242,
                 "in": {
-                  "x": 8.836555997292706,
-                  "y": -48.04877323527903
+                  "x": 0,
+                  "y": -46.48459478486833
                 },
                 "out": {
-                  "x": -8.836555997292692,
-                  "y": 48.04877323527904
+                  "x": 0,
+                  "y": 49.40911075580743
                 },
                 "mode": "smooth"
               },
               {
-                "id": "v_murqvzpp_0u0039j",
-                "x": -16,
-                "y": 87,
+                "id": "v_murqyjl6_dw4c218",
+                "x": 6.908706379978851,
+                "y": 94.99999999999999,
                 "in": {
-                  "x": 68.4833089790184,
-                  "y": 4.418277998646346
+                  "x": 75.08519545952872,
+                  "y": 1.4210854715202004e-14
                 },
                 "out": {
-                  "x": -68.4833089790184,
-                  "y": -4.418277998646346
+                  "x": -79.29262305301744,
+                  "y": 0
                 },
                 "mode": "smooth"
               },
               {
-                "id": "v_murqvzpp_nuohi2u",
-                "x": -124.00000000000001,
-                "y": -8.000000000000004,
+                "id": "v_murqyjl6_atz3nr0",
+                "x": -123.03030303030305,
+                "y": -5.757575757575762,
                 "in": {
-                  "x": -8.836555997292706,
-                  "y": 48.04877323527903
+                  "x": -9.108992907649721,
+                  "y": 54.08464538917027
                 },
                 "out": {
-                  "x": 8.836555997292692,
-                  "y": -48.04877323527904
+                  "x": 8.518953749493903,
+                  "y": -50.58128788762003
                 },
                 "mode": "smooth"
               },
               {
-                "id": "v_murqvzpp_pgwlk9b",
-                "x": 16,
-                "y": -87,
+                "id": "v_murqyjl6_8wlba26",
+                "x": 21.45054945054945,
+                "y": -86.64835164835164,
                 "in": {
-                  "x": -68.4833089790184,
-                  "y": -4.418277998646346
+                  "x": -70.05157992199574,
+                  "y": -4.519456769161025
                 },
                 "out": {
-                  "x": 68.4833089790184,
-                  "y": 4.418277998646346
+                  "x": 66.73101117023397,
+                  "y": 4.305226527111884
                 },
                 "mode": "smooth"
               }
@@ -470,9 +470,9 @@
           }
         ],
         "canvasBefore": "ca5e221b",
-        "canvasAfter": "bd451d39",
+        "canvasAfter": "4e17a235",
         "previewBefore": "fnv1a32:a94d0df7",
-        "previewAfter": "fnv1a32:9d35956d",
+        "previewAfter": "fnv1a32:9f578833",
         "historyLabel": "CHAT distort Path",
         "historyStatus": "COMPLETED",
         "undoRedoExact": true,
@@ -544,7 +544,7 @@
               "role": "outer",
               "anchors": [
                 {
-                  "id": "v_murqvzpp_46cflyg",
+                  "id": "v_murqyjl6_9zx3imz",
                   "x": 140,
                   "y": 0,
                   "in": {
@@ -558,7 +558,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqvzpp_0u0039j",
+                  "id": "v_murqyjl6_dw4c218",
                   "x": 0,
                   "y": 95,
                   "in": {
@@ -572,7 +572,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqvzpp_nuohi2u",
+                  "id": "v_murqyjl6_atz3nr0",
                   "x": -140,
                   "y": 0,
                   "in": {
@@ -586,7 +586,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqvzpp_pgwlk9b",
+                  "id": "v_murqyjl6_8wlba26",
                   "x": 0,
                   "y": -95,
                   "in": {
@@ -669,7 +669,7 @@
             "role": "outer",
             "anchors": [
               {
-                "id": "v_murqvzpp_46cflyg",
+                "id": "v_murqyjl6_9zx3imz",
                 "x": 131.20433996383363,
                 "y": -30.50994575045206,
                 "in": {
@@ -683,7 +683,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqvzpp_0u0039j",
+                "id": "v_murqyjl6_dw4c218",
                 "x": -37.55165692007797,
                 "y": 91.5068226120858,
                 "in": {
@@ -697,7 +697,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqvzpp_nuohi2u",
+                "id": "v_murqyjl6_atz3nr0",
                 "x": -133.74002574002571,
                 "y": -15.454311454311462,
                 "in": {
@@ -711,7 +711,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqvzpp_pgwlk9b",
+                "id": "v_murqyjl6_8wlba26",
                 "x": -14.805385556915544,
                 "y": -92.80660954712363,
                 "in": {
@@ -747,7 +747,7 @@
         "role": "outer",
         "anchors": [
           {
-            "id": "v_murqvzpp_46cflyg",
+            "id": "v_murqyjl6_9zx3imz",
             "x": 140,
             "y": 0,
             "in": {
@@ -761,7 +761,7 @@
             "mode": "smooth"
           },
           {
-            "id": "v_murqvzpp_0u0039j",
+            "id": "v_murqyjl6_dw4c218",
             "x": 0,
             "y": 95,
             "in": {
@@ -775,7 +775,7 @@
             "mode": "smooth"
           },
           {
-            "id": "v_murqvzpp_nuohi2u",
+            "id": "v_murqyjl6_atz3nr0",
             "x": -140,
             "y": 0,
             "in": {
@@ -789,7 +789,7 @@
             "mode": "smooth"
           },
           {
-            "id": "v_murqvzpp_pgwlk9b",
+            "id": "v_murqyjl6_8wlba26",
             "x": 0,
             "y": -95,
             "in": {
@@ -811,11 +811,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B4-candidate-regressions-002-paint-session-create",
-      "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
+      "requestId": "clusterB-B4-final-candidate-regressions-003-paint-session-create",
+      "candidateSha": "938016b79e10c6ac1c06ad930be35a67654c381b",
       "case": "paint-session-create",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:36243/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
+        "href": "http://127.0.0.1:37499/?sourceCandidate=938016b79e10c6ac1c06ad930be35a67654c381b",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -826,15 +826,15 @@
         "before": {
           "count": 0,
           "undo": 0,
-          "canvas": "eb82f616"
+          "canvas": "308b5875"
         },
         "after": {
           "count": 1,
           "undo": 1,
-          "canvas": "6c0c72b1",
+          "canvas": "c81fe871",
           "id": "chat-paint-fnv1a32-c7900103",
           "strokes": 2,
-          "replayHash": "e7d3c1d1"
+          "replayHash": "73d9716f"
         },
         "previewStatus": "COMPLETED",
         "previewBounds": {
@@ -852,11 +852,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B4-candidate-regressions-002-stroke-create-a2",
-      "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
+      "requestId": "clusterB-B4-final-candidate-regressions-003-stroke-create-a2",
+      "candidateSha": "938016b79e10c6ac1c06ad930be35a67654c381b",
       "case": "stroke-create-a2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:45559/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
+        "href": "http://127.0.0.1:35369/?sourceCandidate=938016b79e10c6ac1c06ad930be35a67654c381b",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -894,7 +894,7 @@
         "before": {
           "count": 0,
           "undo": 0,
-          "canvas": "1e347074"
+          "canvas": "308b5875"
         },
         "after": {
           "count": 4,
@@ -975,7 +975,7 @@
             "strokes": 6,
             "drawCalls": 6,
             "simulationPasses": 24,
-            "cacheHits": 24,
+            "cacheHits": 23,
             "cacheMisses": 6,
             "evictions": 0,
             "contextLosses": 0,
@@ -1045,11 +1045,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B4-candidate-regressions-002-page-paper-a3",
-      "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
+      "requestId": "clusterB-B4-final-candidate-regressions-003-page-paper-a3",
+      "candidateSha": "938016b79e10c6ac1c06ad930be35a67654c381b",
       "case": "page-paper-a3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:39209/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
+        "href": "http://127.0.0.1:40485/?sourceCandidate=938016b79e10c6ac1c06ad930be35a67654c381b",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -1116,7 +1116,7 @@
           "webgl": {
             "backend": "webgl2",
             "drawCalls": 4,
-            "cacheHits": 7,
+            "cacheHits": 9,
             "cacheMisses": 4,
             "evictions": 0,
             "contextLosses": 0,
@@ -1232,11 +1232,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B4-candidate-regressions-002-raster-stack-adjustment-b2",
-      "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
+      "requestId": "clusterB-B4-final-candidate-regressions-003-raster-stack-adjustment-b2",
+      "candidateSha": "938016b79e10c6ac1c06ad930be35a67654c381b",
       "case": "raster-stack-adjustment-b2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:40451/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
+        "href": "http://127.0.0.1:45341/?sourceCandidate=938016b79e10c6ac1c06ad930be35a67654c381b",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -1246,9 +1246,9 @@
         "passed": true,
         "operation": "image.adjustment.add.v1",
         "adjustmentType": "brightnessContrast",
-        "objectId": "2cc67b01-8678-49ae-bb93-770890c4ecb0",
-        "beforeFingerprint": "fnv1a32:6e5514dc",
-        "afterFingerprint": "fnv1a32:c82d5962",
+        "objectId": "4ac524fc-630e-48b2-9436-80599a56e11a",
+        "beforeFingerprint": "fnv1a32:dc033067",
+        "afterFingerprint": "fnv1a32:2075b755",
         "beforeHash": "7883b22",
         "afterHash": "9cd23fe",
         "undoHash": "7883b22",
@@ -1261,12 +1261,12 @@
           "adjustmentCount": 1,
           "resultRefs": [
             {
-              "layerId": "a06e2e31-2b09-4d37-a4f2-922b4e04dc9d",
-              "objectId": "2cc67b01-8678-49ae-bb93-770890c4ecb0",
-              "pageId": "ce3fff1a-1262-4ed7-82b7-b8fa3fe3e361"
+              "layerId": "32743bd1-8f71-4a16-a7cd-f599c95d2f95",
+              "objectId": "4ac524fc-630e-48b2-9436-80599a56e11a",
+              "pageId": "afcf40df-70e3-4eaa-8050-f59fb714f6a2"
             }
           ],
-          "stackItemId": "adj_syoj9h",
+          "stackItemId": "adj_5ny4vs",
           "stackItemType": "brightnessContrast"
         }
       },
