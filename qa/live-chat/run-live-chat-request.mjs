@@ -224,10 +224,23 @@ function validateRequest(request) {
       if (step.file != null) {
         assert.ok(['import_ink_reference','import_ink_raster'].includes(step.tool), 'file payload is only allowed for import_ink_reference or import_ink_raster');
         assert.ok(step.file && typeof step.file === 'object' && !Array.isArray(step.file), 'step file must be an object');
-        assert.match(String(step.file.path || ''), /^qa\/fixtures\/[A-Za-z0-9._\/-]+$/);
-        assert.ok(!String(step.file.path).includes('..'), 'fixture path traversal rejected');
         assert.match(String(step.file.name || ''), /^[A-Za-z0-9._-]{1,120}$/);
-        assert.ok(['image/png','image/jpeg','image/webp'].includes(String(step.file.type || '')), 'unsupported fixture MIME type');
+        if (step.file.generatedFormat != null) {
+          assert.equal(step.tool, 'import_ink_raster', 'generated format files are only allowed for import_ink_raster');
+          assert.ok(['PSD','TIFF','EXR','RAW_UNAVAILABLE'].includes(String(step.file.generatedFormat)), 'unsupported generated raster format');
+          assert.ok(!step.file.path, 'generated format file must not include fixture path');
+          const expectedMime = {
+            PSD: 'image/vnd.adobe.photoshop',
+            TIFF: 'image/tiff',
+            EXR: 'image/x-exr',
+            RAW_UNAVAILABLE: 'image/x-adobe-dng'
+          }[String(step.file.generatedFormat)];
+          assert.equal(String(step.file.type || ''), expectedMime, 'generated raster MIME mismatch');
+        } else {
+          assert.match(String(step.file.path || ''), /^qa\/fixtures\/[A-Za-z0-9._\/-]+$/);
+          assert.ok(!String(step.file.path).includes('..'), 'fixture path traversal rejected');
+          assert.ok(['image/png','image/jpeg','image/webp'].includes(String(step.file.type || '')), 'unsupported fixture MIME type');
+        }
       }
     }
   }
@@ -320,17 +333,25 @@ async function run() {
     const invoke = async (tool, input = {}, fileSpec = null) => {
       let file = null;
       if (fileSpec) {
-        const root = path.resolve(process.cwd());
-        const fixtureRoot = path.resolve(root, 'qa/fixtures') + path.sep;
-        const filePath = path.resolve(root, fileSpec.path);
-        assert.ok(filePath.startsWith(fixtureRoot), 'Fixture path outside qa/fixtures');
-        const bytes = await readFile(filePath);
-        assert.ok(bytes.length > 0 && bytes.length <= 8 * 1024 * 1024, 'Fixture byte size out of bounds');
-        file = {
-          name: fileSpec.name,
-          type: fileSpec.type,
-          base64: bytes.toString('base64')
-        };
+        if (fileSpec.generatedFormat) {
+          file = {
+            name: fileSpec.name,
+            type: fileSpec.type,
+            generatedFormat: fileSpec.generatedFormat
+          };
+        } else {
+          const root = path.resolve(process.cwd());
+          const fixtureRoot = path.resolve(root, 'qa/fixtures') + path.sep;
+          const filePath = path.resolve(root, fileSpec.path);
+          assert.ok(filePath.startsWith(fixtureRoot), 'Fixture path outside qa/fixtures');
+          const bytes = await readFile(filePath);
+          assert.ok(bytes.length > 0 && bytes.length <= 8 * 1024 * 1024, 'Fixture byte size out of bounds');
+          file = {
+            name: fileSpec.name,
+            type: fileSpec.type,
+            base64: bytes.toString('base64')
+          };
+        }
       }
       const payload = Buffer.from(JSON.stringify({ tool, input, file }), 'utf8').toString('base64');
       const execution = await cdp.send('Runtime.evaluate', {
@@ -342,10 +363,41 @@ async function run() {
           if (!names.includes(request.tool)) throw new Error('INK_NAMED_TOOL_NOT_FOUND:' + request.tool);
           let toolInput = request.input || {};
           if (request.file) {
-            const raw = atob(request.file.base64);
-            const bytes = new Uint8Array(raw.length);
-            for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
-            const file = new File([bytes], request.file.name, { type: request.file.type });
+            let file;
+            if (request.file.generatedFormat) {
+              const generatedFormat = request.file.generatedFormat;
+              let bytes;
+              if (generatedFormat === 'RAW_UNAVAILABLE') {
+                bytes = Uint8Array.from([82,65,87,84,1,2,3,4]);
+              } else {
+                const formatCore = await import(new URL('src/image/format-interoperability.js', document.baseURI).href);
+                const normalized = await import(new URL('src/image/formats/normalized-payload.js', document.baseURI).href);
+                const width = 16, height = 12, pixels = width * height;
+                if (generatedFormat === 'EXR') {
+                  const data = new Float32Array(pixels * 3), alpha = new Float32Array(pixels);
+                  for (let i = 0; i < pixels; i++) {
+                    const x = i % width, y = Math.floor(i / width), o = i * 3;
+                    data[o] = .2 + x / 12; data[o + 1] = .15 + y / 10; data[o + 2] = .3 + (x + y) / 20; alpha[i] = 1;
+                  }
+                  const payload = normalized.createNormalizedPayload({ format: 'QA', width, height, bitDepth: 32, colorMode: 'RGB', data, alpha, metadata: { qa: 'formal-live-advanced-ingest' } });
+                  bytes = formatCore.encodeFormat('EXR', payload);
+                } else {
+                  const data = new Uint8Array(pixels * 3), alpha = new Uint8Array(pixels);
+                  for (let i = 0; i < pixels; i++) {
+                    const x = i % width, y = Math.floor(i / width), o = i * 3;
+                    data[o] = (30 + x * 11 + y * 3) % 256; data[o + 1] = (80 + x * 5 + y * 13) % 256; data[o + 2] = (140 + x * 7 + y * 9) % 256; alpha[i] = 255;
+                  }
+                  const payload = normalized.createNormalizedPayload({ format: 'QA', width, height, bitDepth: 8, colorMode: 'RGB', data, alpha, metadata: { qa: 'formal-live-advanced-ingest' } });
+                  bytes = formatCore.encodeFormat(generatedFormat, payload);
+                }
+              }
+              file = new File([bytes], request.file.name, { type: request.file.type });
+            } else {
+              const raw = atob(request.file.base64);
+              const bytes = new Uint8Array(raw.length);
+              for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+              file = new File([bytes], request.file.name, { type: request.file.type });
+            }
             toolInput = { ...toolInput, input: { file } };
           }
           return await Promise.resolve(api.tools.invoke(request.tool, toolInput));
