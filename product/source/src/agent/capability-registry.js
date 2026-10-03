@@ -285,6 +285,21 @@ const editSchemas = {
     }, ['type'], 'Existing image-core createLayerEffect() arguments.'),
     1
   ),
+  'image.mask.raster.set.v1': editTaskSchema(
+    { type: 'string', const: 'image.mask.raster.set.v1', description: 'Set one native raster mask on an editable image from bounded raster-local geometry through the existing rasterizePathMask()/renderImageStack() authority.' },
+    obj({
+      shape: { type: 'string', enum: ['rectangle'], default: 'rectangle', description: 'Initial bounded geometry family.' },
+      x: num('Raster-local rectangle X.', { minimum: 0, maximum: 1000000 }),
+      y: num('Raster-local rectangle Y.', { minimum: 0, maximum: 1000000 }),
+      width: num('Rectangle width.', { minimum: Number.EPSILON, maximum: 1000000 }),
+      height: num('Rectangle height.', { minimum: Number.EPSILON, maximum: 1000000 }),
+      invert: bool('Invert mask.', { default: false }),
+      feather: num('Existing mask feather radius.', { minimum: 0, maximum: 256, default: 0 }),
+      expand: { type: 'integer', minimum: -256, maximum: 256, default: 0, description: 'Existing mask expand/contract amount.' },
+      enabled: bool('Mask enabled state.', { default: true })
+    }, ['x','y','width','height'], 'Bounded raster-mask geometry. Raw alpha pixel arrays are not accepted from CHAT.'),
+    1
+  ),
   'image.raster.paintBucket.v1': editTaskSchema(
     { type: 'string', const: 'image.raster.paintBucket.v1', description: 'Destructively fill one bounded region of an editable native 8-bit RGB raster image through the existing paintBucketFill() pixel authority.' },
     obj({
@@ -1016,7 +1031,8 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'image.blend.set.v1') operationConstraints.push('Uses the existing IMAGE_CAPABILITIES blend-mode allowlist and rejects no-op assignment.');
   if (operation === 'image.effect.add.v1') operationConstraints.push('Initial effect allowlist: dropShadow, innerShadow, outerGlow, colorOverlay, stroke; qualification coverage is recorded per tested effect type.');
   if (operation === 'image.liquify.add.v1') operationConstraints.push('Maximum 32 operations; uses existing LIQUIFY_OPERATIONS/createLiquifyFilter/liquifyRaster. Arbitrary freeze-mask pixel arrays are excluded from CHAT exposure.');
-  if (operation === 'image.raster.paintBucket.v1') operationConstraints.push('Destructive local raster edit. Reuses existing paintBucketFill()/magicWandSelection and existing rasterState.colorRaster. Current direct-raster qualification is limited to 8-bit RGB; no pointer emulation or automatic target discovery.');
+  if (operation === 'image.raster.paintBucket.v1') operationConstraints.push('Destructive local raster edit. Reuses existing paintBucketFill()/magicWandSelection and existing rasterState.colorRaster. Current direct-raster qualification is limited to 8-bit RGB; no pointer emulation or automatic target discovery. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints.');
+  if (operation === 'image.mask.raster.set.v1') operationConstraints.push('Initial geometry is rectangle only. Reuses existing rasterizePathMask/createRasterMask/renderImageStack; raw alpha arrays are not accepted. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints.');
   if (operation === 'path.warp.v1') operationConstraints.push('Uses existing createWarpDeformationPlan() + applyNonDestructiveDeformation(); stable Path identity and editable anchor structure are preserved.');
   if (operation === 'path.distort.v1' || operation === 'path.perspective.v1') operationConstraints.push('Uses existing projective planner and applyNonDestructiveDeformation(); recomputes anchors and handles from retained baseSubpaths with serializable reversible state. Distort offsets independent corners; Perspective constrains opposing edges toward a shared center. Invalid folded quads are rejected.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
