@@ -213,6 +213,15 @@ const editSchemas = {
     }, ['kind', 'samples'], 'Creates the same native type=stroke document object used by interactive drawing. Natural kinds brush/drybrush/airbrush are routed to the existing natural-v2 renderer.'),
     0, 0
   ),
+  'stroke.erase.circle.v1': editTaskSchema(
+    { type: 'string', const: 'stroke.erase.circle.v1', description: 'Erase explicit native Stroke targets with one bounded world-space circle through the existing eraseStrokeWithCircle() geometry authority.' },
+    obj({
+      x: num('World-space eraser center X.'),
+      y: num('World-space eraser center Y.'),
+      radius: num('World-space eraser radius.', { minimum: Number.EPSILON, maximum: 1000000 })
+    }, ['x', 'y', 'radius'], 'Targeted Eraser geometry. No hit-test, pointer simulation, or area-wide target discovery is performed.'),
+    64, 1
+  ),
   'paint.session.create.v1': editTaskSchema(
     { type: 'string', const: 'paint.session.create.v1', description: 'Create one native deterministic Paint / Stroke Session on the active layer through the existing Brush Engine and Stroke Session authority.' },
     obj({
@@ -963,6 +972,7 @@ primary.push(descriptor({
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   const paperOnly = operation === 'page.paper.set.v1';
   const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
+  const strokeOnly = operation === 'stroke.erase.circle.v1';
   const imageOnly = operation.startsWith('image.');
   const zeroTargetCreate = ['path.create.v1', 'paint.session.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
   const operationConstraints = paperOnly
@@ -973,6 +983,8 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
       ? ['Target must resolve to one editable visible unlocked Text object.']
       : imageOnly
         ? ['Target must resolve to exactly one editable visible unlocked native Image with rasterState.colorRaster. ReferenceImage and src-only images are rejected.']
+        : strokeOnly
+          ? ['Targets must resolve to explicit editable visible unlocked native Stroke objects.']
         : pathOnly || operation === 'boolean.apply.v1'
           ? ['Targets must resolve to editable visible unlocked Path objects.']
           : ['Targets must resolve to editable visible unlocked objects.'];
@@ -981,6 +993,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'object.reparent.v1') operationConstraints.push('Native hierarchy authority currently accepts Frame parents or layer root and rejects cycles/cross-layer invalid moves.');
   if (operation === 'svg.import.v1') operationConstraints.push('Raw local SVG only; script/foreign-code/network execution forms are rejected and parser unsupported evidence is returned.');
   if (operation === 'paint.session.create.v1') operationConstraints.push('Uses only the qualified built-in Brush Engine preset subset and the existing StrokeSessionRecorder/replay authority; Blender, Smudge, Eraser, and pointer emulation are intentionally not exposed here.');
+  if (operation === 'stroke.erase.circle.v1') operationConstraints.push('Explicit stable Stroke targets only; existing proposal target fingerprints and revision checks reject stale edits. Uses eraseStrokeWithCircle() directly and never calls interactive hit-test, pointer, or area-wide eraseAt().');
   if (imageOnly) operationConstraints.push('Image stack params are structurally bounded to 8 KiB, depth 4, 64 object keys, array length 128, finite numbers and 512-character strings.');
   if (operation === 'image.adjustment.add.v1') operationConstraints.push('Initial qualified adjustment allowlist: brightnessContrast, levels, curves, hueSaturation.');
   if (operation === 'image.filter.add.v1') operationConstraints.push('Initial qualified filter allowlist: gaussianBlur, sharpen, noiseGrain, textureOverlay.');
@@ -1023,6 +1036,8 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
         ? ['Object']
         : imageOnly
           ? ['Image']
+          : strokeOnly
+            ? ['Stroke']
           : (pathOnly || operation === 'boolean.apply.v1' ? ['Path'] : ['Object']),
     constraints: operationConstraints,
     ...policy(true, 'PROPOSE_THEN_EXPLICIT_APPROVAL_BEFORE_EXECUTE', 'AUTHORITATIVE_COMMIT_ON_EXECUTE_ONLY', 'NO_AUTO_CAPTURE', true, false, 'Preview is recommended after execution.'),
