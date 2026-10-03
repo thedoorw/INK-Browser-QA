@@ -1,171 +1,318 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "core-perf-paint-session-live-002",
+  "requestId": "clusterB-B3-source-retouch-live-001a",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "e095ee54a51f8562d03af248dca658cf321e6479",
+  "expectedSourceSha": "0794cd5aa0567314ec6c240acdef57de7ef314d6",
   "steps": [
     {
-      "id": "capabilities",
-      "tool": "get_ink_capabilities",
-      "input": {}
-    },
-    {
-      "id": "contextBefore",
-      "tool": "get_ink_context",
+      "id": "describe",
+      "tool": "describe_ink_capability",
       "input": {
-        "maxObjects": 20
+        "idOrToolName": "image.raster.sourceRetouch.v1"
       }
     },
     {
-      "id": "historyBefore",
-      "tool": "get_ink_history",
-      "input": {}
+      "id": "importRaster",
+      "tool": "import_ink_raster",
+      "input": {
+        "options": {
+          "name": "B3 Source Retouch Raster A",
+          "type": "image/png",
+          "intent": "B3 source-dependent retouch formal Live A"
+        }
+      },
+      "file": {
+        "path": "qa/fixtures/rose-window/rose-window-primary.png",
+        "name": "rose-window-primary.png",
+        "type": "image/png"
+      }
     },
     {
-      "id": "paintPropose",
+      "id": "previewBaseline",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "stalePropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "paint-session-bounds-live-rerun-003",
-          "operation": "paint.session.create.v1",
-          "targets": [],
+          "taskId": "live-b3-source-stale",
+          "operation": "image.raster.sourceRetouch.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
           "arguments": {
-            "name": "Paint Session Bounds Live Rerun 003",
-            "seed": 137,
+            "type": "cloneStamp",
+            "sourceX": 220,
+            "sourceY": 420,
+            "targetX": 760,
+            "targetY": 760,
+            "radius": 24,
             "opacity": 1,
-            "strokes": [
-              {
-                "brushId": "pencil",
-                "color": "#25384a",
-                "seed": 201,
-                "samples": [
-                  {
-                    "x": -110,
-                    "y": -55,
-                    "pressure": 0.25,
-                    "timestamp": 0
-                  },
-                  {
-                    "x": -20,
-                    "y": -95,
-                    "pressure": 0.65,
-                    "timestamp": 20
-                  },
-                  {
-                    "x": 80,
-                    "y": -30,
-                    "pressure": 0.9,
-                    "timestamp": 40
-                  }
-                ]
-              },
-              {
-                "brushId": "watercolor",
-                "color": "#b86d83",
-                "seed": 202,
-                "samples": [
-                  {
-                    "x": -90,
-                    "y": 20,
-                    "pressure": 0.35,
-                    "timestamp": 0
-                  },
-                  {
-                    "x": 0,
-                    "y": 70,
-                    "pressure": 0.7,
-                    "timestamp": 22
-                  },
-                  {
-                    "x": 100,
-                    "y": 25,
-                    "pressure": 0.5,
-                    "timestamp": 44
-                  }
-                ]
-              }
-            ]
+            "hardness": 0.9
           }
         }
       }
     },
     {
-      "id": "paintApprove",
+      "id": "bucketPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-b3-source-intervening",
+          "operation": "image.raster.paintBucket.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "x": 5,
+            "y": 5,
+            "color": "#20b86a",
+            "tolerance": 0,
+            "contiguous": true,
+            "opacity": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "bucketApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "paintPropose.result.result.proposalId"
+          "$ref": "bucketPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "paintExecute",
+      "id": "bucketExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "paintPropose.result.result.proposalId"
+          "$ref": "bucketPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "paintApprove.result.result.approvalToken"
+          "$ref": "bucketApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "contextAfter",
-      "tool": "get_ink_context",
+      "id": "staleApprove",
+      "tool": "approve_ink_edit",
+      "allowFailure": true,
       "input": {
-        "maxObjects": 20
+        "proposalId": {
+          "$ref": "stalePropose.result.result.proposalId"
+        }
       }
     },
     {
-      "id": "historyAfter",
-      "tool": "get_ink_history",
-      "input": {}
-    },
-    {
-      "id": "previewAfter",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "undo",
+      "id": "undoBucket",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "contextUndo",
-      "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 20
-      }
-    },
-    {
-      "id": "redo",
-      "tool": "redo_ink",
-      "input": {}
-    },
-    {
-      "id": "contextRedo",
-      "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 20
-      }
-    },
-    {
-      "id": "previewRedo",
+      "id": "previewRestored",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
         "maxDimension": 800,
         "background": true
       }
+    },
+    {
+      "id": "clonePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-b3-source-clone",
+          "operation": "image.raster.sourceRetouch.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "type": "cloneStamp",
+            "sourceX": 220,
+            "sourceY": 420,
+            "targetX": 760,
+            "targetY": 760,
+            "radius": 24,
+            "opacity": 1,
+            "hardness": 0.9
+          }
+        }
+      }
+    },
+    {
+      "id": "cloneApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "clonePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "cloneExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "clonePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "cloneApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "clonePreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "cloneUndo",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "cloneUndoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "cloneRedo",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "cloneRedoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "cloneRestore",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "healPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-b3-source-heal",
+          "operation": "image.raster.sourceRetouch.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "type": "healingBrush",
+            "sourceX": 260,
+            "sourceY": 360,
+            "targetX": 720,
+            "targetY": 860,
+            "radius": 24,
+            "opacity": 1,
+            "hardness": 0.9
+          }
+        }
+      }
+    },
+    {
+      "id": "healApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "healPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "healExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "healPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "healApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "healPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "healUndo",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "healUndoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "healRedo",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "healRedoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "historyFinal",
+      "tool": "get_ink_history",
+      "input": {}
     }
   ]
 }
