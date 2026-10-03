@@ -1,3 +1,4 @@
+import * as B2_FORMAL_CASES from '../shared/image-stack-formal-cases.mjs';
 import { IMAGE_STACK_CACHE_REVIEW_CASE } from '../shared/image-stack-cache-review-case.mjs';
 import { NATURAL_MEDIA_CACHE_REVIEW_CASE } from '../shared/natural-media-cache-review-case.mjs';
 import { B4_BROWSER_CASE } from '../shared/b4-browser-case.mjs';
@@ -435,6 +436,17 @@ async function run() {
       if (probe.exceptionDetails) throw new Error(probe.exceptionDetails.exception?.description || probe.exceptionDetails.text);
       assert.equal(probe.result?.value?.passed, true, 'B4 formal Live qualification failed');
       executionResult = { discovery: executionResult, qualification: probe.result.value };
+    }
+
+    if (request.imageStackFormalB2 === true) {
+      const results=[];
+      for(const [name,expression] of Object.entries(B2_FORMAL_CASES)){
+        const probe=await cdp.send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true},sessionId,90000);
+        if(probe.exceptionDetails)throw new Error(name+':'+(probe.exceptionDetails.exception?.description||probe.exceptionDetails.text));
+        assert.equal(probe.result?.value?.passed,true,name+' Formal Live failed');
+        results.push({name,...probe.result.value});
+      }
+      executionResult={...executionResult,imageStackFormalB2:results};
     }
 
     if (request.imageStackCacheReview === true) {
