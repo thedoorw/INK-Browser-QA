@@ -301,6 +301,14 @@ try {
   `,'candidate worker identity',60000);
   await waitReady(cdp,sessionId);
   await waitControlled(cdp,sessionId);
+  await waitFor(cdp,sessionId,`
+    (async () => {
+      const registration = await navigator.serviceWorker.getRegistration();
+      const keys = await caches.keys();
+      return registration?.active?.state === 'activated'
+        && keys.every(key => !key.startsWith('ink-build-') || key.includes(${JSON.stringify(expectedCandidateBuildId)}));
+    })()
+  `,'candidate activation and cache cleanup',30000);
 
   const candidateIdentity = await workerIdentity(cdp,sessionId);
   const candidateCaches = await cacheKeys(cdp,sessionId);
