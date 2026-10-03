@@ -187,7 +187,7 @@ const editSchemas = {
     obj({
       objectId: str('Optional caller-supplied stable stroke object id; collisions are rejected.'),
       name: str('Stroke name.'),
-      kind: { type: 'string', enum: [...CHAT_STROKE_KINDS], description: 'Existing native stroke kind. Blender, Smudge, and Eraser are intentionally excluded from A2.' },
+      kind: { type: 'string', enum: [...CHAT_STROKE_KINDS], description: 'Existing native stroke kind. Blender and Smudge are run-only natural-media mixer strokes; Eraser remains a separate targeted operation.' },
       color: str('Stroke color token.'),
       size: num('Native stroke size.', { minimum: .25, maximum: 512, default: 12 }),
       opacity: num('Stroke opacity.', { minimum: 0, maximum: 1, default: 1 }),
@@ -199,6 +199,9 @@ const editSchemas = {
       flow: num('Natural-media flow.', { minimum: 0, maximum: 1, default: 1 }),
       wetness: num('Natural-media wetness.', { minimum: 0, maximum: 1, default: 0 }),
       bristle: num('Natural-media bristle amount.', { minimum: 0, maximum: 1, default: 0 }),
+      blend: num('Blender mixing strength.', { minimum: 0, maximum: 1, default: 0 }),
+      smudge: num('Pigment pickup/transport strength.', { minimum: 0, maximum: 1, default: 0 }),
+      drag: num('Smudge transport distance factor.', { minimum: 0, maximum: 1, default: 0 }),
       samples: arr(obj({
         x: num('World-space sample X.'),
         y: num('World-space sample Y.'),
@@ -210,7 +213,7 @@ const editSchemas = {
         altitude: num('Altitude degrees.', { minimum: 0, maximum: 90, default: 90 }),
         twist: num('Pointer twist.', { minimum: -360000, maximum: 360000, default: 0 })
       }, ['x', 'y'], 'One bounded native stroke sample.'), 'World-space samples; at least two are required.', { minItems: 2, maxItems: 4096 })
-    }, ['kind', 'samples'], 'Creates the same native type=stroke document object used by interactive drawing. Natural kinds brush/drybrush/airbrush are routed to the existing natural-v2 renderer.'),
+    }, ['kind', 'samples'], 'Creates the same native type=stroke document object used by interactive drawing. Brush/drybrush/airbrush use existing natural-v2 deposit rendering; Blender/Smudge participate only in contiguous multi-channel runs and mutate existing pigment without depositing their own color.'),
     0, 0
   ),
   'stroke.erase.circle.v1': editTaskSchema(
@@ -993,6 +996,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'object.reparent.v1') operationConstraints.push('Native hierarchy authority currently accepts Frame parents or layer root and rejects cycles/cross-layer invalid moves.');
   if (operation === 'svg.import.v1') operationConstraints.push('Raw local SVG only; script/foreign-code/network execution forms are rejected and parser unsupported evidence is returned.');
   if (operation === 'paint.session.create.v1') operationConstraints.push('Uses only the qualified built-in Brush Engine preset subset and the existing StrokeSessionRecorder/replay authority; Blender, Smudge, Eraser, and pointer emulation are intentionally not exposed here.');
+  if (operation === 'stroke.create.v1') operationConstraints.push('Blender/Smudge are native run-only mixer strokes. They require a contiguous multi-channel run containing at least one Brush/DryBrush depositor; mixing runs use the existing Canvas2D multi-channel surface until GPU transport parity is separately implemented.');
   if (operation === 'stroke.erase.circle.v1') operationConstraints.push('Explicit stable Stroke targets only; existing proposal target fingerprints and revision checks reject stale edits. Uses eraseStrokeWithCircle() directly and never calls interactive hit-test, pointer, or area-wide eraseAt().');
   if (imageOnly) operationConstraints.push('Image stack params are structurally bounded to 8 KiB, depth 4, 64 object keys, array length 128, finite numbers and 512-character strings.');
   if (operation === 'image.adjustment.add.v1') operationConstraints.push('Initial qualified adjustment allowlist: brightnessContrast, levels, curves, hueSaturation.');
