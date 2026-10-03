@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterC-C1-page-ops-live-001",
+  "requestId": "clusterC-C1-page-ops-live-002",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "dfb197ca31dc1e2e5ca46c6452e998dce44c57c6",
   "steps": [
@@ -199,7 +199,7 @@
           "targets": [],
           "arguments": {
             "pageId": {
-              "$ref": "contextBefore.result.result.active.page.id"
+              "$ref": "contextBefore.result.active.page.id"
             }
           }
         }
@@ -346,7 +346,7 @@
           "targets": [],
           "arguments": {
             "pageId": {
-              "$ref": "contextBefore.result.result.active.page.id"
+              "$ref": "contextBefore.result.active.page.id"
             }
           }
         }
