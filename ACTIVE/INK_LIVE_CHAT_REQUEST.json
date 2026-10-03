@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B3-local-retouch-live-002a",
+  "requestId": "clusterB-B3-local-retouch-live-002a-rerun",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "ca4bf6913efe1564eb572988a306120b3c008539",
   "steps": [
@@ -23,8 +23,8 @@
         }
       },
       "file": {
-        "path": "working/evidence/ink-ui-sup08-11-20261002/before-options-smudge-crop.png",
-        "name": "before-options-smudge-crop.png",
+        "path": "qa/fixtures/rose-window/rose-window-primary.png",
+        "name": "rose-window-primary.png",
         "type": "image/png"
       }
     },
