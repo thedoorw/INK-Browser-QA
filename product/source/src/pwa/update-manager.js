@@ -5,7 +5,7 @@ export class ServiceWorkerUpdateManager {
     buildId = null,
     onStatusChange = null,
     autoActivate = true,
-    reloadOnActivate = true
+    reloadOnActivate = false
   } = {}) {
     this.scriptURL = scriptURL;
     this.scope = scope;
