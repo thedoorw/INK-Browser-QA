@@ -1650,15 +1650,16 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
       try { createMaterialTemplate(clone(document), task.arguments.template, { replace: false }); }
       catch (error) { editFail('MATERIAL_TEMPLATE_INVALID', { actual: error?.code || error?.message || 'UNKNOWN' }); }
     } else {
+      const probeDocument = clone(document);
       let template;
-      try { template = getMaterialTemplate(document, task.arguments.templateId); }
+      try { template = getMaterialTemplate(probeDocument, task.arguments.templateId); }
       catch { editFail('MATERIAL_TEMPLATE_MISSING', { actual: task.arguments.templateId }); }
       if (String(template.templateVersion) !== String(task.arguments.templateVersion)) {
         editFail('MATERIAL_TEMPLATE_VERSION_MISMATCH', { expected: task.arguments.templateVersion, actual: template.templateVersion ?? null });
       }
       if (!(page.layers || []).some(layer => layer.id === task.arguments.layerId)) editFail('LAYER_MISSING', { layerId: task.arguments.layerId });
       try {
-        createMaterialInstance(clone(document), task.arguments.templateId, {
+        createMaterialInstance(probeDocument, task.arguments.templateId, {
           instanceId: task.arguments.instanceId,
           instanceKey: task.arguments.instanceKey,
           name: task.arguments.name,
