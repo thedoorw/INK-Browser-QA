@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B3-local-retouch-live-002b",
+  "requestId": "clusterB-B3-local-retouch-live-002c",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "ca4bf6913efe1564eb572988a306120b3c008539",
   "steps": [
@@ -17,9 +17,9 @@
       "tool": "import_ink_raster",
       "input": {
         "options": {
-          "name": "B3 Local Retouch Raster B",
+          "name": "B3 Local Retouch Raster C",
           "type": "image/png",
-          "intent": "B3 local retouch formal Live B"
+          "intent": "B3 local retouch formal Live C"
         }
       },
       "file": {
@@ -38,13 +38,13 @@
       }
     },
     {
-      "id": "spongePropose",
+      "id": "localSharpenPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-b3-local-sponge",
+          "taskId": "live-b3-local-sharpen",
           "operation": "image.raster.localRetouch.v1",
           "targets": [
             {
@@ -52,40 +52,40 @@
             }
           ],
           "arguments": {
-            "type": "sponge",
+            "type": "localSharpen",
             "x": 543,
             "y": 724,
             "radius": 48,
             "hardness": 0.85,
-            "strength": 0.8,
-            "mode": "saturate"
+            "amount": 2,
+            "kernelRadius": 2
           }
         }
       }
     },
     {
-      "id": "spongeApprove",
+      "id": "localSharpenApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "spongePropose.result.result.proposalId"
+          "$ref": "localSharpenPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "spongeExecute",
+      "id": "localSharpenExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "spongePropose.result.result.proposalId"
+          "$ref": "localSharpenPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "spongeApprove.result.result.approvalToken"
+          "$ref": "localSharpenApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "spongePreview",
+      "id": "localSharpenPreview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -94,12 +94,12 @@
       }
     },
     {
-      "id": "spongeUndo",
+      "id": "localSharpenUndo",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "spongeUndoPreview",
+      "id": "localSharpenUndoPreview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -108,12 +108,12 @@
       }
     },
     {
-      "id": "spongeRedo",
+      "id": "localSharpenRedo",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "spongeRedoPreview",
+      "id": "localSharpenRedoPreview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -122,18 +122,18 @@
       }
     },
     {
-      "id": "spongeRestore",
+      "id": "localSharpenRestore",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "localBlurPropose",
+      "id": "colorReplacementPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-b3-local-blur",
+          "taskId": "live-b3-local-color",
           "operation": "image.raster.localRetouch.v1",
           "targets": [
             {
@@ -141,40 +141,41 @@
             }
           ],
           "arguments": {
-            "type": "localBlur",
+            "type": "colorReplacement",
             "x": 543,
             "y": 724,
             "radius": 48,
             "hardness": 0.85,
-            "strength": 1,
-            "kernelRadius": 3
+            "replacementColor": "#2d74cf",
+            "tolerance": 48,
+            "strength": 1
           }
         }
       }
     },
     {
-      "id": "localBlurApprove",
+      "id": "colorReplacementApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "localBlurPropose.result.result.proposalId"
+          "$ref": "colorReplacementPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "localBlurExecute",
+      "id": "colorReplacementExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "localBlurPropose.result.result.proposalId"
+          "$ref": "colorReplacementPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "localBlurApprove.result.result.approvalToken"
+          "$ref": "colorReplacementApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "localBlurPreview",
+      "id": "colorReplacementPreview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -183,12 +184,12 @@
       }
     },
     {
-      "id": "localBlurUndo",
+      "id": "colorReplacementUndo",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "localBlurUndoPreview",
+      "id": "colorReplacementUndoPreview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -197,12 +198,12 @@
       }
     },
     {
-      "id": "localBlurRedo",
+      "id": "colorReplacementRedo",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "localBlurRedoPreview",
+      "id": "colorReplacementRedoPreview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -211,9 +212,56 @@
       }
     },
     {
-      "id": "localBlurRestore",
+      "id": "colorReplacementRestore",
       "tool": "undo_ink",
       "input": {}
+    },
+    {
+      "id": "noOpPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-b3-local-noop",
+          "operation": "image.raster.localRetouch.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "type": "dodge",
+            "x": 543,
+            "y": 724,
+            "radius": 48,
+            "hardness": 0.85,
+            "strength": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "noOpApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "noOpPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "noOpExecute",
+      "tool": "execute_ink_edit",
+      "allowFailure": true,
+      "input": {
+        "proposalId": {
+          "$ref": "noOpPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "noOpApprove.result.result.approvalToken"
+        }
+      }
     },
     {
       "id": "historyFinal",
