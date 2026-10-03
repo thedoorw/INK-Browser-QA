@@ -787,3 +787,75 @@ SECOND_AUTHORITY = NONE
 POINTER_SIMULATION = NONE
 FORMAT_VERSION_CHANGE = NONE
 ```
+
+
+## A5 Blender / Smudge — merged / deployed / formal Live qualified 2026-10-03
+
+This closure supersedes earlier `A5_BLENDER_SMUDGE = OPEN / PRODUCT_RENDER_INTEGRATION_GAP` markers.
+
+Classification:
+```text
+A5_BLENDER_SMUDGE = PRODUCT_RENDER_INTEGRATION_GAP → REPAIRED
+GPU_MIXER_TRANSPORT_PARITY = SEPARATE / NOT QUALIFIED
+PAINT_SESSION_MIXERS = SEPARATE / NOT QUALIFIED
+```
+
+Authority and source:
+- existing native Stroke / NaturalMediaController / multi-channel Renderer / History remain authoritative;
+- Blender/Smudge are run-only native `type:'stroke'` kinds with `mediaModel:'natural-v2'`;
+- a mixer run must contain at least one real Brush/DryBrush depositor;
+- Blender mixes existing local pigment; Smudge transports existing pigment/water along stroke direction;
+- mixer runs currently use the existing Canvas2D multi-channel surface; ordinary Brush/DryBrush retains the existing WebGL2 multi-channel route;
+- isolated mixer Strokes do not fall back to generic color-stroke rendering;
+- Paint Session Blender/Smudge remains intentionally excluded;
+- no pointer emulation, second renderer/document/history authority, UI change, or FORMAT_VERSION change.
+
+Source qualification:
+- PR #137 merged.
+- exact accepted candidate: `f351c788e57b7d5ad034f156711d47d431179669`.
+- merged/deployed source: `20b06020bbb6b6142dc1f6952ebf26e14ed268dd`.
+- candidate request: `clusterA-A5-blender-smudge-candidate-001-regressions`.
+- candidate result commit: `8707060ceca34bddcdeea8b92891621e61623082`.
+- candidate run: `37093732538`; artifact `11263473338`; digest `sha256:b4c60f4ac1ca0a94e1c9b7dd380f67815c09521abce2500536d286e370696ef6`.
+- A5 primary case PASS:
+  - baseline Preview `fnv1a32:1c7b7b41`;
+  - after Blender `fnv1a32:3e594331`;
+  - after Smudge `fnv1a32:06e7d736`;
+  - exact Undo/Redo restoration;
+  - backend `canvas2d-multichannel`;
+  - 288 mixer stamps;
+  - `transportedPigment=192521.06028555412`.
+- exact-SHA regressions A1 Paint Session / A2 native Stroke & NaturalMedia / A3 Paper / B2 brightnessContrast: PASS.
+- A2/A3 diagnostics retained `webgl2-multichannel` and `mixingRuns=0`, so ordinary natural-media routing did not regress.
+
+Formal Live:
+- initial request `clusterA-A5-blender-smudge-live-001` stopped at the exact-source identity gate while Pages still served prior A4 source; no A5 operation ran.
+- successful request: `clusterA-A5-blender-smudge-live-002`.
+- request commit: `d3d11b945a7b26b1fab90eb0260bd21c8eb77962`.
+- result commit: `70796c30ff51aa59f41610e63a4c0ab7ac0e7149`.
+- hosted run: `37094249144`.
+- artifact: `11262658859`; digest `sha256:36ebea21ea56085bcc3fa6acfd671c041c087435810f9ff9776ee4bc72e1d938`.
+- exact runtime source verified; `apiReady=true`; 23 named tools.
+- final native objects: `live-a5-red`, `live-a5-blue`, `live-a5-blender`, `live-a5-smudge`.
+- final History: 4 scoped `CHAT create Stroke` entries.
+- Live Preview:
+  - baseline `fnv1a32:c182394c`;
+  - Blender `fnv1a32:d2f80729`;
+  - Smudge `fnv1a32:9a547b82`;
+  - Undo Smudge → `d2f80729`;
+  - Undo Blender → `c182394c`;
+  - Redo Blender → `d2f80729`;
+  - Redo Smudge → `9a547b82`.
+
+```text
+A1_PAINT_SESSION = PASS / CLOSED
+A2_NATIVE_STROKE = PASS / CLOSED
+A3_PAPER = PASS / CLOSED
+A4_TARGETED_ERASER = PASS / CLOSED
+A5_BLENDER_SMUDGE = PASS / CLOSED / MERGED / DEPLOYED / FORMAL LIVE QUALIFIED
+CLUSTER_A_DRAWING_NATURAL_MEDIA = CLOSED FOR QUALIFIED CHAT ROUTES
+GPU_MIXER_TRANSPORT_PARITY = FOLLOW-UP ONLY
+PAINT_SESSION_MIXERS = FOLLOW-UP ONLY
+SECOND_AUTHORITY = NONE
+FORMAT_VERSION_CHANGE = NONE
+```
