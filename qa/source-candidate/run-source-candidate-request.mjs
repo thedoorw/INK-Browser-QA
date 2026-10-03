@@ -123,7 +123,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['paint-session-create','stroke-create-a2','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['page-paper-a3','paint-session-create','stroke-create-a2','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -271,6 +271,54 @@ const STROKE_A2_CASE = String.raw`(async()=>{
     redoCanvas,
     naturalMedia:app.renderer?.naturalMedia?.diagnostics?.()||null
   };
+})()`;
+
+const PAPER_A3_CASE = String.raw`(async()=>{
+  const app=window.INK_APP,api=app.inkPublicApi;
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  app.history.clear();
+  const invoke=(tool,input={})=>Promise.resolve(api.tools.invoke(tool,input));
+  const find=(v,k)=>{if(!v||typeof v!=='object')return; if(Object.hasOwn(v,k))return v[k];for(const a of Object.values(v)){const r=find(a,k);if(r!==undefined)return r;}};
+  const task=(id,key,value)=>({taskId:id,operation:'page.paper.set.v1',targets:[],arguments:{key,value}});
+  const propose=async t=>{const r=await invoke('propose_ink_edit',{task:t});if(r.status!=='PROPOSED')throw new Error('PROPOSE:'+JSON.stringify(r));return find(r,'proposalId');};
+  const edit=async t=>{const proposalId=await propose(t);const a=await invoke('approve_ink_edit',{proposalId});const r=await invoke('execute_ink_edit',{proposalId,approvalToken:find(a,'approvalToken')});if(r.status!=='EXECUTED'||find(r,'changed')!==true)throw new Error('EXECUTE:'+JSON.stringify(r));return r;};
+  const frames=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const preview=async()=>{await frames();const r=await invoke('get_ink_preview',{scope:'content',background:false,maxDimension:800});if(r.status!=='COMPLETED')throw new Error('PREVIEW');return r.outputHandles[0].renderFingerprint;};
+  const descriptor=await invoke('describe_ink_capability',{idOrToolName:'page.paper.set.v1'});
+  if(descriptor.status==='FAILED')throw new Error('DISCOVERY');
+  const paper0=JSON.parse(JSON.stringify(app.page().paper));
+  const strokeTask={taskId:'qa-a3-natural-stroke',operation:'stroke.create.v1',targets:[],arguments:{kind:'brush',color:'#8f3f58',size:72,opacity:.85,flow:.75,wetness:.8,grain:.4,bristle:.4,samples:[{x:-120,y:-20,pressure:.3,timestamp:0},{x:0,y:70,pressure:.9,timestamp:24},{x:120,y:-40,pressure:.6,timestamp:48}]}};
+  await edit(strokeTask);const baseline=await preview();
+  const objectBefore=JSON.stringify(app.page().layers.flatMap(l=>l.objects));
+  const beforeUndo=app.history.undoStack.length;
+  const proposedId=await propose(task('qa-a3-roughness','roughness',.95));
+  if(JSON.stringify(app.page().paper)!==JSON.stringify(paper0)||app.history.undoStack.length!==beforeUndo)throw new Error('PROPOSE_MUTATED');
+  const approval=await invoke('approve_ink_edit',{proposalId:proposedId});
+  const rough=await invoke('execute_ink_edit',{proposalId:proposedId,approvalToken:find(approval,'approvalToken')});
+  if(rough.status!=='EXECUTED'||find(rough,'changed')!==true||app.page().paper.roughness!==.95)throw new Error('ROUGHNESS');
+  const roughPreview=await preview();
+  await edit(task('qa-a3-absorbency','absorbency',.05));const changedPreview=await preview();
+  if(app.page().paper.absorbency!==.05||app.history.undoStack.length!==beforeUndo+2)throw new Error('PAPER_HISTORY');
+  if(changedPreview===baseline)throw new Error('NATURAL_PAPER_RENDER_NO_DELTA');
+  if(JSON.stringify(app.page().layers.flatMap(l=>l.objects))!==objectBefore)throw new Error('PAPER_MUTATED_STROKE');
+  const paperAfter=JSON.parse(JSON.stringify(app.page().paper));
+  const fingerprint=find(rough,'paperProfileFingerprint');if(!fingerprint)throw new Error('PROFILE_RECEIPT');
+  await invoke('undo_ink');await invoke('undo_ink');
+  if(JSON.stringify(app.page().paper)!==JSON.stringify(paper0)||(await preview())!==baseline)throw new Error('UNDO_PAPER_RENDER');
+  await invoke('redo_ink');await invoke('redo_ink');
+  if(JSON.stringify(app.page().paper)!==JSON.stringify(paperAfter)||(await preview())!==changedPreview)throw new Error('REDO_PAPER_RENDER');
+  const rejectCases=[['unknown',1],['roughness',2],['seed',1.5],['textureVisible','false'],['color','url(https://example.com/)']];
+  for(let i=0;i<rejectCases.length;i++){const [key,value]=rejectCases[i];const r=await invoke('propose_ink_edit',{task:task('qa-a3-invalid-'+i,key,value)});if(r.status!=='FAILED')throw new Error('INVALID_ACCEPTED:'+key);}
+  const noOp=await invoke('propose_ink_edit',{task:task('qa-a3-noop','roughness',.95)});if(noOp.status!=='FAILED')throw new Error('NOOP_ACCEPTED');
+  const staleId=await propose(task('qa-a3-stale','roughness',.6));const staleA=await invoke('approve_ink_edit',{proposalId:staleId});
+  app.page().paper.seed+=1;const n=app.history.undoStack.length;
+  const stale=await invoke('execute_ink_edit',{proposalId:staleId,approvalToken:find(staleA,'approvalToken')});
+  app.page().paper.seed-=1;
+  if(stale.status!=='FAILED'||!JSON.stringify(stale).includes('STALE_PAPER')||app.history.undoStack.length!==n)throw new Error('STALE_NOT_REJECTED');
+  app.paperPreview={key:'roughness',before:.95};const busy=await invoke('propose_ink_edit',{task:task('qa-a3-busy','roughness',.6)});app.paperPreview=null;
+  if(busy.status!=='FAILED'||!JSON.stringify(busy).includes('PAPER_PREVIEW_BUSY'))throw new Error('PREVIEW_BUSY_NOT_REJECTED');
+  app.renderer.render();
+  return {passed:true,operation:'page.paper.set.v1',paperBefore:paper0,paperAfter,baseline,roughPreview,changedPreview,undoRedoRenderExact:true,scopedPaperEntries:app.history.undoStack.slice(-2).map(e=>({label:e.label,captureMode:e.captureMode})),paperProfileFingerprint:fingerprint,invalidCasesRejected:rejectCases.length,noOpRejected:true,staleRejected:true,pendingPreviewRejected:true,naturalMedia:app.renderer.naturalMedia.diagnostics()};
 })()`;
 
 const RASTER_CASE = String.raw`(async()=>{
@@ -764,7 +812,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))));
+    const caseExpression=request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     assert.equal(caseResult?.passed,true,'Candidate case did not pass');
     const shot=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false},sessionId,30000);
