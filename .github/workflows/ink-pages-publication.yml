@@ -1,0 +1,124 @@
+# Supervisor live gate candidate: actual GitHub Pages transition evidence
+name: INK GitHub Pages Publication
+
+on:
+  push:
+    branches:
+      - main
+      - work/pwa-cache-freshness-supervisor-gates-002
+    paths:
+      - product/source/**
+      - qa/pwa-pages-live-baseline.mjs
+      - qa/pwa-pages-live-verify.mjs
+      - .github/workflows/ink-pages-publication.yml
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ink-pages-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main' || contains(github.event.head_commit.message, '[PWA_PAGES_GATE]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: ink-qa-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Capture currently deployed QA profile
+        if: github.ref != 'refs/heads/main'
+        run: |
+          mkdir -p qa/evidence/pwa-pages-live
+          node qa/pwa-pages-live-baseline.mjs \
+            "https://thedoorw.github.io/INK-Browser-QA/product/source/" \
+            "$RUNNER_TEMP/ink-pages-profile" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-pages-live/baseline.json"
+
+      - name: Generate publication-bound build identity
+        id: identity
+        run: |
+          BUILD_ID="$(node product/source/generate-build-identity.mjs)"
+          node product/source/generate-build-identity.mjs --check
+          echo "build_id=$BUILD_ID" >> "$GITHUB_OUTPUT"
+          printf '{"source_sha":"%s","build_id":"%s","publication":"github-pages-actions"}\n' "$GITHUB_SHA" "$BUILD_ID" > PAGES_BUILD_INFO.json
+
+      - name: Verify shell after generated identity
+        run: |
+          node product/source/generate-shell.mjs --check
+          node --check product/source/service-worker.js
+          node --check product/source/service-worker-runtime.js
+          node --check product/source/src/pwa/update-manager.js
+
+      - name: Stage exact Pages artifact
+        run: |
+          mkdir -p "$RUNNER_TEMP/pages-site"
+          rsync -a --delete --exclude='.git' --exclude='_site' ./ "$RUNNER_TEMP/pages-site/"
+          test "$(cat "$RUNNER_TEMP/pages-site/product/source/build-identity.js")" = "$(cat product/source/build-identity.js)"
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/pages-site
+
+      - name: Deploy exact artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Wait for exact deployed identity
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+          EXPECTED_BUILD_ID: ${{ steps.identity.outputs.build_id }}
+        run: |
+          node - <<'NODE'
+          const url='https://thedoorw.github.io/INK-Browser-QA/PAGES_BUILD_INFO.json';
+          const expectedSha=process.env.EXPECTED_SHA;
+          const expectedBuildId=process.env.EXPECTED_BUILD_ID;
+          const end=Date.now()+120000;
+          while(Date.now()<end){
+            try{
+              const response=await fetch(url+'?t='+Date.now(),{cache:'no-store'});
+              const info=await response.json();
+              if(info.source_sha===expectedSha && info.build_id===expectedBuildId){
+                console.log(JSON.stringify(info));
+                process.exit(0);
+              }
+            }catch{}
+            await new Promise(r=>setTimeout(r,2000));
+          }
+          throw new Error('deployed Pages identity did not converge');
+          NODE
+
+      - name: Verify actual deployed QA reload/reopen/offline
+        if: github.ref != 'refs/heads/main'
+        env:
+          EXPECTED_BUILD_ID: ${{ steps.identity.outputs.build_id }}
+        run: |
+          node qa/pwa-pages-live-verify.mjs \
+            "https://thedoorw.github.io/INK-Browser-QA/product/source/" \
+            "$RUNNER_TEMP/ink-pages-profile" \
+            "$EXPECTED_BUILD_ID" \
+            "$GITHUB_SHA" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-pages-live/baseline.json" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-pages-live/final.json"
+
+      - name: Upload live evidence
+        if: always() && github.ref != 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ink-pwa-pages-live-${{ github.sha }}
+          path: qa/evidence/pwa-pages-live/*.json
+          if-no-files-found: error
