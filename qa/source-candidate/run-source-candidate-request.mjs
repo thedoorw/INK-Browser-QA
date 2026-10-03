@@ -125,7 +125,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -274,6 +274,138 @@ const STROKE_A2_CASE = String.raw`(async()=>{
     naturalMedia:app.renderer?.naturalMedia?.diagnostics?.()||null
   };
 })()`;
+
+const STROKE_ERASE_A4_CASE = String.raw\`(async()=>{
+  const app=window.INK_APP,api=app?.inkPublicApi;
+  if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+  const toolNames=api.tools.registry().map(item=>item.name);
+  for(const name of ['describe_ink_capability','propose_ink_edit','approve_ink_edit','execute_ink_edit','get_ink_preview','undo_ink','redo_ink']) if(!toolNames.includes(name)) throw new Error('MISSING_TOOL:'+name);
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  app.history.clear();
+  const flatObjects=()=>app.page().layers.flatMap(layer=>layer.objects||[]);
+  const hashCanvas=()=>{const text=app.el.canvas.toDataURL('image/png');let h=2166136261;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(16);};
+  const findField=(value,key,depth=0)=>{
+    if(value==null||depth>10||typeof value!=='object')return undefined;
+    if(Object.prototype.hasOwnProperty.call(value,key))return value[key];
+    for(const item of Object.values(value)){const found=findField(item,key,depth+1);if(found!==undefined)return found;}
+    return undefined;
+  };
+  const waitFrames=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const invokeEdit=async(task)=>{
+    const proposed=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task}));
+    if(proposed?.status==='FAILED')throw new Error('PROPOSE_FAILED:'+task.operation+':'+JSON.stringify(proposed.diagnostics||[]));
+    const proposalId=findField(proposed,'proposalId');if(!proposalId)throw new Error('PROPOSAL_ID_MISSING:'+task.operation);
+    const approved=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId}));
+    if(approved?.status==='FAILED')throw new Error('APPROVE_FAILED:'+task.operation+':'+JSON.stringify(approved.diagnostics||[]));
+    const approvalToken=findField(approved,'approvalToken');if(!approvalToken)throw new Error('APPROVAL_TOKEN_MISSING:'+task.operation);
+    const executed=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId,approvalToken}));
+    if(executed?.status==='FAILED')throw new Error('EXECUTE_FAILED:'+task.operation+':'+JSON.stringify(executed.diagnostics||[]));
+    if(findField(executed,'changed')!==true)throw new Error('EXECUTE_NOT_CHANGED:'+task.operation);
+    await waitFrames();
+    return executed;
+  };
+  const preview=async()=>{
+    const value=await Promise.resolve(api.tools.invoke('get_ink_preview',{scope:'content',maxDimension:800,background:false}));
+    if(value?.status==='FAILED')throw new Error('PREVIEW_FAILED:'+JSON.stringify(value.diagnostics||[]));
+    return {value,fingerprint:findField(value,'renderFingerprint')||findField(value,'fingerprint')||null,bounds:findField(value,'bounds')||null};
+  };
+
+  const descriptor=await Promise.resolve(api.tools.invoke('describe_ink_capability',{idOrToolName:'stroke.erase.circle.v1'}));
+  if(descriptor?.status==='FAILED')throw new Error('ERASER_CAPABILITY_MISSING:'+JSON.stringify(descriptor.diagnostics||[]));
+
+  const create=await invokeEdit({schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-a4-source-stroke',operation:'stroke.create.v1',targets:[],arguments:{
+    objectId:'qa-a4-source-stroke',name:'QA A4 Source Stroke',kind:'pencil',color:'#2c4456',size:14,opacity:.9,smoothing:.2,pressure:.8,grain:.35,
+    samples:[
+      {x:-180,y:0,pressure:.7,timestamp:0},
+      {x:-90,y:0,pressure:.78,timestamp:20},
+      {x:0,y:0,pressure:.85,timestamp:40},
+      {x:90,y:0,pressure:.78,timestamp:60},
+      {x:180,y:0,pressure:.7,timestamp:80}
+    ]
+  }});
+  const source=flatObjects().find(item=>item.id==='qa-a4-source-stroke');
+  if(!source||source.type!=='stroke')throw new Error('SOURCE_STROKE_MISSING');
+  const ref={pageId:app.page().id,layerId:app.page().activeLayerId,objectId:source.id};
+  app.history.clear();
+  await waitFrames();
+  const baseline={canvas:hashCanvas(),preview:await preview(),pointCount:source.points?.length||0};
+
+  const erased=await invokeEdit({schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-a4-erase-main',operation:'stroke.erase.circle.v1',targets:[ref],arguments:{x:0,y:0,radius:32}});
+  const controllerResult=findField(erased,'controllerResult')||{};
+  if(controllerResult.erasedTargetCount!==1)throw new Error('ERASE_TARGET_COUNT:'+JSON.stringify(controllerResult));
+  if(controllerResult.fragmentCount!==2)throw new Error('ERASE_FRAGMENT_COUNT:'+JSON.stringify(controllerResult));
+  if(flatObjects().some(item=>item.id===source.id))throw new Error('SOURCE_STROKE_RETAINED');
+  const fragments=flatObjects().filter(item=>item.type==='stroke'&&item.name==='QA A4 Source Stroke');
+  if(fragments.length!==2)throw new Error('FRAGMENT_OBJECT_COUNT:'+fragments.length);
+  if(fragments.some(item=>item.kind!=='pencil'))throw new Error('FRAGMENT_KIND_CHANGED');
+  const fragmentIds=fragments.map(item=>item.id).sort();
+  if(new Set(fragmentIds).size!==2)throw new Error('FRAGMENT_IDS_NOT_UNIQUE');
+  if(app.history.undoStack.length!==1||app.history.undoStack.at(-1)?.label!=='CHAT erase Stroke')throw new Error('ERASER_HISTORY_INVALID:'+JSON.stringify(app.history.undoStack.map(x=>x.label)));
+  const after={canvas:hashCanvas(),preview:await preview(),fragmentIds};
+  if(after.canvas===baseline.canvas)throw new Error('ERASER_CANVAS_UNCHANGED');
+  if(after.preview.fingerprint&&baseline.preview.fingerprint&&after.preview.fingerprint===baseline.preview.fingerprint)throw new Error('ERASER_PREVIEW_UNCHANGED');
+
+  const undone=await Promise.resolve(api.tools.invoke('undo_ink',{}));
+  if(undone?.status==='FAILED')throw new Error('UNDO_FAILED');
+  await waitFrames();
+  const undoSource=flatObjects().find(item=>item.id===source.id);
+  if(!undoSource||undoSource.type!=='stroke')throw new Error('UNDO_SOURCE_NOT_RESTORED');
+  if(fragmentIds.some(id=>flatObjects().some(item=>item.id===id)))throw new Error('UNDO_FRAGMENT_RETAINED');
+  const undoState={canvas:hashCanvas(),preview:await preview()};
+  if(undoState.canvas!==baseline.canvas)throw new Error('UNDO_CANVAS_MISMATCH');
+  if(baseline.preview.fingerprint&&undoState.preview.fingerprint!==baseline.preview.fingerprint)throw new Error('UNDO_PREVIEW_MISMATCH');
+
+  const redone=await Promise.resolve(api.tools.invoke('redo_ink',{}));
+  if(redone?.status==='FAILED')throw new Error('REDO_FAILED');
+  await waitFrames();
+  const redoIds=flatObjects().filter(item=>item.type==='stroke'&&item.name==='QA A4 Source Stroke').map(item=>item.id).sort();
+  if(JSON.stringify(redoIds)!==JSON.stringify(fragmentIds))throw new Error('REDO_FRAGMENT_IDS_MISMATCH:'+JSON.stringify({fragmentIds,redoIds}));
+  const redoState={canvas:hashCanvas(),preview:await preview()};
+  if(redoState.canvas!==after.canvas)throw new Error('REDO_CANVAS_MISMATCH');
+  if(after.preview.fingerprint&&redoState.preview.fingerprint!==after.preview.fingerprint)throw new Error('REDO_PREVIEW_MISMATCH');
+
+  const restore=await Promise.resolve(api.tools.invoke('undo_ink',{}));
+  if(restore?.status==='FAILED')throw new Error('RESTORE_UNDO_FAILED');
+  await waitFrames();
+  const staleProposed=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task:{schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-a4-stale-erase',operation:'stroke.erase.circle.v1',targets:[ref],arguments:{x:0,y:0,radius:24}}}));
+  if(staleProposed?.status==='FAILED')throw new Error('STALE_PROPOSE_SETUP_FAILED');
+  const staleProposalId=findField(staleProposed,'proposalId');if(!staleProposalId)throw new Error('STALE_PROPOSAL_ID_MISSING');
+  await invokeEdit({schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-a4-stale-mutation',operation:'object.translate.v1',targets:[ref],arguments:{dx:7,dy:0}});
+  const staleApprove=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId:staleProposalId}));
+  if(staleApprove?.status!=='FAILED')throw new Error('STALE_PROPOSAL_NOT_REJECTED');
+  const staleCode=findField(staleApprove,'code');
+  if(!['STALE_REVISION','TARGET_STALE'].includes(staleCode))throw new Error('STALE_DIAGNOSTIC_UNEXPECTED:'+JSON.stringify(staleApprove));
+  const untranslate=await Promise.resolve(api.tools.invoke('undo_ink',{}));
+  if(untranslate?.status==='FAILED')throw new Error('STALE_MUTATION_UNDO_FAILED');
+  await waitFrames();
+
+  const noOpProposed=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task:{schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-a4-noop',operation:'stroke.erase.circle.v1',targets:[ref],arguments:{x:900,y:900,radius:10}}}));
+  if(noOpProposed?.status==='FAILED')throw new Error('NOOP_PROPOSE_FAILED');
+  const noOpProposalId=findField(noOpProposed,'proposalId');if(!noOpProposalId)throw new Error('NOOP_PROPOSAL_ID_MISSING');
+  const noOpApproved=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId:noOpProposalId}));
+  if(noOpApproved?.status==='FAILED')throw new Error('NOOP_APPROVE_FAILED');
+  const noOpToken=findField(noOpApproved,'approvalToken');if(!noOpToken)throw new Error('NOOP_TOKEN_MISSING');
+  const noOpExecuted=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId:noOpProposalId,approvalToken:noOpToken}));
+  if(noOpExecuted?.status!=='FAILED'||findField(noOpExecuted,'code')!=='NO_OP')throw new Error('NOOP_NOT_REJECTED:'+JSON.stringify(noOpExecuted));
+
+  return {
+    passed:true,
+    descriptorStatus:descriptor.status,
+    sourceId:source.id,
+    fragmentIds,
+    baselineCanvas:baseline.canvas,
+    erasedCanvas:after.canvas,
+    previewBefore:baseline.preview.fingerprint,
+    previewAfter:after.preview.fingerprint,
+    undoCanvas:undoState.canvas,
+    redoCanvas:redoState.canvas,
+    historyLabel:'CHAT erase Stroke',
+    staleCode,
+    noOpCode:findField(noOpExecuted,'code'),
+    controllerResult
+  };
+})()\`;
+
 
 const PAPER_A3_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app.inkPublicApi;
@@ -864,7 +996,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))));
+    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE)))))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     assert.equal(caseResult?.passed,true,'Candidate case did not pass');
     const shot=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false},sessionId,30000);
