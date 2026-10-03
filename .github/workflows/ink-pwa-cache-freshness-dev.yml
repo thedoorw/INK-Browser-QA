@@ -51,12 +51,16 @@ jobs:
           node qa/pwa-cache-freshness-browser.mjs \
             "$RUNNER_TEMP/ink-pwa-baseline/product/source" \
             "$GITHUB_WORKSPACE/product/source" \
-            "$GITHUB_WORKSPACE/qa/evidence/pwa-cache-freshness-001/browser-report.json"
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-cache-freshness-001/browser-report-a.json"
+          node qa/pwa-cache-freshness-browser.mjs \
+            "$RUNNER_TEMP/ink-pwa-baseline/product/source" \
+            "$GITHUB_WORKSPACE/product/source" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-cache-freshness-001/browser-report-b.json"
 
       - name: Upload evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ink-pwa-cache-freshness-${{ github.sha }}
-          path: qa/evidence/pwa-cache-freshness-001/browser-report.json
+          path: qa/evidence/pwa-cache-freshness-001/browser-report-*.json
           if-no-files-found: error
