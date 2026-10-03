@@ -349,6 +349,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'frame.create.v1',
   'text.create.v1',
   'text.edit.v1',
+  'text.path.set.v1',
   'svg.import.v1',
   'object.resize.v1',
   'object.scale.v1',
@@ -987,6 +988,21 @@ function normalizeTextEditArguments(raw = {}) {
   return patch;
 }
 
+function normalizeTextPathSetArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const ref = raw.pathRef;
+  if (!ref || typeof ref !== 'object' || Array.isArray(ref)) editFail('ARGUMENT_INVALID', { field: 'arguments.pathRef' });
+  return {
+    pathRef: {
+      pageId: boundedText(ref.pageId, 'arguments.pathRef.pageId', { max: 160 }),
+      layerId: boundedText(ref.layerId, 'arguments.pathRef.layerId', { max: 160 }),
+      objectId: boundedText(ref.objectId, 'arguments.pathRef.objectId', { max: 160 })
+    },
+    startOffset: boundedNumber(raw.startOffset ?? 0, 'arguments.startOffset', { min: 0, max: 1e6 }),
+    overflow: raw.overflow == null ? 'clip' : boundedEnum(raw.overflow, 'arguments.overflow', ['clip'])
+  };
+}
+
 function normalizeSvgImportArguments(raw = {}) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
   const svg = boundedRawString(raw.svg, 'arguments.svg', { max: 1048576 });
@@ -1335,6 +1351,7 @@ function normalizeOperationArguments(operation, raw) {
   if (operation === 'frame.create.v1') return normalizeFrameCreateArguments(raw);
   if (operation === 'text.create.v1') return normalizeTextCreateArguments(raw);
   if (operation === 'text.edit.v1') return normalizeTextEditArguments(raw);
+  if (operation === 'text.path.set.v1') return normalizeTextPathSetArguments(raw);
   if (operation === 'svg.import.v1') return normalizeSvgImportArguments(raw);
   if (operation === 'object.resize.v1') return normalizeResizeArguments(raw);
   if (operation === 'object.scale.v1') return normalizeScaleArguments(raw);
@@ -1378,6 +1395,7 @@ function operationTargetRules(operation) {
     || operation === 'repeat.radial.v1'
     || operation === 'object.reparent.v1'
     || operation === 'text.edit.v1'
+    || operation === 'text.path.set.v1'
     || operation === 'object.resize.v1'
     || operation === 'repeat.mirror.v1'
     || operation === 'repeat.grid.v1'
@@ -1503,9 +1521,15 @@ function captureExpectedState(app, task, resolved) {
     revisionId: app?.revisions?.revisionIdFor?.(app.doc?.id) ?? null,
     ...(task.operation === 'page.paper.set.v1' ? { paperFingerprint: chatStateFingerprint(page.paper) } : {}),
     ...(CHAT_PRECISION_LAYOUT_OPERATION_SET.has(task.operation) ? { precisionFingerprint: precisionLayoutFingerprint(page) } : {}),
-    targetFingerprints: Object.fromEntries(resolved
-      .map(({ ref, found }) => [targetRefKey(ref), currentTargetFingerprint(page, found, task.operation)])
-      .sort((a, b) => a[0].localeCompare(b[0])))
+    targetFingerprints: Object.fromEntries([
+      ...resolved.map(({ ref, found }) => [targetRefKey(ref), currentTargetFingerprint(page, found, task.operation)]),
+      ...(task.operation === 'text.path.set.v1'
+        ? (() => {
+            const pathFound = findPageObject(page, task.arguments.pathRef);
+            return pathFound ? [[targetRefKey(task.arguments.pathRef), currentTargetFingerprint(page, pathFound, task.operation)]] : [];
+          })()
+        : [])
+    ].sort((a, b) => a[0].localeCompare(b[0])))
   };
 }
 
@@ -1606,7 +1630,7 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     if (task.operation === 'stroke.erase.circle.v1' && found.object?.type !== 'stroke') {
       editFail('STROKE_REQUIRED', { objectId: found.object?.id || null });
     }
-    if (task.operation === 'text.edit.v1' && found.object?.type !== 'text') {
+    if ((task.operation === 'text.edit.v1' || task.operation === 'text.path.set.v1') && found.object?.type !== 'text') {
       editFail('TEXT_REQUIRED', { objectId: found.object?.id || null });
     }
     if (CHAT_RASTER_IMAGE_OPERATION_SET.has(task.operation)
@@ -1634,6 +1658,36 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     }
     return { ref, found };
   });
+
+  if (task.operation === 'text.path.set.v1') {
+    const textFound = resolved[0]?.found || null;
+    const pathRef = task.arguments.pathRef;
+    if (pathRef.pageId !== page.id) editFail('PATH_REF_PAGE_INACTIVE', { pageId: pathRef.pageId, actual: page.id || null });
+    const pathFound = findPageObject(page, pathRef);
+    if (!pathFound) editFail('PATH_REF_MISSING', { layerId: pathRef.layerId, objectId: pathRef.objectId });
+    if (pathFound.object?.type !== 'path') editFail('PATH_REQUIRED', { objectId: pathFound.object?.id || null });
+    const textParentId = textFound?.parentObject?.id || null;
+    const pathParentId = pathFound.parentObject?.id || null;
+    if (pathFound.layer?.id !== textFound?.layer?.id || pathParentId !== textParentId) {
+      editFail('PATH_TEXT_CONTAINER_MISMATCH', { objectId: pathFound.object.id });
+    }
+    if (!Matrix.isInvertible(pathFound.worldMatrix || pathFound.object?.matrix || Matrix.identity())) {
+      editFail('TARGET_SINGULAR', { objectId: pathFound.object.id });
+    }
+    const expectedPathFingerprint = preconditions?.targetFingerprints?.[targetRefKey(pathRef)];
+    if (expectedPathFingerprint) {
+      const actualPathFingerprint = currentTargetFingerprint(page, pathFound, task.operation);
+      if (actualPathFingerprint !== expectedPathFingerprint) {
+        editFail('TARGET_STALE', { objectId: pathFound.object.id, expected: expectedPathFingerprint, actual: actualPathFingerprint });
+      }
+    }
+    const current = textFound.object.pathText || null;
+    if (current?.pathId === pathFound.object.id
+      && Number(current.startOffset || 0) === task.arguments.startOffset
+      && (current.overflow || 'clip') === task.arguments.overflow) {
+      editFail('NO_OP', { objectId: textFound.object.id });
+    }
+  }
 
   return { task, resolved, expected: preconditions };
 }
@@ -2293,6 +2347,28 @@ function executeTextEditTask(app, task) {
   });
   finishStructuralMutation(app);
   return { resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: found.object.id }] };
+}
+
+function executeTextPathSetTask(app, task) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found || found.object?.type !== 'text') editFail('TEXT_REQUIRED');
+  const pathFound = findPageObject(app.page(), task.arguments.pathRef);
+  if (!pathFound || pathFound.object?.type !== 'path') editFail('PATH_REQUIRED');
+  app.history.pushScoped('CHAT set Text Path', structuralHistoryPaths(app, [found]), () => {
+    if (!updateTextObject(found.object, {
+      pathText: {
+        pathId: pathFound.object.id,
+        startOffset: task.arguments.startOffset,
+        overflow: task.arguments.overflow
+      }
+    })) editFail('TEXT_REQUIRED');
+  });
+  finishStructuralMutation(app);
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: found.object.id }],
+    pathRef: { pageId: app.page().id, layerId: pathFound.layer.id, objectId: pathFound.object.id },
+    pathText: clone(found.object.pathText)
+  };
 }
 
 function collectImportedObjects(objects, output = []) {
@@ -3379,6 +3455,7 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'frame.create.v1') return executeFrameCreateTask(app, task);
   if (task.operation === 'text.create.v1') return executeTextCreateTask(app, task);
   if (task.operation === 'text.edit.v1') return executeTextEditTask(app, task);
+  if (task.operation === 'text.path.set.v1') return executeTextPathSetTask(app, task);
   if (task.operation === 'svg.import.v1') return executeSvgImportTask(app, task);
   if (task.operation === 'object.resize.v1') return executeResizeTask(app, task);
   if (task.operation === 'object.scale.v1') return executeScaleTask(app, task);
