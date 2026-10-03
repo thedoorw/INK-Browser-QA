@@ -61,7 +61,7 @@ jobs:
         run: |
           grep -F "branches:" .github/workflows/ink-pwa-pages-postintegration.yml
           grep -F "pages-build-identity.txt" .github/workflows/ink-pwa-pages-postintegration.yml
-          grep -F "pages-$GITHUB_SHA" .github/workflows/ink-pwa-pages-postintegration.yml
+          grep -F 'pages-$GITHUB_SHA' .github/workflows/ink-pwa-pages-postintegration.yml
           grep -F "premerge-profile.tgz" .github/workflows/ink-pwa-pages-postintegration.yml
 
       - name: Materialize latest-main product baseline
