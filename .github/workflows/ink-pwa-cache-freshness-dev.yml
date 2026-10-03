@@ -32,6 +32,15 @@ jobs:
       - name: Run source guards
         run: node --test qa/pwa-cache-freshness.test.mjs
 
+      - name: Run shell and syntax regressions
+        run: |
+          node product/source/generate-shell.mjs --check
+          node --check product/source/generate-build-identity.mjs
+          node --check product/source/service-worker.js
+          node --check product/source/service-worker-runtime.js
+          node --check product/source/src/pwa/update-manager.js
+          node --check qa/pwa-cache-freshness-browser.mjs
+
       - name: Materialize previous deployed-source baseline
         run: |
           git worktree add "$RUNNER_TEMP/ink-pwa-baseline" d426147bd1b450bc0924f8bbbde959111f9d3314
