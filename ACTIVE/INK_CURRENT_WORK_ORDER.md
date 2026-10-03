@@ -1,5 +1,25 @@
 # INK Current Work Order
 
+## INK Architecture Recomposition R&D — USER PRIORITY / RESEARCH ONLY 2026-10-03
+
+USER opened a new architecture question: determine whether continuing bounded repair or structurally recomposing INK around its already mature capabilities is faster and safer.
+
+Authority:
+- `research/INK_ARCHITECTURE_RECOMPOSITION_R_AND_D_v0.1.md`
+- `ACTIVE/INK_ARCHITECTURE_RECOMPOSITION_NEW_WINDOW_HANDOFF_v0.1.md`
+
+Current scope:
+```text
+CURRENT architecture map
+→ TARGET architecture map
+→ authority duplication register
+→ KEEP / REHOME / CONSOLIDATE / SPLIT / REPLACE / RETIRE matrix
+→ compare incremental repair vs recomposition vs full rewrite
+→ STOP → USER decision
+```
+
+No product refactor is authorized yet. Current PWA integration/live gate and C06 remain separate.
+
 ## PWA / Cache Freshness — Integration + Live Gate ACTIVE 2026-10-03
 
 Dispatch:
