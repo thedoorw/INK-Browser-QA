@@ -49,3 +49,27 @@ Remaining authority queue is:
 - Text warp / curved-text product rendering integration.
 
 Representative coverage never implies every enum variant is qualified. Registry counts alone do not close capabilities. Empty default catalogs do not prove missing engines. UI C04/C06, New Document/A4 redesign and external workflow-IR research are outside this appointment.
+
+
+## Cluster C1 authority closure — 2026-10-03
+
+Cluster C1 native page lifecycle is accepted and formally Live-qualified.
+
+- PR #145;
+- exact candidate `8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b`;
+- merged/deployed source `dfb197ca31dc1e2e5ca46c6452e998dce44c57c6`;
+- candidate A2/A3/B1/B2 regressions PASS;
+- Formal Live `clusterC-C1-page-ops-live-002`, run `37104322420`;
+- create/duplicate/delete/rename/activate PASS;
+- duplicate identity rekeying, navigation-only activate, delete Undo/Redo, stale/no-op guards, and minimum-one-page invariant PASS;
+- no New Document/A4 redesign, second page/History/navigation authority, UI change, or FORMAT_VERSION change.
+
+Remaining Cluster C queue:
+1. C2 explicit-target align / distribute through existing `InkApp.alignSelection()` + `applyWorldTransformBatch()`;
+2. C3 snap settings + ruler guides;
+3. C4 bounded artboard state mutation.
+
+```text
+C1_PAGE_OPERATIONS = CLOSED
+NEXT_AUTHORITY_QUEUE = C2_ALIGN_DISTRIBUTE
+```
