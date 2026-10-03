@@ -1,9 +1,10 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "core-perf-cache-authority-candidate-003",
-  "candidateSha": "0ac6e236a2baff587224398bc6f3e3aff35f5318",
+  "requestId": "core-perf-cache-integrated-001",
+  "candidateSha": "e095ee54a51f8562d03af248dca658cf321e6479",
   "case": "blender-smudge-a5",
   "regressions": true,
-  "naturalMediaCacheReview": true
+  "naturalMediaCacheReview": true,
+  "postIntegration": true
 }
