@@ -476,7 +476,26 @@ introduce new authority
 
 Do not mass-move files first. Authority migration comes before directory cleanup.
 
-## 10. USER decision gate
+## 10. UI Assembly rebuild refinement
+
+A follow-up repository inspection confirms that Option B should explicitly include:
+
+```text
+KEEP mature Core
+→ extract UI-critical shared Command / State authority
+→ REBUILD Photoshop-aligned UI Assembly
+→ migrate Human UI onto the shared commands
+→ retain CHAT / Recipe as adapters to the same commands
+```
+
+The UI rebuild is feasible because the Photoshop dataset, Master Guide and Micro-Module Grammar already provide the target design authority.
+
+It should **not** start as a visual-only replacement of the current DOM. Current `ink.js`, `full-capability-controls.js` and `web-shell.js` still contain direct event routing and product mutation. The first implementation phase must therefore establish the UI-critical command/state seam.
+
+Detailed evidence:
+- `research/INK_UI_ASSEMBLY_REBUILD_FEASIBILITY_v0.1.md`
+
+## 11. USER decision gate
 
 Current R&D result:
 
