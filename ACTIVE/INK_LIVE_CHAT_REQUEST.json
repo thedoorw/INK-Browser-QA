@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "cluster-d-material-recipe-formal-live-002",
+  "requestId": "cluster-d-material-recipe-formal-live-003",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "4188e9cc7673313726abd7986310d758912f63cf",
   "steps": [
@@ -185,7 +185,7 @@
             "instanceId": "live-d1-material-instance",
             "name": "Formal Live Material Instance",
             "layerId": {
-              "$ref": "contextBefore.result.result.active.layer.id"
+              "$ref": "contextBefore.result.active.layer.id"
             },
             "parameterOverrides": {},
             "transform": [
