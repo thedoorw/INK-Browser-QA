@@ -3,6 +3,7 @@ export class ServiceWorkerUpdateManager {
     scriptURL = './service-worker-runtime.js',
     scope = './',
     buildId = null,
+    deploymentIdentityURL = './pages-build-identity.txt',
     onStatusChange = null,
     autoActivate = true,
     reloadOnActivate = false
@@ -10,6 +11,7 @@ export class ServiceWorkerUpdateManager {
     this.scriptURL = scriptURL;
     this.scope = scope;
     this.buildId = buildId;
+    this.deploymentIdentityURL = deploymentIdentityURL;
     this.onStatusChange = onStatusChange;
     this.autoActivate = autoActivate;
     this.reloadOnActivate = reloadOnActivate;
@@ -21,6 +23,9 @@ export class ServiceWorkerUpdateManager {
     this.controllerAtRegister = false;
     this.reloadIssued = false;
     this.controllerListenerBound = false;
+    this.publishedRevision = null;
+    this.identitySource = buildId ? 'source-fallback' : 'unknown';
+    this.resolvedScriptURL = scriptURL;
   }
 
   supported() { return Boolean(globalThis.navigator?.serviceWorker); }
@@ -29,6 +34,39 @@ export class ServiceWorkerUpdateManager {
     const status = this.diagnostics(extra);
     this.onStatusChange?.(status);
     return status;
+  }
+
+  scopeURL() {
+    try { return new URL(this.scope, globalThis.location?.href || 'http://ink.local/').href; }
+    catch { return this.scope; }
+  }
+
+  scriptURLForBuild(buildId = this.buildId) {
+    try {
+      const url = new URL(this.scriptURL, globalThis.location?.href || 'http://ink.local/');
+      if (buildId) url.searchParams.set('build', buildId);
+      return url.href;
+    } catch {
+      return this.scriptURL;
+    }
+  }
+
+  async resolvePublishedIdentity() {
+    if (globalThis.navigator?.onLine === false || typeof globalThis.fetch !== 'function') return null;
+    try {
+      const url = new URL(this.deploymentIdentityURL, globalThis.location?.href || 'http://ink.local/');
+      url.searchParams.set('ink_identity_probe', String(Date.now()));
+      const response = await fetch(url.href, { cache: 'no-store', credentials: 'same-origin' });
+      if (!response.ok) return null;
+      const revision = (await response.text()).trim().toLowerCase();
+      if (!/^[a-f0-9]{40}$/.test(revision)) return null;
+      this.publishedRevision = revision;
+      this.buildId = `pages-${revision}`;
+      this.identitySource = 'pages-jekyll-build-revision';
+      return this.buildId;
+    } catch {
+      return null;
+    }
   }
 
   bindControllerChange() {
@@ -46,13 +84,30 @@ export class ServiceWorkerUpdateManager {
     });
   }
 
+  async reuseOfflineRegistration() {
+    if (globalThis.navigator?.onLine !== false || !navigator.serviceWorker.getRegistration) return null;
+    const existing = await navigator.serviceWorker.getRegistration(this.scopeURL()).catch(() => null);
+    if (!existing?.active) return null;
+    this.registration = existing;
+    this.bindControllerChange();
+    try { await this.refreshWorkerIdentity(); } catch {}
+    this.state = 'ready';
+    return this.emit({ offlineReuse: true });
+  }
+
   async register() {
     if (!this.supported()) { this.state = 'unsupported'; return this.emit(); }
     this.state = 'registering'; this.emit();
     try {
+      const offlineReuse = await this.reuseOfflineRegistration();
+      if (offlineReuse) return offlineReuse;
+
       this.controllerAtRegister = Boolean(navigator.serviceWorker.controller);
       this.bindControllerChange();
-      this.registration = await navigator.serviceWorker.register(this.scriptURL, {
+      await this.resolvePublishedIdentity();
+      this.resolvedScriptURL = this.scriptURLForBuild();
+
+      this.registration = await navigator.serviceWorker.register(this.resolvedScriptURL, {
         scope: this.scope,
         updateViaCache: 'none'
       });
@@ -88,10 +143,10 @@ export class ServiceWorkerUpdateManager {
   }
 
   async refreshWorkerIdentity() {
-    const worker = navigator.serviceWorker.controller
+    const worker = this.registration?.waiting
+      || this.registration?.installing
       || this.registration?.active
-      || this.registration?.waiting
-      || this.registration?.installing;
+      || navigator.serviceWorker.controller;
     if (!worker || typeof MessageChannel === 'undefined') return null;
     const detail = await new Promise((resolve, reject) => {
       const channel = new MessageChannel();
@@ -102,13 +157,33 @@ export class ServiceWorkerUpdateManager {
       };
       worker.postMessage({ type: 'INK_GET_VERSION' }, [channel.port2]);
     });
-    if (detail?.buildId) this.buildId = detail.buildId;
+    if (detail?.buildId && !detail?.migration) {
+      this.buildId = detail.buildId;
+      if (detail?.publishedRevision) {
+        this.publishedRevision = detail.publishedRevision;
+        this.identitySource = 'runtime-worker';
+      }
+    }
     return detail;
   }
 
   async checkForUpdate() {
     if (!this.registration) return { ...this.emit(), checked: false };
     try {
+      const previousBuildId = this.buildId;
+      await this.resolvePublishedIdentity();
+      const desiredScriptURL = this.scriptURLForBuild();
+      const currentScriptURL = this.registration?.active?.scriptURL
+        || this.registration?.waiting?.scriptURL
+        || this.registration?.installing?.scriptURL
+        || this.resolvedScriptURL;
+      if (this.buildId && this.buildId !== previousBuildId && desiredScriptURL !== currentScriptURL) {
+        this.resolvedScriptURL = desiredScriptURL;
+        this.registration = await navigator.serviceWorker.register(desiredScriptURL, {
+          scope: this.scope,
+          updateViaCache: 'none'
+        });
+      }
       await this.registration.update();
       this.waiting = this.registration.waiting || this.waiting;
       if (this.waiting) {
@@ -143,7 +218,14 @@ export class ServiceWorkerUpdateManager {
       autoActivate: this.autoActivate,
       error: this.error,
       buildId: this.buildId,
-      registrationScriptURL: this.registration?.active?.scriptURL || this.registration?.waiting?.scriptURL || this.registration?.installing?.scriptURL || this.scriptURL,
+      publishedRevision: this.publishedRevision,
+      identitySource: this.identitySource,
+      deploymentIdentityURL: this.deploymentIdentityURL,
+      registrationScriptURL: this.registration?.active?.scriptURL
+        || this.registration?.waiting?.scriptURL
+        || this.registration?.installing?.scriptURL
+        || this.resolvedScriptURL
+        || this.scriptURL,
       ...extra
     };
   }
