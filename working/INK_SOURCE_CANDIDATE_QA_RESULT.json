@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterB-B3-source-retouch-integration-001-regressions",
-  "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
-  "case": "raster-source-retouch-b3",
+  "requestId": "clusterB-advanced-raster-ingest-candidate-001-regressions",
+  "candidateSha": "41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+  "case": "raster-advanced-ingest",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:44683/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
+    "href": "http://127.0.0.1:44957/?sourceCandidate=41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,59 +13,77 @@
   },
   "result": {
     "passed": true,
-    "operation": "image.raster.sourceRetouch.v1",
-    "objectId": "f9d6b12a-52a0-4458-b656-b35ad04b4802",
-    "baselineHash": "7b77e00d",
-    "baselinePreview": {
-      "status": "COMPLETED",
-      "fingerprint": "fnv1a32:7f12eccb"
-    },
-    "types": [
+    "operation": "raster.import",
+    "imports": [
       {
-        "type": "cloneStamp",
-        "afterHash": "b677e6f9",
-        "afterPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:9effb581"
+        "format": "PSD",
+        "ref": {
+          "layerId": "c1d20160-1431-45ee-94c4-a95f94d75be7",
+          "objectId": "a23a2209-c86c-4fd0-961f-529bf5f5b8f9",
+          "pageId": "3bb085d5-c63d-41e2-a12e-787e22993d45"
         },
-        "changedPixels": 149,
-        "changedChannels": 447
+        "objectId": "a23a2209-c86c-4fd0-961f-529bf5f5b8f9",
+        "bitDepth": 8,
+        "colorMode": "RGB",
+        "preview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:71adb35d"
+        }
       },
       {
-        "type": "healingBrush",
-        "afterHash": "ae324391",
-        "afterPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:6650e7b0"
+        "format": "TIFF",
+        "ref": {
+          "layerId": "c1d20160-1431-45ee-94c4-a95f94d75be7",
+          "objectId": "78d309bb-3685-43b6-912c-f04ab59849d7",
+          "pageId": "3bb085d5-c63d-41e2-a12e-787e22993d45"
         },
-        "changedPixels": 145,
-        "changedChannels": 435
+        "objectId": "78d309bb-3685-43b6-912c-f04ab59849d7",
+        "bitDepth": 8,
+        "colorMode": "RGB",
+        "preview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:71adb35d"
+        }
       },
       {
-        "type": "patch",
-        "afterHash": "dfc18a42",
-        "afterPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:faa33887"
+        "format": "EXR",
+        "ref": {
+          "layerId": "c1d20160-1431-45ee-94c4-a95f94d75be7",
+          "objectId": "bb399a0a-0f84-47a8-89b3-20e042639364",
+          "pageId": "3bb085d5-c63d-41e2-a12e-787e22993d45"
         },
-        "changedPixels": 120,
-        "changedChannels": 359
+        "objectId": "bb399a0a-0f84-47a8-89b3-20e042639364",
+        "bitDepth": 32,
+        "colorMode": "RGB",
+        "preview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:3815a805"
+        }
       }
     ],
-    "staleRejected": true,
-    "noOpRejected": true,
-    "outOfRangeRejected": true
+    "psdMutation": {
+      "beforeHash": "9c21f25f",
+      "afterHash": "1d273b3e",
+      "undoHash": "9c21f25f",
+      "redoHash": "1d273b3e",
+      "afterEditPreview": {
+        "status": "COMPLETED",
+        "fingerprint": "fnv1a32:3815a805"
+      }
+    },
+    "rawRejected": true,
+    "rawCode": "INK_AGENT_RASTER_RAW_DECODER_UNAVAILABLE"
   },
   "status": "PASS",
   "regressions": [
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-source-retouch-integration-001-regressions-raster-local-retouch-b3",
-      "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
-      "case": "raster-local-retouch-b3",
+      "requestId": "clusterB-advanced-raster-ingest-candidate-001-regressions-raster-import-named-tool",
+      "candidateSha": "41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+      "case": "raster-import-named-tool",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:37417/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
+        "href": "http://127.0.0.1:42573/?sourceCandidate=41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -73,213 +91,36 @@
       },
       "result": {
         "passed": true,
-        "operation": "image.raster.localRetouch.v1",
-        "objectId": "dde26315-720d-46d3-b8fe-68d68659f0aa",
-        "baselineHash": "5e882188",
-        "baselinePreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:1ac04c76"
+        "before": {
+          "count": 0,
+          "undo": 0,
+          "canvas": "1e347074"
         },
-        "types": [
-          {
-            "type": "dodge",
-            "afterHash": "bc6a95b1",
-            "afterPreview": {
-              "status": "COMPLETED",
-              "fingerprint": "fnv1a32:f259d859"
-            },
-            "changedPixels": 193,
-            "changedChannels": 579
-          },
-          {
-            "type": "burn",
-            "afterHash": "f271f5ee",
-            "afterPreview": {
-              "status": "COMPLETED",
-              "fingerprint": "fnv1a32:b73afcc8"
-            },
-            "changedPixels": 193,
-            "changedChannels": 579
-          },
-          {
-            "type": "sponge",
-            "afterHash": "91c9cbe7",
-            "afterPreview": {
-              "status": "COMPLETED",
-              "fingerprint": "fnv1a32:337c8655"
-            },
-            "changedPixels": 193,
-            "changedChannels": 574
-          },
-          {
-            "type": "localBlur",
-            "afterHash": "236a83e1",
-            "afterPreview": {
-              "status": "COMPLETED",
-              "fingerprint": "fnv1a32:19935513"
-            },
-            "changedPixels": 286,
-            "changedChannels": 525
-          },
-          {
-            "type": "localSharpen",
-            "afterHash": "2f9676c8",
-            "afterPreview": {
-              "status": "COMPLETED",
-              "fingerprint": "fnv1a32:81de7660"
-            },
-            "changedPixels": 244,
-            "changedChannels": 355
-          },
-          {
-            "type": "colorReplacement",
-            "afterHash": "6481918c",
-            "afterPreview": {
-              "status": "COMPLETED",
-              "fingerprint": "fnv1a32:c0cb6440"
-            },
-            "changedPixels": 113,
-            "changedChannels": 339
-          }
-        ],
-        "staleRejected": true,
-        "noOpRejected": true
+        "after": {
+          "count": 1,
+          "undo": 1,
+          "canvas": "b2d95166",
+          "id": "20c7ef30-323c-49a1-ba0d-b91ae47914cf",
+          "width": 32,
+          "height": 24,
+          "sourceSha256": "02180abde1c6932923a0a99a9a346ce284ff63b7af38d8f082830d50268589b4"
+        },
+        "importStatus": "COMPLETED",
+        "previewStatus": "COMPLETED",
+        "undoStatus": "COMPLETED",
+        "redoStatus": "COMPLETED",
+        "restoredFormat": "ink-image-state"
       },
       "status": "PASS"
     },
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-source-retouch-integration-001-regressions-raster-spot-heal-b3",
-      "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
-      "case": "raster-spot-heal-b3",
-      "runtimeIdentity": {
-        "href": "http://127.0.0.1:37619/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
-        "readyState": "complete",
-        "apiReady": true,
-        "toolCount": 23,
-        "appVersion": "0.1"
-      },
-      "result": {
-        "passed": true,
-        "operation": "image.raster.spotHeal.v1",
-        "objectId": "d649fefb-488e-4eee-8a94-4001aab8f711",
-        "beforeHash": "56c8e8cb",
-        "afterHash": "73c4534b",
-        "undoHash": "56c8e8cb",
-        "redoHash": "73c4534b",
-        "beforePreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:97b6669b"
-        },
-        "afterPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:afea5d15"
-        },
-        "undoPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:97b6669b"
-        },
-        "redoPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:afea5d15"
-        },
-        "historyLabel": "CHAT raster Spot Healing",
-        "changedPixels": 64,
-        "changedChannels": 192,
-        "staleRejected": true,
-        "noOpRejected": true,
-        "controllerResult": {
-          "changed": true,
-          "rasterEdit": {
-            "changedChannels": 192,
-            "changedPixels": 64,
-            "hardness": 1,
-            "neighborRadius": 2,
-            "opacity": 1,
-            "radius": 6,
-            "type": "spotHealing",
-            "x": 32,
-            "y": 24
-          },
-          "resultRefs": [
-            {
-              "layerId": "e8ccb36e-f75c-4234-b03a-9ad1c7eb03b0",
-              "objectId": "d649fefb-488e-4eee-8a94-4001aab8f711",
-              "pageId": "0ce47fb7-3ff1-4b61-ae13-9b9945a4ccd7"
-            }
-          ]
-        }
-      },
-      "status": "PASS"
-    },
-    {
-      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
-      "version": 1,
-      "requestId": "clusterB-B3-source-retouch-integration-001-regressions-raster-mask-b3",
-      "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
-      "case": "raster-mask-b3",
-      "runtimeIdentity": {
-        "href": "http://127.0.0.1:42095/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
-        "readyState": "complete",
-        "apiReady": true,
-        "toolCount": 23,
-        "appVersion": "0.1"
-      },
-      "result": {
-        "passed": true,
-        "operation": "image.mask.raster.set.v1",
-        "objectId": "c31ec80d-9f76-4dea-bf60-d92116d4c18e",
-        "baselineHash": "376ec6fb",
-        "afterMaskHash": "376ec6fb",
-        "baselinePreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:4d9848b1"
-        },
-        "afterMaskPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:88ecac90"
-        },
-        "undoPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:4d9848b1"
-        },
-        "redoPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:88ecac90"
-        },
-        "historyLabel": "CHAT set raster mask",
-        "maskReceipt": {
-          "bounds": {
-            "h": 24,
-            "w": 32,
-            "x": 8,
-            "y": 6
-          },
-          "enabled": true,
-          "expand": 0,
-          "feather": 0,
-          "fingerprint": "fnv1a32:888bf7ca",
-          "height": 48,
-          "id": "chat-rmask-fnv1a32-472d10e4",
-          "invert": false,
-          "type": "raster-mask",
-          "width": 64
-        },
-        "pixelStaleRejected": true,
-        "maskStaleRejected": true,
-        "noOpRejected": true
-      },
-      "status": "PASS"
-    },
-    {
-      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
-      "version": 1,
-      "requestId": "clusterB-B3-source-retouch-integration-001-regressions-raster-direct-paint-bucket-b3",
-      "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
+      "requestId": "clusterB-advanced-raster-ingest-candidate-001-regressions-raster-direct-paint-bucket-b3",
+      "candidateSha": "41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
       "case": "raster-direct-paint-bucket-b3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:37085/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
+        "href": "http://127.0.0.1:33209/?sourceCandidate=41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -288,7 +129,7 @@
       "result": {
         "passed": true,
         "operation": "image.raster.paintBucket.v1",
-        "objectId": "0426b049-9ac9-4432-9297-c8664b630e1d",
+        "objectId": "9c976d16-2f90-4864-97ac-c571d01637bf",
         "beforeHash": "376ec6fb",
         "afterHash": "b09ebd5b",
         "undoHash": "376ec6fb",
@@ -335,9 +176,9 @@
           },
           "resultRefs": [
             {
-              "layerId": "135762a7-52dd-48d5-aad0-8aa6f087f49d",
-              "objectId": "0426b049-9ac9-4432-9297-c8664b630e1d",
-              "pageId": "64a1b371-9d13-4018-861d-cc64acd02ec4"
+              "layerId": "82f375e1-8594-4ce0-9f13-83b5a619de87",
+              "objectId": "9c976d16-2f90-4864-97ac-c571d01637bf",
+              "pageId": "82cc43af-ea31-4ecb-9a0c-06da0a77ab7c"
             }
           ]
         }
@@ -347,11 +188,71 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-source-retouch-integration-001-regressions-raster-stack-adjustment-b2",
-      "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
+      "requestId": "clusterB-advanced-raster-ingest-candidate-001-regressions-raster-source-retouch-b3",
+      "candidateSha": "41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+      "case": "raster-source-retouch-b3",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:39001/?sourceCandidate=41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "image.raster.sourceRetouch.v1",
+        "objectId": "ba474a97-d102-45e5-aa12-e6d263787a83",
+        "baselineHash": "7b77e00d",
+        "baselinePreview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:7f12eccb"
+        },
+        "types": [
+          {
+            "type": "cloneStamp",
+            "afterHash": "b677e6f9",
+            "afterPreview": {
+              "status": "COMPLETED",
+              "fingerprint": "fnv1a32:9effb581"
+            },
+            "changedPixels": 149,
+            "changedChannels": 447
+          },
+          {
+            "type": "healingBrush",
+            "afterHash": "ae324391",
+            "afterPreview": {
+              "status": "COMPLETED",
+              "fingerprint": "fnv1a32:6650e7b0"
+            },
+            "changedPixels": 145,
+            "changedChannels": 435
+          },
+          {
+            "type": "patch",
+            "afterHash": "dfc18a42",
+            "afterPreview": {
+              "status": "COMPLETED",
+              "fingerprint": "fnv1a32:faa33887"
+            },
+            "changedPixels": 120,
+            "changedChannels": 359
+          }
+        ],
+        "staleRejected": true,
+        "noOpRejected": true,
+        "outOfRangeRejected": true
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterB-advanced-raster-ingest-candidate-001-regressions-raster-stack-adjustment-b2",
+      "candidateSha": "41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
       "case": "raster-stack-adjustment-b2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:39959/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
+        "href": "http://127.0.0.1:37009/?sourceCandidate=41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -361,9 +262,9 @@
         "passed": true,
         "operation": "image.adjustment.add.v1",
         "adjustmentType": "brightnessContrast",
-        "objectId": "171828f5-55d6-4fef-a514-2aff1d7c595d",
-        "beforeFingerprint": "fnv1a32:9c7d9a66",
-        "afterFingerprint": "fnv1a32:da7f2605",
+        "objectId": "af4e9420-a3ce-4f2c-af22-5a8189067109",
+        "beforeFingerprint": "fnv1a32:a9a16e0a",
+        "afterFingerprint": "fnv1a32:413db316",
         "beforeHash": "7883b22",
         "afterHash": "9cd23fe",
         "undoHash": "7883b22",
@@ -376,12 +277,12 @@
           "adjustmentCount": 1,
           "resultRefs": [
             {
-              "layerId": "6418cdae-71a1-4618-8a2e-1a39779c7ae0",
-              "objectId": "171828f5-55d6-4fef-a514-2aff1d7c595d",
-              "pageId": "8348a144-4b5f-4ecf-a2ef-bb7b93b7ddf6"
+              "layerId": "5c05139e-c380-45a4-a3dc-619ecf2b71c5",
+              "objectId": "af4e9420-a3ce-4f2c-af22-5a8189067109",
+              "pageId": "9b375780-36d8-43b1-8a5a-9bfb5cf4bd1d"
             }
           ],
-          "stackItemId": "adj_1z05gkt",
+          "stackItemId": "adj_eo0a0x",
           "stackItemType": "brightnessContrast"
         }
       },
