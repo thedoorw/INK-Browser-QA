@@ -1,5 +1,22 @@
 # INK Current Work Order
 
+## PWA / Cache Freshness repair — ACTIVE 2026-10-03
+
+USER authorized a separate package for the stale-page / Ctrl+F5 problem.
+
+Dispatch:
+- `ACTIVE/INK_PWA_CACHE_FRESHNESS_DEV_DISPATCH_v1.0.md`
+
+Goal:
+```text
+normal open / F5
+→ latest deployed QA build when online
+→ no Ctrl+F5 requirement
+→ coherent offline fallback retained
+```
+
+Keep separate from C06 12800% zoom, C04, New Document/A4, History, unrelated UI fidelity and unrelated Core work.
+
 ## C06 Canvas Navigation 12800% zoom — ACTIVE 2026-10-03
 
 USER authorized independent dispatch.
