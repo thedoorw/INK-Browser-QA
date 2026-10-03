@@ -1,0 +1,129 @@
+{
+  "schema": "INK_CORE_PERFORMANCE_STABILITY_FOCUSED_QA",
+  "version": 1,
+  "package": "ink-core-performance-stability-002",
+  "date": "2026-10-03",
+  "branch": "work/ink-core-performance-stability-002",
+  "baselineSha": "cdfef7b3085782747cc98e286fcd12624f70891a",
+  "repairCommit": "a69aaf3723d6acc270d7c83fe0c1870365c4ca58",
+  "exactCandidate": "f2dd755e54d53cd1d5f2f67b77f6d17917ade31a",
+  "focusedTest": "qa/ink-core-performance-stability-002.test.mjs",
+  "disposition": "DEV_SOURCE_HARNESS_PASS__AUTHORITY_REVIEW_REQUIRED",
+  "checks": [
+    {
+      "id": "external-image-unrelated-document-change-cache-reuse",
+      "status": "PASS",
+      "before": {
+        "sourceReads": 3,
+        "processedWrites": 3,
+        "cacheEntries": 3
+      },
+      "after": {
+        "sourceReads": 1,
+        "processedWrites": 1,
+        "cacheEntries": 1
+      },
+      "assertion": "global document modifiedAt changes do not invalidate an unchanged external-source image stack"
+    },
+    {
+      "id": "image-stack-mutation-invalidates",
+      "status": "PASS",
+      "observed": {
+        "sourceReads": 2,
+        "processedWrites": 2,
+        "cacheEntries": 2
+      },
+      "assertion": "adjustment parameter mutation creates a fresh external image-stack entry"
+    },
+    {
+      "id": "image-source-mutation-invalidates",
+      "status": "PASS",
+      "observed": {
+        "sourceReads": 2,
+        "processedWrites": 2,
+        "cacheEntries": 2
+      },
+      "assertion": "external source identity mutation creates a fresh entry"
+    },
+    {
+      "id": "raster-state-history-invalidation-preserved",
+      "status": "PASS",
+      "observed": {
+        "rasterConversions": 2,
+        "cacheEntries": 2
+      },
+      "assertion": "raster-state image requests retain app.doc.modifiedAt so History-style document restoration cannot reuse stale pixels"
+    },
+    {
+      "id": "output-parity",
+      "status": "PASS",
+      "beforeHash": 3260145365,
+      "afterHash": 3260145365,
+      "assertion": "cache-key repair does not change processed image bytes"
+    }
+  ],
+  "affectedRegressionReview": {
+    "drawingA1A2A3A5": {
+      "status": "PASS_SOURCE_CONTROL",
+      "observation": "Brush/DryBrush cold 577ms; five warm calls 1ms each; one preparation plus five preparation skips",
+      "sourceOverlap": "NONE"
+    },
+    "preview": {
+      "status": "PASS_SOURCE_CONTROL",
+      "observation": "transient calls 511/485/510ms; cacheEntries=0; preparations=3",
+      "semantics": "UNCHANGED"
+    },
+    "imageStackB2": {
+      "status": "FOCUSED_PASS",
+      "observation": "external image stack reuses cache across unrelated document mutations and invalidates on source/stack mutation"
+    },
+    "rasterB3": {
+      "status": "BOUNDARY_PRESERVED",
+      "observation": "raster-state modifiedAt invalidation remains active",
+      "sourceOverlap": "NO B3 mutation implementation changed"
+    },
+    "history": {
+      "status": "PASS_SOURCE_CONTROL",
+      "observation": "representative scoped Undo/Redo applies are 0-1ms at Date.now resolution",
+      "sourceOverlap": "NONE"
+    },
+    "b4": {
+      "status": "NO_SOURCE_OVERLAP"
+    }
+  },
+  "candidateDiff": {
+    "productFiles": [
+      "product/source/src/studio-core.js"
+    ],
+    "qaFiles": [
+      "qa/ink-core-performance-stability-002.test.mjs"
+    ],
+    "studioCoreChange": {
+      "additions": 1,
+      "deletions": 1
+    },
+    "baselineToCandidateCommits": 2
+  },
+  "unchangedRegressionBlobs": {
+    "studioCoreUnit": "190a11b5dc40fba602e93a7248209c84b2f1200d",
+    "layerEffects": "74797ca9e2d0fbf02edeeeb3a811936eba374624",
+    "rasterProcessingExpansion": "66982fdb7783ed0e236698cd071dccbd4e06f55f",
+    "historyUnit": "b55fdbfa1628a9973c9cd9fe785b35247b1742c3",
+    "package001Focused": "1f778e6fb022b3d1b9db3327cec29f3143d187fa"
+  },
+  "boundaries": {
+    "uiChanged": false,
+    "formatVersionChanged": false,
+    "newCoreAuthority": false,
+    "newRendererAuthority": false,
+    "newHistoryAuthority": false,
+    "newRasterAuthority": false,
+    "newCache": false,
+    "cacheLimitChanged": false
+  },
+  "limits": [
+    "Focused execution is source-exact isolated JavaScript with mocked DOM/Canvas boundaries; no browser/runtime PASS is claimed.",
+    "Existing regression file blobs were checked for identity/overlap; this DEV pass does not claim central Runtime execution.",
+    "Formal authority review, integration, deployment and Live qualification remain pending."
+  ]
+}
