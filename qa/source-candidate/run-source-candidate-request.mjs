@@ -132,7 +132,7 @@ function validateRequest(request){
   return request;
 }
 
-const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw\`(async()=>{
+const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
   if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
   const invoke=(name,input={})=>Promise.resolve(api.tools.invoke(name,input));
@@ -299,7 +299,7 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw\`(async()=>{
     recipe:{inventoryReadOnly:true,inventoryCount:inventory.result?.counts||null,recipeId:executionReceipt.recipeId,recipeVersion:String(executionReceipt.recipeVersion),historyAtomic:true,replayId:replayReceipt.id,checkpointCount:executionReceipt.checkpoints.length,undoRedo:true,storedRediscovery:'NOT_APPLICABLE_STUDIO_REGISTRY_NOT_FLORA_PERSISTENCE'},
     governance:{proposalApprovalRequired:true,noSecondMaterialEngine:true,noSecondRecipeEngine:true,workflowIrUsed:false}
   };
-})()\`;
+})()`;
 
 const PAINT_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
