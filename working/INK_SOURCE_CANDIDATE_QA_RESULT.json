@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "local-paper-webgl-a2-regression-001",
+  "requestId": "local-paper-webgl-a3-regression-001",
   "candidateSha": "e75ff85e28a7fa6370d25c1a9f38c6488e189023",
-  "case": "stroke-create-a2",
+  "case": "page-paper-a3",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:37819/?sourceCandidate=e75ff85e28a7fa6370d25c1a9f38c6488e189023",
+    "href": "http://127.0.0.1:35857/?sourceCandidate=e75ff85e28a7fa6370d25c1a9f38c6488e189023",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,59 +13,53 @@
   },
   "result": {
     "passed": true,
-    "operation": "stroke.create.v1",
-    "created": [
+    "operation": "page.paper.set.v1",
+    "paperCoupledRunStrokeCount": 2,
+    "paperBefore": {
+      "type": "blank",
+      "color": "#fffef9",
+      "gridSize": 32,
+      "absorbency": 0.58,
+      "roughness": 0.42,
+      "fiberStrength": 0.36,
+      "fiberAngle": 0,
+      "sizing": 0.28,
+      "granulation": 0.32,
+      "seed": 1337,
+      "textureVisible": true
+    },
+    "paperAfter": {
+      "type": "blank",
+      "color": "#fffef9",
+      "gridSize": 32,
+      "absorbency": 0.05,
+      "roughness": 0.95,
+      "fiberStrength": 0.36,
+      "fiberAngle": 0,
+      "sizing": 0.28,
+      "granulation": 0.32,
+      "seed": 1337,
+      "textureVisible": true
+    },
+    "baseline": "fnv1a32:7369ca9a",
+    "roughPreview": "fnv1a32:9a583508",
+    "changedPreview": "fnv1a32:a859823d",
+    "undoRedoRenderExact": true,
+    "scopedPaperEntries": [
       {
-        "id": "chat-stroke-fnv1a32-305b66ac",
-        "kind": "pencil",
-        "mediaModel": null,
-        "pointCount": 3
+        "label": "調整畫布",
+        "captureMode": "scoped"
       },
       {
-        "id": "chat-stroke-fnv1a32-4aee2959",
-        "kind": "brush",
-        "mediaModel": "natural-v2",
-        "pointCount": 3
-      },
-      {
-        "id": "chat-stroke-fnv1a32-201f5261",
-        "kind": "airbrush",
-        "mediaModel": "natural-v2",
-        "pointCount": 3
-      },
-      {
-        "id": "chat-stroke-fnv1a32-391cb2bc",
-        "kind": "drybrush",
-        "mediaModel": "natural-v2",
-        "pointCount": 3
+        "label": "調整畫布",
+        "captureMode": "scoped"
       }
     ],
-    "before": {
-      "count": 0,
-      "undo": 0,
-      "canvas": "8d257ff8"
-    },
-    "after": {
-      "count": 4,
-      "undo": 4,
-      "canvas": "9773ed10"
-    },
-    "historyLabels": [
-      "CHAT create Stroke",
-      "CHAT create Stroke",
-      "CHAT create Stroke",
-      "CHAT create Stroke"
-    ],
-    "previewStatus": "COMPLETED",
-    "previewBounds": {
-      "h": 350.6,
-      "w": 451,
-      "x": -233.6,
-      "y": -182
-    },
-    "undoStatus": "COMPLETED",
-    "redoStatus": "COMPLETED",
-    "redoCanvas": "9773ed10",
+    "paperProfileFingerprint": "580:950:360:0:280:320:1337000:1000",
+    "invalidCasesRejected": 5,
+    "noOpRejected": true,
+    "staleRejected": true,
+    "pendingPreviewRejected": true,
     "naturalMedia": {
       "preference": "auto",
       "floraReferenceBackend": "canvas2d",
@@ -77,16 +71,16 @@
       "batchFallbacks": 0,
       "webgl": {
         "backend": "webgl2",
-        "drawCalls": 3,
-        "cacheHits": 24,
-        "cacheMisses": 3,
+        "drawCalls": 4,
+        "cacheHits": 9,
+        "cacheMisses": 4,
         "evictions": 0,
         "contextLosses": 0,
         "restores": 0,
-        "vertices": 1722,
+        "vertices": 1284,
         "state": "ready",
         "available": true,
-        "cacheEntries": 3,
+        "cacheEntries": 2,
         "lastError": null,
         "capabilities": {
           "maxTextureSize": 8192,
@@ -102,38 +96,38 @@
           "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
         },
         "resources": {
-          "allocations": 3,
-          "releases": 0,
+          "allocations": 4,
+          "releases": 2,
           "evictions": 0,
           "rejected": 0,
-          "peakBytes": 736892,
+          "peakBytes": 1592244,
           "budgetBytes": 100663296,
-          "usedBytes": 736892,
-          "availableBytes": 99926404,
-          "utilization": 0.0073203643163045245,
-          "resources": 3,
+          "usedBytes": 1592244,
+          "availableBytes": 99071052,
+          "utilization": 0.01581752300262451,
+          "resources": 2,
           "byType": {
-            "raster-cache": 736892
+            "raster-cache": 1592244
           }
         },
         "selfTest": null
       },
       "multiChannelWebgl": {
         "backend": "webgl2-multichannel",
-        "runs": 6,
-        "strokes": 6,
-        "drawCalls": 6,
-        "simulationPasses": 24,
-        "cacheHits": 23,
-        "cacheMisses": 6,
+        "runs": 17,
+        "strokes": 32,
+        "drawCalls": 32,
+        "simulationPasses": 68,
+        "cacheHits": 16,
+        "cacheMisses": 17,
         "evictions": 0,
         "contextLosses": 0,
         "restores": 0,
         "state": "ready",
         "available": true,
-        "cacheEntries": 4,
+        "cacheEntries": 6,
         "lastError": null,
-        "targets": "164x79",
+        "targets": "306x207",
         "capabilities": {
           "maxTextureSize": 8192,
           "maxRenderbufferSize": 8192,
@@ -148,19 +142,19 @@
           "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
         },
         "resources": {
-          "allocations": 16,
-          "releases": 10,
+          "allocations": 44,
+          "releases": 36,
           "evictions": 0,
           "rejected": 0,
-          "peakBytes": 758708,
+          "peakBytes": 4278288,
           "budgetBytes": 167772160,
-          "usedBytes": 470196,
-          "availableBytes": 167301964,
-          "utilization": 0.002802586555480957,
-          "resources": 6,
+          "usedBytes": 2864880,
+          "availableBytes": 164907280,
+          "utilization": 0.01707601547241211,
+          "resources": 8,
           "byType": {
-            "raster-cache": 262900,
-            "mrt-target": 207296
+            "raster-cache": 1851408,
+            "mrt-target": 1013472
           }
         },
         "selfTest": null
