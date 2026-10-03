@@ -1,0 +1,139 @@
+{
+  "requestId": "core-perf-combined-reference-live-002",
+  "status": "PASS",
+  "source": "e095ee54a51f8562d03af248dca658cf321e6479",
+  "fingerprints": {
+    "previewBeforeCorrection": "fnv1a32:c3bd4f5f",
+    "previewCorrected": "fnv1a32:f279be47",
+    "previewUndo": "fnv1a32:c3bd4f5f",
+    "previewRedo": "fnv1a32:f279be47"
+  },
+  "history": {
+    "applied": 4,
+    "canRedo": false,
+    "canUndo": true,
+    "entries": [
+      {
+        "captureMode": "scoped",
+        "label": "Reference import · CHAT attachment",
+        "objectIds": [
+          "a6ca3f1b-7996-45df-bb2c-8d10d26bd610-reference"
+        ],
+        "patchCount": 1,
+        "storedBytes": 3960366,
+        "targetCount": 1
+      },
+      {
+        "captureMode": "scoped",
+        "label": "匯入可編輯影像",
+        "objectIds": [
+          "3ff45c36-f2a6-4ff0-8753-34e3470eefaa"
+        ],
+        "patchCount": 1,
+        "storedBytes": 24005817,
+        "targetCount": 1
+      },
+      {
+        "captureMode": "scoped",
+        "label": "CHAT translate objects",
+        "objectIds": [],
+        "patchCount": 2,
+        "storedBytes": 308,
+        "targetCount": 1
+      },
+      {
+        "captureMode": "scoped",
+        "label": "CHAT add image adjustment: brightnessContrast",
+        "objectIds": [],
+        "patchCount": 1,
+        "storedBytes": 281,
+        "targetCount": 1
+      }
+    ],
+    "limit": 30,
+    "pending": false,
+    "retainedCount": 4,
+    "stats": {
+      "capturedBytes": 51971667,
+      "fullEntries": 0,
+      "limit": 30,
+      "metrics": {
+        "fullBegins": 0,
+        "fullCapturedBytes": 0,
+        "inPlaceApplies": 2,
+        "scopedBegins": 4,
+        "scopedCapturedBytes": 51971667
+      },
+      "mode": "hybrid-target-scoped-id-aware-patches",
+      "patchCount": 5,
+      "redo": 0,
+      "scopedEntries": 4,
+      "scopedRatio": 1,
+      "storedBytes": 27966772,
+      "undo": 4
+    }
+  },
+  "lockedRef": {
+    "layerId": "beea068e-9382-427e-9ce9-1b31146ef664",
+    "objectId": "a6ca3f1b-7996-45df-bb2c-8d10d26bd610-reference",
+    "pageId": "81f36981-ef18-4597-91fe-02269a61f74e"
+  },
+  "editableRef": {
+    "layerId": "beea068e-9382-427e-9ce9-1b31146ef664",
+    "objectId": "3ff45c36-f2a6-4ff0-8753-34e3470eefaa",
+    "pageId": "81f36981-ef18-4597-91fe-02269a61f74e"
+  },
+  "revisions": {
+    "items": [
+      {
+        "baseRevisionId": null,
+        "createdAt": "2026-10-03T05:17:02.457Z",
+        "documentFingerprint": "fnv1a32:6d17ad4b",
+        "label": "Reference editable baseline after transform",
+        "parentRevisionId": null,
+        "reason": "INK-QA-B",
+        "revisionId": "ink-rev:1e54236d:r1:1f0ff94f:6d17ad4b",
+        "sequence": 1
+      },
+      {
+        "baseRevisionId": "ink-rev:1e54236d:r1:1f0ff94f:6d17ad4b",
+        "createdAt": "2026-10-03T05:17:15.292Z",
+        "documentFingerprint": "fnv1a32:2a21a4d4",
+        "label": "Reference corrected brightness contrast",
+        "parentRevisionId": "ink-rev:1e54236d:r1:1f0ff94f:6d17ad4b",
+        "reason": "INK-QA-B",
+        "revisionId": "ink-rev:1e54236d:r2:120ed45b:2a21a4d4",
+        "sequence": 2
+      }
+    ]
+  },
+  "output": {
+    "byteLength": 702397,
+    "documentFingerprint": "fnv1a32:2a21a4d4",
+    "documentId": "f4c002e5-3f2f-4014-b455-7d1e4fd5fea9",
+    "editable": false,
+    "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+    "format": "png",
+    "handleId": "ink-output-v1:91a6fe4f",
+    "kind": "asset-export",
+    "mimeType": "image/png",
+    "objectRefs": [],
+    "pageId": "81f36981-ef18-4597-91fe-02269a61f74e",
+    "persistence": "NONE",
+    "physicalSize": {
+      "heightMm": 297,
+      "widthMm": 210
+    },
+    "pixelSize": {
+      "height": 1684,
+      "width": 1191
+    },
+    "renderFingerprint": "fnv1a32:0e7e514b",
+    "revisionId": "ink-rev:1e54236d:r2:120ed45b:2a21a4d4",
+    "schema": "INK_OUTPUT_HANDLE",
+    "scope": "artboard",
+    "transport": "INTERNAL_EPHEMERAL",
+    "version": 1
+  },
+  "artifactSha256": "0ea07ce12f1da73f3d5e98dad81791769664b947abd90dee65b2d52796cf9d56"
+}

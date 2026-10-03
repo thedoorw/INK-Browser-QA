@@ -1,0 +1,1207 @@
+{
+  "schema": "INK-LIVE-CHAT-RESULT",
+  "version": 1,
+  "requestId": "core-perf-combined-reference-live-002",
+  "tool": null,
+  "liveUrl": "https://thedoorw.github.io/INK/",
+  "expectedSourceSha": "e095ee54a51f8562d03af248dca658cf321e6479",
+  "runtimeIdentity": {
+    "href": "https://thedoorw.github.io/INK/",
+    "readyState": "complete",
+    "apiReady": true,
+    "sourceSha": "e095ee54a51f8562d03af248dca658cf321e6479",
+    "toolCount": 23
+  },
+  "status": "COMPLETED",
+  "compacted": true,
+  "fullResultBytes": 56030134,
+  "fullResultArtifact": true,
+  "result": {
+    "steps": [
+      {
+        "id": "capabilities",
+        "tool": "get_ink_capabilities",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "capabilities",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "describeTranslate",
+        "tool": "describe_ink_capability",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "capability.describe",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "describeAdjustment",
+        "tool": "describe_ink_capability",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "capability.describe",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "importReference",
+        "tool": "import_ink_reference",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "reference.import",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 1,
+          "changedRefCount": 1,
+          "createdRefsSample": [
+            {
+              "layerId": "beea068e-9382-427e-9ce9-1b31146ef664",
+              "objectId": "a6ca3f1b-7996-45df-bb2c-8d10d26bd610-reference",
+              "pageId": "81f36981-ef18-4597-91fe-02269a61f74e"
+            }
+          ],
+          "outputHandles": [],
+          "historyReceipt": {
+            "commit": {
+              "actualApplied": 1,
+              "expectedApplied": 1,
+              "limit": 30,
+              "newestMatches": true,
+              "redoCleared": true,
+              "saturatedBefore": false,
+              "valid": true
+            },
+            "stepCount": null
+          },
+          "revisionReceipt": {
+            "created": null,
+            "endingRevisionId": null,
+            "documentFingerprint": null
+          },
+          "resultSummary": {
+            "status": "COMPLETED",
+            "action": null,
+            "planId": null,
+            "referenceObjectId": "a6ca3f1b-7996-45df-bb2c-8d10d26bd610-reference",
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "importRaster",
+        "tool": "import_ink_raster",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "raster.import",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 1,
+          "changedRefCount": 1,
+          "createdRefsSample": [
+            {
+              "layerId": "beea068e-9382-427e-9ce9-1b31146ef664",
+              "objectId": "3ff45c36-f2a6-4ff0-8753-34e3470eefaa",
+              "pageId": "81f36981-ef18-4597-91fe-02269a61f74e"
+            }
+          ],
+          "outputHandles": [],
+          "historyReceipt": {
+            "commit": null,
+            "stepCount": null
+          },
+          "revisionReceipt": {
+            "created": null,
+            "endingRevisionId": null,
+            "documentFingerprint": null
+          },
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "inspectRaster",
+        "tool": "inspect_ink_objects",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "inspect",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 1,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": 1,
+            "contextFingerprint": "fnv1a32:e5179c6c",
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "contextImported",
+        "tool": "get_ink_context",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "context",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 2,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": 2,
+            "contextFingerprint": "fnv1a32:0f614bc8",
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "historyImported",
+        "tool": "get_ink_history",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "history.inspect",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "translatePropose",
+        "tool": "propose_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.propose",
+          "status": "PROPOSED",
+          "diagnostics": [],
+          "targetRefCount": 1,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": "propose",
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "translateApprove",
+        "tool": "approve_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.approve",
+          "status": "APPROVED",
+          "diagnostics": [],
+          "targetRefCount": 1,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": "approve",
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "translateExecute",
+        "tool": "execute_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.execute",
+          "status": "EXECUTED",
+          "diagnostics": [],
+          "targetRefCount": 1,
+          "createdRefCount": 0,
+          "changedRefCount": 1,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": {
+            "commit": null,
+            "stepCount": null
+          },
+          "revisionReceipt": {
+            "created": null,
+            "endingRevisionId": null,
+            "documentFingerprint": "fnv1a32:6d17ad4b"
+          },
+          "resultSummary": {
+            "status": null,
+            "action": "execute",
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "previewBeforeCorrection",
+        "tool": "get_ink_preview",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "preview.capture",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [
+            {
+              "background": {
+                "color": "#fffef9",
+                "included": true
+              },
+              "bounds": {
+                "h": 1532,
+                "w": 1206,
+                "x": -24,
+                "y": -24
+              },
+              "byteLength": 1286514,
+              "documentFingerprint": "fnv1a32:6d17ad4b",
+              "documentId": "f4c002e5-3f2f-4014-b455-7d1e4fd5fea9",
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:06c58283",
+              "kind": "preview",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "81f36981-ef18-4597-91fe-02269a61f74e",
+              "persistence": "NONE",
+              "pixelSize": {
+                "height": 850,
+                "width": 670
+              },
+              "renderFingerprint": "fnv1a32:c3bd4f5f",
+              "revisionId": null,
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "content",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
+            }
+          ],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": "ink-output-v1:06c58283"
+          }
+        }
+      },
+      {
+        "id": "baselineRevision",
+        "tool": "capture_ink_revision",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "revision.capture",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": {
+            "created": true,
+            "endingRevisionId": null,
+            "documentFingerprint": "fnv1a32:6d17ad4b"
+          },
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "adjustPropose",
+        "tool": "propose_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.propose",
+          "status": "PROPOSED",
+          "diagnostics": [],
+          "targetRefCount": 1,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": "propose",
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "adjustApprove",
+        "tool": "approve_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.approve",
+          "status": "APPROVED",
+          "diagnostics": [],
+          "targetRefCount": 1,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": "approve",
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "adjustExecute",
+        "tool": "execute_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.execute",
+          "status": "EXECUTED",
+          "diagnostics": [],
+          "targetRefCount": 1,
+          "createdRefCount": 0,
+          "changedRefCount": 1,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": {
+            "commit": null,
+            "stepCount": null
+          },
+          "revisionReceipt": {
+            "created": null,
+            "endingRevisionId": null,
+            "documentFingerprint": "fnv1a32:2a21a4d4"
+          },
+          "resultSummary": {
+            "status": null,
+            "action": "execute",
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "previewCorrected",
+        "tool": "get_ink_preview",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "preview.capture",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [
+            {
+              "background": {
+                "color": "#fffef9",
+                "included": true
+              },
+              "bounds": {
+                "h": 1532,
+                "w": 1206,
+                "x": -24,
+                "y": -24
+              },
+              "byteLength": 1109065,
+              "documentFingerprint": "fnv1a32:2a21a4d4",
+              "documentId": "f4c002e5-3f2f-4014-b455-7d1e4fd5fea9",
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:be8204d6",
+              "kind": "preview",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "81f36981-ef18-4597-91fe-02269a61f74e",
+              "persistence": "NONE",
+              "pixelSize": {
+                "height": 850,
+                "width": 670
+              },
+              "renderFingerprint": "fnv1a32:f279be47",
+              "revisionId": "ink-rev:1e54236d:r1:1f0ff94f:6d17ad4b",
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "content",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
+            }
+          ],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": "ink-output-v1:be8204d6"
+          }
+        }
+      },
+      {
+        "id": "correctedRevision",
+        "tool": "capture_ink_revision",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "revision.capture",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": {
+            "created": true,
+            "endingRevisionId": null,
+            "documentFingerprint": "fnv1a32:2a21a4d4"
+          },
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "revisionsAfter",
+        "tool": "get_ink_revisions",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "revision.list",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "historyCorrected",
+        "tool": "get_ink_history",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "history.inspect",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "undoCorrection",
+        "tool": "undo_ink",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "history.undo",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": {
+            "commit": null,
+            "stepCount": null
+          },
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "previewUndo",
+        "tool": "get_ink_preview",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "preview.capture",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [
+            {
+              "background": {
+                "color": "#fffef9",
+                "included": true
+              },
+              "bounds": {
+                "h": 1532,
+                "w": 1206,
+                "x": -24,
+                "y": -24
+              },
+              "byteLength": 1286514,
+              "documentFingerprint": "fnv1a32:c53fa963",
+              "documentId": "f4c002e5-3f2f-4014-b455-7d1e4fd5fea9",
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:8a3f3a19",
+              "kind": "preview",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "81f36981-ef18-4597-91fe-02269a61f74e",
+              "persistence": "NONE",
+              "pixelSize": {
+                "height": 850,
+                "width": 670
+              },
+              "renderFingerprint": "fnv1a32:c3bd4f5f",
+              "revisionId": "ink-rev:1e54236d:r2:120ed45b:2a21a4d4",
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "content",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
+            }
+          ],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": "ink-output-v1:8a3f3a19"
+          }
+        }
+      },
+      {
+        "id": "contextUndo",
+        "tool": "get_ink_context",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "context",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 2,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": 2,
+            "contextFingerprint": "fnv1a32:0c89a0f1",
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "redoCorrection",
+        "tool": "redo_ink",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "history.redo",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": {
+            "commit": null,
+            "stepCount": null
+          },
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "previewRedo",
+        "tool": "get_ink_preview",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "preview.capture",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [
+            {
+              "background": {
+                "color": "#fffef9",
+                "included": true
+              },
+              "bounds": {
+                "h": 1532,
+                "w": 1206,
+                "x": -24,
+                "y": -24
+              },
+              "byteLength": 1109065,
+              "documentFingerprint": "fnv1a32:2a21a4d4",
+              "documentId": "f4c002e5-3f2f-4014-b455-7d1e4fd5fea9",
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:4d8e1004",
+              "kind": "preview",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "81f36981-ef18-4597-91fe-02269a61f74e",
+              "persistence": "NONE",
+              "pixelSize": {
+                "height": 850,
+                "width": 670
+              },
+              "renderFingerprint": "fnv1a32:f279be47",
+              "revisionId": "ink-rev:1e54236d:r2:120ed45b:2a21a4d4",
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "content",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
+            }
+          ],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": "ink-output-v1:4d8e1004"
+          }
+        }
+      },
+      {
+        "id": "contextFinal",
+        "tool": "get_ink_context",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "context",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 2,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": 2,
+            "contextFingerprint": "fnv1a32:0c89a0f1",
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "historyFinal",
+        "tool": "get_ink_history",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "history.inspect",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      },
+      {
+        "id": "exportPng",
+        "tool": "export_ink_asset",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "asset.export",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [
+            {
+              "byteLength": 702397,
+              "documentFingerprint": "fnv1a32:2a21a4d4",
+              "documentId": "f4c002e5-3f2f-4014-b455-7d1e4fd5fea9",
+              "editable": false,
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:91a6fe4f",
+              "kind": "asset-export",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "81f36981-ef18-4597-91fe-02269a61f74e",
+              "persistence": "NONE",
+              "physicalSize": {
+                "heightMm": 297,
+                "widthMm": 210
+              },
+              "pixelSize": {
+                "height": 1684,
+                "width": 1191
+              },
+              "renderFingerprint": "fnv1a32:0e7e514b",
+              "revisionId": "ink-rev:1e54236d:r2:120ed45b:2a21a4d4",
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "artboard",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
+            }
+          ],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": "ink-output-v1:91a6fe4f"
+          }
+        }
+      },
+      {
+        "id": "inspectExport",
+        "tool": "inspect_ink_output",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "asset.inspect",
+          "status": "COMPLETED",
+          "diagnostics": [],
+          "targetRefCount": 0,
+          "createdRefCount": 0,
+          "changedRefCount": 0,
+          "createdRefsSample": [],
+          "outputHandles": [
+            {
+              "byteLength": 702397,
+              "documentFingerprint": "fnv1a32:2a21a4d4",
+              "documentId": "f4c002e5-3f2f-4014-b455-7d1e4fd5fea9",
+              "editable": false,
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:91a6fe4f",
+              "kind": "asset-export",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "81f36981-ef18-4597-91fe-02269a61f74e",
+              "persistence": "NONE",
+              "physicalSize": {
+                "heightMm": 297,
+                "widthMm": 210
+              },
+              "pixelSize": {
+                "height": 1684,
+                "width": 1191
+              },
+              "renderFingerprint": "fnv1a32:0e7e514b",
+              "revisionId": "ink-rev:1e54236d:r2:120ed45b:2a21a4d4",
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "artboard",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
+            }
+          ],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "resultSummary": {
+            "status": null,
+            "action": null,
+            "planId": null,
+            "referenceObjectId": null,
+            "sourceReferenceObjectId": null,
+            "colorObjectCount": null,
+            "lineObjectCount": null,
+            "totalMatched": null,
+            "resultCount": null,
+            "objectCount": null,
+            "contextFingerprint": null,
+            "handleId": null
+          }
+        }
+      }
+    ]
+  }
+}
