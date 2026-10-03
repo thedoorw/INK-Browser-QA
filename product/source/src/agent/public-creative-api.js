@@ -466,17 +466,50 @@ export function createInkPublicCreativeApi(app) {
     async import(input, options = {}) {
       const action = 'raster.import';
       try {
-        if (typeof app?.importWebRaster !== 'function') {
-          throw Object.assign(new Error('INK mutable web-raster import authority unavailable'), { code: 'INK_AGENT_RASTER_IMPORT_AUTHORITY_UNAVAILABLE' });
+        if (typeof app?.importWebRaster !== 'function' || typeof app?.importImageFormat !== 'function' || typeof app?.imageFormatProbe !== 'function') {
+          throw Object.assign(new Error('INK mutable raster import authority unavailable'), { code: 'INK_AGENT_RASTER_IMPORT_AUTHORITY_UNAVAILABLE' });
         }
         const historyBefore = historyInspection(app);
         const revisionBefore = currentRevisionId(app);
         const file = await normalizeChatAttachment(input, options);
-        const object = await app.importWebRaster(file, {
-          name: options?.name || file?.name || null,
-          matrix: options?.matrix ?? null,
-          sourceChannel: 'CHAT_RASTER_ATTACHMENT_HANDOFF'
-        });
+        const name = options?.name || file?.name || null;
+        const matrix = options?.matrix ?? null;
+        const fileName = String(file?.name || name || '').toLowerCase();
+        const mimeType = String(file?.type || options?.type || options?.mimeType || '').toLowerCase();
+        const rawLike = /\.(dng|nef|cr2|cr3|arw|orf|rw2|raf|pef|srw|raw)$/i.test(fileName)
+          || /(?:camera-raw|x-adobe-dng|x-canon-cr2|x-canon-cr3|x-nikon-nef|x-sony-arw|x-panasonic-rw2|x-fuji-raf|x-raw)/i.test(mimeType);
+        let object;
+        let importRoute = 'web-raster';
+        let detectedFormat = null;
+
+        if (rawLike) {
+          throw Object.assign(new Error('No approved RAW decoder is registered in the current INK runtime'), {
+            code: 'INK_AGENT_RASTER_RAW_DECODER_UNAVAILABLE',
+            field: 'input',
+            actual: file?.name || null
+          });
+        }
+
+        const bytes = new Uint8Array(await file.arrayBuffer());
+        const probe = app.imageFormatProbe(bytes);
+        detectedFormat = probe?.matched ? String(probe.format || '').toUpperCase() : null;
+        if (['PSD', 'TIFF', 'EXR'].includes(detectedFormat)) {
+          importRoute = 'advanced-format';
+          object = await app.importImageFormat(bytes, { name: name || 'Imported image', matrix, format: detectedFormat });
+        } else if (detectedFormat) {
+          throw Object.assign(new Error('Detected raster format is not qualified for CHAT mutable import'), {
+            code: 'INK_AGENT_RASTER_FORMAT_NOT_QUALIFIED',
+            field: 'input',
+            actual: detectedFormat
+          });
+        } else {
+          object = await app.importWebRaster(file, {
+            name,
+            matrix,
+            sourceChannel: 'CHAT_RASTER_ATTACHMENT_HANDOFF'
+          });
+        }
+
         const pageId = activePage(app)?.id || null;
         const selected = (Array.isArray(app?.selection) ? app.selection : [])
           .find(item => String(item?.objectId ?? item?.id ?? '') === String(object?.id || ''));
@@ -489,6 +522,7 @@ export function createInkPublicCreativeApi(app) {
         const revisionAfter = currentRevisionId(app);
         const source = object?.metadata?.rasterImport?.source || {};
         const rasterState = object?.rasterState || {};
+        const formatSource = rasterState?.source || {};
         const compactHistory = value => ({
           applied: value?.applied ?? null,
           retainedCount: value?.retainedCount ?? null,
@@ -510,10 +544,16 @@ export function createInkPublicCreativeApi(app) {
             latest: latestHistory
           },
           revisionReceipt: { before: revisionBefore, after: revisionAfter },
-          provenanceReceipt: {
-            sourceChannel: object?.metadata?.rasterImport?.sourceChannel || 'CHAT_RASTER_ATTACHMENT_HANDOFF',
-            sourceSha256: source?.sha256 || null
-          },
+          provenanceReceipt: importRoute === 'advanced-format'
+            ? {
+                sourceChannel: 'CHAT_RASTER_ATTACHMENT_HANDOFF',
+                format: formatSource?.format || detectedFormat,
+                provenance: rasterState?.provenance || null
+              }
+            : {
+                sourceChannel: object?.metadata?.rasterImport?.sourceChannel || 'CHAT_RASTER_ATTACHMENT_HANDOFF',
+                sourceSha256: source?.sha256 || null
+              },
           result: {
             objectId: object?.id || null,
             source: {
@@ -526,10 +566,13 @@ export function createInkPublicCreativeApi(app) {
             },
             rasterState: {
               type: rasterState?.type || null,
-              format: rasterState?.format || null,
+              format: formatSource?.format || rasterState?.format || detectedFormat,
+              bitDepth: rasterState?.colorRaster?.bitDepth ?? null,
+              colorMode: rasterState?.colorRaster?.colorMode ?? null,
               width: Number(object?.w) || null,
               height: Number(object?.h) || null
-            }
+            },
+            importRoute
           }
         });
       } catch (error) {
