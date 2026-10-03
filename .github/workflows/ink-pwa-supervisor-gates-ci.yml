@@ -1,0 +1,64 @@
+name: INK PWA Supervisor Gate CI
+
+on:
+  push:
+    branches:
+      - work/pwa-cache-freshness-supervisor-gates-002
+    paths:
+      - product/source/**
+      - qa/pwa-cache-freshness.test.mjs
+      - qa/pwa-cache-freshness-browser.mjs
+      - .github/workflows/ink-pwa-supervisor-gates-ci.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ink-pwa-supervisor-gates-ci
+  cancel-in-progress: true
+
+jobs:
+  local-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify deterministic identity
+        run: node product/source/generate-build-identity.mjs --check
+
+      - name: Source and syntax guards
+        run: |
+          node --test qa/pwa-cache-freshness.test.mjs
+          node product/source/generate-shell.mjs --check
+          node --check product/source/service-worker.js
+          node --check product/source/service-worker-runtime.js
+          node --check product/source/src/pwa/update-manager.js
+          node --check qa/pwa-cache-freshness-browser.mjs
+
+      - name: Materialize latest-main baseline
+        run: git worktree add "$RUNNER_TEMP/ink-pwa-baseline" 4188e9cc7673313726abd7986310d758912f63cf
+
+      - name: Real Chromium lifecycle A
+        run: |
+          mkdir -p qa/evidence/pwa-supervisor-gates
+          node qa/pwa-cache-freshness-browser.mjs \
+            "$RUNNER_TEMP/ink-pwa-baseline/product/source" \
+            "$GITHUB_WORKSPACE/product/source" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-supervisor-gates/local-a.json"
+
+      - name: Real Chromium lifecycle B
+        run: |
+          node qa/pwa-cache-freshness-browser.mjs \
+            "$RUNNER_TEMP/ink-pwa-baseline/product/source" \
+            "$GITHUB_WORKSPACE/product/source" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-supervisor-gates/local-b.json"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ink-pwa-supervisor-local-${{ github.sha }}
+          path: qa/evidence/pwa-supervisor-gates/*.json
+          if-no-files-found: error
