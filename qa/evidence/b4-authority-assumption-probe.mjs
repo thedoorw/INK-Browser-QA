@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import { applyNonDestructiveDeformation } from '../../product/source/src/vector/deformation.js';
+import { createPath } from '../../product/source/src/vector/vector-core.js';
+import { createDistortTransform, createPerspectiveTransform } from '../../product/source/src/editor/transform-advanced.js';
+const path = createPath({id:'b4-authority-probe',subpaths:[{closed:true,anchors:[{x:20,y:20},{x:140,y:20},{x:140,y:120},{x:20,y:120}]}]});
+const before = JSON.stringify(path.subpaths);
+applyNonDestructiveDeformation(path, {xOffset:12,yOffset:6});
+assert.equal(JSON.stringify(path.subpaths), before);
+assert.deepEqual(path.deformation.parameters, {xOffset:12,yOffset:6});
+assert.equal(createDistortTransform, createPerspectiveTransform);
+console.log(JSON.stringify({classification:'NATIVE_AUTHORITY_ASSUMPTION_MISMATCH',nativeSubpathsChanged:false,parametersStoredButNotConsumed:true,distortAndPerspectiveSameProjectivePlanner:true,pointerEmulation:false}));
