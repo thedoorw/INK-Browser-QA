@@ -1,3 +1,4 @@
+import { B4_BROWSER_CASE } from '../shared/b4-browser-case.mjs';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { existsSync } from 'node:fs';
@@ -123,7 +124,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['page-paper-a3','paint-session-create','stroke-create-a2','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['path-deformation-b4','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -321,6 +322,54 @@ const PAPER_A3_CASE = String.raw`(async()=>{
   if(busy.status!=='FAILED'||!JSON.stringify(busy).includes('PAPER_PREVIEW_BUSY'))throw new Error('PREVIEW_BUSY_NOT_REJECTED');
   app.renderer.render();
   return {passed:true,operation:'page.paper.set.v1',paperCoupledRunStrokeCount:2,paperBefore:paper0,paperAfter,baseline,roughPreview,changedPreview,undoRedoRenderExact:true,scopedPaperEntries:app.history.undoStack.slice(-2).map(e=>({label:e.label,captureMode:e.captureMode})),paperProfileFingerprint:fingerprint,invalidCasesRejected:rejectCases.length,noOpRejected:true,staleRejected:true,pendingPreviewRejected:true,naturalMedia:app.renderer.naturalMedia.diagnostics()};
+})()`;
+
+
+const PAPER_SINGLE_STROKE_CASE = String.raw`(async()=>{
+  const app=window.INK_APP,api=app.inkPublicApi;
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  const invoke=(tool,input={})=>Promise.resolve(api.tools.invoke(tool,input));
+  const find=(v,k)=>{if(!v||typeof v!=='object')return;if(Object.hasOwn(v,k))return v[k];for(const a of Object.values(v)){const r=find(a,k);if(r!==undefined)return r;}};
+  const frames=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const preview=async()=>{await frames();const r=await invoke('get_ink_preview',{scope:'content',background:false,maxDimension:800});if(r.status!=='COMPLETED')throw new Error('PREVIEW');return r.outputHandles[0].renderFingerprint;};
+  const edit=async task=>{
+    const p=await invoke('propose_ink_edit',{task});if(p.status!=='PROPOSED')throw new Error('PROPOSE:'+JSON.stringify(p));
+    const proposalId=find(p,'proposalId'),a=await invoke('approve_ink_edit',{proposalId});
+    const r=await invoke('execute_ink_edit',{proposalId,approvalToken:find(a,'approvalToken')});
+    if(r.status!=='EXECUTED'||find(r,'changed')!==true)throw new Error('EXECUTE:'+JSON.stringify(r));
+    return r;
+  };
+  const paperTask=(id,key,value)=>({taskId:id,operation:'page.paper.set.v1',targets:[],arguments:{key,value}});
+  const strokeTask=(id,kind)=>({taskId:id,operation:'stroke.create.v1',targets:[],arguments:{
+    kind,color:kind==='drybrush'?'#42689a':'#8f3f58',size:72,opacity:.85,flow:.75,
+    wetness:kind==='drybrush'?.22:.82,grain:kind==='drybrush'?.82:.4,bristle:kind==='drybrush'?.78:.4,
+    samples:[{x:-120,y:-20,pressure:.3,timestamp:0},{x:0,y:70,pressure:.9,timestamp:24},{x:120,y:-40,pressure:.6,timestamp:48}]
+  }});
+  const flat=()=>app.page().layers.flatMap(l=>l.objects||[]);
+  const paper0=JSON.parse(JSON.stringify(app.page().paper));
+  const cases=[];
+  for(const kind of ['brush','drybrush']){
+    app.history.clear();
+    if(flat().some(o=>o.type==='stroke'))throw new Error('SETUP_NOT_EMPTY:'+kind);
+    const created=await edit(strokeTask('qa-single-'+kind,kind));
+    const objectId=find(created,'objectId');const object=flat().find(o=>o.id===objectId);
+    if(!object||object.type!=='stroke'||object.kind!==kind)throw new Error('STROKE_INVALID:'+kind);
+    const identity=JSON.stringify(object),baseline=await preview(),historyBefore=app.history.undoStack.length;
+    await edit(paperTask('qa-single-paper-'+kind,'absorbency',.05));
+    const changed=await preview();
+    if(changed===baseline)throw new Error('SINGLE_PAPER_RENDER_NO_DELTA:'+kind);
+    if(JSON.stringify(flat().find(o=>o.id===objectId))!==identity)throw new Error('STROKE_MUTATED:'+kind);
+    if(app.history.undoStack.length!==historyBefore+1)throw new Error('PAPER_HISTORY_EXTRA:'+kind);
+    const diagnostics=app.renderer.naturalMedia.diagnostics();
+    if(!String(diagnostics.activeBackend).includes('multichannel'))throw new Error('NOT_MULTICHANNEL:'+kind+':'+diagnostics.activeBackend);
+    const undoPaper=await invoke('undo_ink');if(undoPaper.status==='FAILED'||(await preview())!==baseline)throw new Error('PAPER_UNDO:'+kind);
+    const redoPaper=await invoke('redo_ink');if(redoPaper.status==='FAILED'||(await preview())!==changed)throw new Error('PAPER_REDO:'+kind);
+    await invoke('undo_ink');
+    const undoStroke=await invoke('undo_ink');if(undoStroke.status==='FAILED'||flat().some(o=>o.id===objectId))throw new Error('STROKE_UNDO:'+kind);
+    if(JSON.stringify(app.page().paper)!==JSON.stringify(paper0))throw new Error('PAPER_NOT_RESTORED:'+kind);
+    cases.push({kind,objectId,baseline,changed,historyBefore,paperHistoryAfter:historyBefore+1,activeBackend:diagnostics.activeBackend,identityStable:true,undoRedoExact:true});
+  }
+  return {passed:true,paperBefore:paper0,cases,naturalMedia:app.renderer.naturalMedia.diagnostics()};
 })()`;
 
 const RASTER_CASE = String.raw`(async()=>{
@@ -814,7 +863,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))));
+    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     assert.equal(caseResult?.passed,true,'Candidate case did not pass');
     const shot=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false},sessionId,30000);

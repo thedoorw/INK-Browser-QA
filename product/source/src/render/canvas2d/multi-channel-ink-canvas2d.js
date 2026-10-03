@@ -12,12 +12,13 @@ export class Canvas2DMultiChannelInkRenderer {
     this.cache = new Map();this.stats = { backend: 'canvas2d-multichannel', runs: 0, strokes: 0, stamps: 0, pixels: 0, cacheHits: 0, cacheMisses: 0, evictions: 0, skipped: 0 };
   }
 
-  supports(entries) {
-    return supportsNaturalMediaRun(entries);
+  supports(entries, { minimum = 2 } = {}) {
+    return supportsNaturalMediaRun(entries, { minimum });
   }
 
   render(entries, paper = {}, options = {}) {
-    if (!this.supports(entries)) { this.stats.skipped++;return null; }
+    const minimumStrokes = Math.max(1, Math.trunc(options.minimumStrokes ?? 2));
+    if (!this.supports(entries, { minimum: minimumStrokes })) { this.stats.skipped++;return null; }
     const run = prepareNaturalMediaRun(entries);if (!run.bounds) return null;
     const preferredScale = clamp(options.preferredScale ?? 1.35, .18, 6);
     const maxDimension = Math.max(128, options.maxDimension ?? this.maxDimension);

@@ -620,3 +620,79 @@ A4_TARGETED_ERASER = OPEN / SEPARATE
 A5_BLENDER_SMUDGE = OPEN / SEPARATE PRODUCT_RENDER_INTEGRATION_GAP
 FULL_NATURAL_MEDIA_COMPLETENESS = NOT_CLAIMED
 ```
+
+
+## Combined Capability Qualification — Draw + Reference closure — 2026-10-03
+
+Formal record:
+`working/INK_COMBINED_CAPABILITY_QUALIFICATION_20261003.md`
+
+Evidence manifest:
+`qa/evidence/combined-capability-20261003/evidence-manifest.json`
+
+Authority:
+```text
+QA_MAIN_BEFORE_COMBINED = d26539b3c98c11bf0d1da55b190ff5937b2a0f70
+LIVE_WRAPPER_AT_TEST = 8d2fba408efc205c903efaae24a958440a6a71b1
+DEPLOYED_PRODUCT_SOURCE = ab84aafc3006f0f14a74d231ca862200bd0b5d94
+EVIDENCE_CHECKPOINT_BEFORE_PROGRESS_RECORD = 800b428d7fb2238c856f73195f7d1aabae5d8825
+PRODUCT_MUTATION = NONE
+```
+
+### INK-QA-C Draw
+
+```text
+REQUEST = ink-qa-c-draw-combined-001
+REQUEST_COMMIT = b6033cc2f8b107844084ce5cfd11b6f4cb3e4a0d
+RESULT_COMMIT = f50c885ed80a0056dd9df098879e9473b3e5f071
+RUN = 37086517849
+ARTIFACT = 11261115603
+RESULT = PASS
+```
+
+Combined native drawing route completed:
+Paper → Brush Stroke → DryBrush Stroke → Preview/Context/History → CHAT Airbrush correction → Preview → Undo → Redo → final verification → PNG output.
+
+Renderer fingerprints:
+`fnv1a32:287f934e → fnv1a32:eb357f3b → Undo 287f934e → Redo eb357f3b`.
+
+Final native state: 3 editable Stroke objects; final History: 4 scoped entries; A4 PNG output fingerprint `fnv1a32:73678494`.
+
+Known A3 gaps remain open but did not block this qualified route:
+- `PAPER_SINGLE_STROKE_RENDER_INTEGRATION`
+- `PAPER_WEBGL_ROUGHNESS_PARITY`
+
+### INK-QA-B Reference
+
+```text
+REQUEST = ink-qa-b-reference-combined-001
+REQUEST_COMMIT = 61cb1278f4f84a79fe58396570b5509ab10a5ee5
+RESULT_COMMIT = d889043a6d653ea96946f1643e9ddf6c150e696b
+RUN = 37086642087
+ARTIFACT = 11261355427
+RESULT = PASS
+```
+
+Combined reference route completed:
+Reference intake → editable raster import → inspect → translate → Preview → baseline Revision → CHAT brightness/contrast correction → Preview → corrected Revision → History → Undo/Redo → final verification → PNG output + output inspection.
+
+Native separation is preserved:
+- locked/non-editable Reference: `7d9ce64f-9374-4793-9317-37adc78cd00e-reference`;
+- mutable native image: `7892c1c0-7b53-4ffd-90e5-e9586bc60a32`, 1086×1448, editable.
+
+Renderer fingerprints:
+`fnv1a32:c3bd4f5f → fnv1a32:f279be47 → Undo c3bd4f5f → Redo f279be47`.
+
+Revision chain:
+- r1 `ink-rev:7cee1722:r1:efc3c675:163505a7`;
+- r2 `ink-rev:7cee1722:r2:164a463d:7fe7d877`.
+
+Final History: 4 scoped entries; A4 PNG output fingerprint `fnv1a32:0e7e514b`.
+
+```text
+INK_QA_C_DRAW_CLOSURE = PASS
+INK_QA_B_REFERENCE_CLOSURE = PASS
+COMBINED_CAPABILITY_QUALIFICATION = PASS
+ROUND_2_COMBINED_DRAW_REFERENCE = CLOSED
+NEW_PRODUCT_CAPABILITY = NONE
+```

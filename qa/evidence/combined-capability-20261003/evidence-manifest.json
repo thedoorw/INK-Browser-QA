@@ -1,0 +1,75 @@
+{
+  "schema": "INK-COMBINED-CAPABILITY-QUALIFICATION-EVIDENCE",
+  "version": 1,
+  "date": "2026-10-03",
+  "classification": "PURE_TEST_EVIDENCE",
+  "productMutation": false,
+  "identities": {
+    "qaMainBefore": "d26539b3c98c11bf0d1da55b190ff5937b2a0f70",
+    "liveWrapperAtTest": "8d2fba408efc205c903efaae24a958440a6a71b1",
+    "deployedProductSource": "ab84aafc3006f0f14a74d231ca862200bd0b5d94",
+    "liveUrl": "https://thedoorw.github.io/INK/"
+  },
+  "draw": {
+    "requestId": "ink-qa-c-draw-combined-001",
+    "requestCommit": "b6033cc2f8b107844084ce5cfd11b6f4cb3e4a0d",
+    "resultCommit": "f50c885ed80a0056dd9df098879e9473b3e5f071",
+    "workflowRun": 37086517849,
+    "artifactId": 11261115603,
+    "artifactDigest": "sha256:283205a6522e5a6042b40e9effd2f1b60f28fdb453066c60314eef3a6e797585",
+    "preview": {
+      "initial": "fnv1a32:287f934e",
+      "corrected": "fnv1a32:eb357f3b",
+      "undo": "fnv1a32:287f934e",
+      "redo": "fnv1a32:eb357f3b",
+      "export": "fnv1a32:73678494"
+    },
+    "finalNativeObjectCount": 3,
+    "historyAppliedFinal": 4,
+    "classification": "PASS"
+  },
+  "reference": {
+    "requestId": "ink-qa-b-reference-combined-001",
+    "requestCommit": "61cb1278f4f84a79fe58396570b5509ab10a5ee5",
+    "resultCommit": "d889043a6d653ea96946f1643e9ddf6c150e696b",
+    "workflowRun": 37086642087,
+    "artifactId": 11261355427,
+    "artifactDigest": "sha256:72e58741c507727f274d812e2fe295e550a4a7cd0a2fb262a06d21057b165f44",
+    "referenceObjectId": "7d9ce64f-9374-4793-9317-37adc78cd00e-reference",
+    "editableRasterObjectId": "7892c1c0-7b53-4ffd-90e5-e9586bc60a32",
+    "preview": {
+      "beforeCorrection": "fnv1a32:c3bd4f5f",
+      "corrected": "fnv1a32:f279be47",
+      "undo": "fnv1a32:c3bd4f5f",
+      "redo": "fnv1a32:f279be47",
+      "export": "fnv1a32:0e7e514b"
+    },
+    "revisions": [
+      {
+        "revisionId": "ink-rev:7cee1722:r1:efc3c675:163505a7",
+        "sequence": 1,
+        "label": "Reference editable baseline after transform",
+        "documentFingerprint": "fnv1a32:163505a7"
+      },
+      {
+        "revisionId": "ink-rev:7cee1722:r2:164a463d:7fe7d877",
+        "sequence": 2,
+        "label": "Reference corrected brightness contrast",
+        "documentFingerprint": "fnv1a32:7fe7d877"
+      }
+    ],
+    "historyAppliedFinal": 4,
+    "classification": "PASS"
+  },
+  "retainedGaps": [
+    {
+      "id": "PAPER_SINGLE_STROKE_RENDER_INTEGRATION",
+      "classification": "PRODUCT_RENDER_INTEGRATION_GAP"
+    },
+    {
+      "id": "PAPER_WEBGL_ROUGHNESS_PARITY",
+      "classification": "PRODUCT_RENDER_INTEGRATION_GAP_BACKEND_PARITY"
+    }
+  ],
+  "overall": "PASS"
+}
