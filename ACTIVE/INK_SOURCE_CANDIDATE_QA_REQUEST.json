@@ -1,8 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B4-final-candidate-regressions-003",
-  "candidateSha": "938016b79e10c6ac1c06ad930be35a67654c381b",
-  "case": "path-deformation-b4",
-  "regressions": true
+  "requestId": "local-paper-webgl-roughness-candidate-001",
+  "candidateSha": "e75ff85e28a7fa6370d25c1a9f38c6488e189023",
+  "case": "page-paper-webgl-roughness"
 }
