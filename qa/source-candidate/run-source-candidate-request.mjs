@@ -1010,9 +1010,9 @@ async function run(){
   }
 }
 await run();
-// Fresh installed-browser process/profile for each required B4 regression.
+// Fresh installed-browser process/profile for each required cross-capability regression.
 const batchRequest=JSON.parse(await readFile(path.resolve(process.argv[2]),'utf8'));
-if(batchRequest.case==='path-deformation-b4' && batchRequest.regressions===true && !process.exitCode){
+if(['path-deformation-b4','stroke-erase-a4'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
   const primary=JSON.parse(await readFile(path.resolve(process.argv[4]),'utf8'));
   primary.regressions=[];
   for(const caseName of ['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2']){
