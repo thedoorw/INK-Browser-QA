@@ -1,4 +1,4 @@
-export const PAPER_WEBGL_ROUGHNESS_CASE = String.raw\`(async()=>{
+export const PAPER_WEBGL_ROUGHNESS_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
   if(!api?.tools?.invoke)throw new Error('INK_PUBLIC_API_UNAVAILABLE');
   if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
@@ -121,4 +121,4 @@ export const PAPER_WEBGL_ROUGHNESS_CASE = String.raw\`(async()=>{
     },
     naturalMedia:diagnostics
   };
-})()\`;
+})()`;
