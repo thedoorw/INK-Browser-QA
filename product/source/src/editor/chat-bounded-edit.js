@@ -526,8 +526,7 @@ function normalizeImageRasterMaskArguments(raw = {}) {
     height: boundedNumber(raw.height, 'arguments.height', { min: Number.EPSILON, max: 1e6 }),
     invert: boundedBoolean(raw.invert ?? false, 'arguments.invert'),
     feather: boundedNumber(raw.feather ?? 0, 'arguments.feather', { min: 0, max: 256 }),
-    expand: boundedNumber(raw.expand ?? 0, 'arguments.expand', { min: -256, max: 256, integer: true }),
-    enabled: boundedBoolean(raw.enabled ?? true, 'arguments.enabled')
+    expand: boundedNumber(raw.expand ?? 0, 'arguments.expand', { min: -256, max: 256, integer: true })
   };
 }
 
@@ -2470,7 +2469,7 @@ function executeImageRasterMaskTask(app, task) {
     invert: args.invert,
     feather: args.feather,
     expand: args.expand,
-    enabled: args.enabled
+    enabled: true
   };
   if (rasterMaskFingerprint(object.rasterMask) === rasterMaskFingerprint(nextMask)) {
     editFail('NO_OP', { operation: task.operation });
