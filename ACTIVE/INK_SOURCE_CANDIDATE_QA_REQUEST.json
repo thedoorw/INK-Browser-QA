@@ -1,8 +1,8 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B3-raster-mask-candidate-002-regressions",
-  "candidateSha": "e018a08c5c8e352908eee5e066f2e33eee883946",
-  "case": "raster-mask-b3",
+  "requestId": "clusterB-B3-spot-heal-candidate-001-regressions",
+  "candidateSha": "0551f4516ea197d60a8cae711abf2db7ab92c2c4",
+  "case": "raster-spot-heal-b3",
   "regressions": true
 }
