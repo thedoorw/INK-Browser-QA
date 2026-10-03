@@ -149,6 +149,15 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
     await frames();
     return {status:r.status,fingerprint:find(r,'renderFingerprint')||find(r,'fingerprint')||null,bounds:find(r,'bounds')||null};
   };
+  const renderProbe=async()=>{
+    const canvas=await app.renderExportCanvas({scope:'content',scale:1,background:true});
+    const data=canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height).data;
+    let h=2166136261;
+    for(let i=0;i<data.length;i++){h^=data[i];h=Math.imul(h,16777619);}
+    const result={hash:(h>>>0).toString(16),width:canvas.width,height:canvas.height};
+    canvas.width=1;canvas.height=1;
+    return result;
+  };
   const edit=async(task,{checkBlocked=false}={})=>{
     const p=await invoke('propose_ink_edit',{task});
     if(p?.status==='FAILED')throw new Error('PROPOSE_FAILED:'+task.operation+':'+JSON.stringify(p.diagnostics||[]));
@@ -238,6 +247,7 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
   const redoInstance=await invoke('redo_ink',{});if(redoInstance?.status==='FAILED'||!instancePresent())throw new Error('MATERIAL_INSTANCE_REDO_FAILED');
 
   const beforeApply=await preview();
+  const beforeApplyProbe=await renderProbe();
   const applyExecution=await edit({
     schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-apply',
     operation:'path.material.apply.v1',targets:[targetRef],
@@ -246,7 +256,16 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
   const applied=app.page().layers.flatMap(layer=>layer.objects||[]).find(object=>object.id===targetId);
   if(applied?.materialAppearance?.templateId!==template.templateId)throw new Error('PATH_MATERIAL_NOT_APPLIED');
   const afterApply=await preview();
-  if(beforeApply.fingerprint&&afterApply.fingerprint&&beforeApply.fingerprint===afterApply.fingerprint)throw new Error('MATERIAL_PREVIEW_NO_DELTA');
+  const afterApplyProbe=await renderProbe();
+  if(beforeApplyProbe.hash===afterApplyProbe.hash){
+    const storedTemplate=app.doc.materialLibrary?.templates?.find(item=>item.templateId===template.templateId)||null;
+    throw new Error('MATERIAL_RENDER_NO_DELTA:'+JSON.stringify({
+      beforeApply,afterApply,beforeApplyProbe,afterApplyProbe,
+      storedPathAppearance:storedTemplate?.metadata?.pathAppearance||storedTemplate?.pathAppearance||null,
+      targetMaterialAppearance:applied?.materialAppearance||null,
+      targetFill:applied?.fill||null,targetStroke:applied?.stroke||null
+    }));
+  }
   const undoApply=await invoke('undo_ink',{});if(undoApply?.status==='FAILED')throw new Error('MATERIAL_APPLY_UNDO_FAILED');
   const undoApplied=app.page().layers.flatMap(layer=>layer.objects||[]).find(object=>object.id===targetId);
   if(undoApplied?.materialAppearance)throw new Error('MATERIAL_APPLY_UNDO_NOT_EXACT');
