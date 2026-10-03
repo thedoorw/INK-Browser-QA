@@ -1,52 +1,131 @@
 # INK DEV Progress
 
-STATUS: `DEV_COMPLETE — STOPPED FOR CHAT / CORE / LIVE AUTHORITY`
+STATUS: `UI-C / UR_PASS / PROMOTION_READY`
 
-TASK: `INK-C019-TEXT-WARP-RENDER-INTEGRATION-001`
+TASK: `INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001`
 
-BRANCH: `work/ink-c019-text-warp-render-001`
+BRANCH: `work/ink-ui-c-photoshop-fidelity-closure-001`
 
-BASE_MAIN_AT_DISPATCH: `b6f837643064100b04cad12e338db782709ce255`
+BASE_MAIN: `fe0ad7dd8aec3cb51314378d4b6b628f5bfbab56`
 
-LATEST_MAIN_OBSERVED_AT_RETURN: `b1a4331de524c193f77a40b1ad530cfcf75ba37f`
+SOURCE_CLOSURE_HEAD: `d5fccb906bce3201f0f9e829f71fb92d5dc786ef`
 
-EXACT_BROWSER_QUALIFIED_CANDIDATE: `35872e4f498950c58d47aac64f8e515967b081e9`
+DEV HANDOFF:
+`working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md`
 
-DRAFT_PR: `#152`
+WORKPACK:
+`working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_WORKPACK_v1.0.md`
 
-FORMAT_VERSION: `4 / UNCHANGED`
+## Gate
 
-## Completion
+```text
+UI_A = PROMOTED
+UI_B = UR_PASS / PROMOTED
+UI_C = DEV_BOUNDED_REVISION_R1_COMPLETE / UR_REVIEW_REQUIRED
+OWNER = UR
+DEV_HANDOFF = STOP_TO_UR
+MR_INTERMEDIARY = NO
+FORMAT_VERSION_CHANGE = 0
+P2 = NOT STARTED
+CENTRAL_RUNTIME = NOT RUN
+INTEGRATION_REQUIRED = NO
+```
 
-- latest-main-at-dispatch C019 render gap reconfirmed;
-- formal Renderer now consumes native Text `pathText` through existing `layoutTextOnPath()`;
-- Text remains editable `type:'text'`; no Path/raster conversion;
-- bounded CHAT `text.path.set.v1` added after renderer integration;
-- Text + referenced Path stale-state protection and renderability guards added;
-- exact-candidate browser QA PASS;
-- exact Undo / Redo PASS;
-- post-curve text editing PASS;
-- B4 Path warp follow-through PASS;
-- FORMAT_VERSION 4 persistence PASS;
-- focused Node QA: 30/30 PASS;
-- fresh-browser B4 / A2 / B2 regressions PASS;
-- branch-only browser harness removed after evidence capture;
-- evidence and DEV return committed;
-- no merge;
-- no deploy.
+## DEV closure checkpoint
 
-## Evidence
+```text
+BASE_PINNED = YES
+BRANCH_FAST_FORWARD_FROM_BASE = YES
+SOURCE_STATIC_QA = 50 / 50 PASS
+PHOTOSHOP_GEOMETRY_SOURCE_CONTRACT = PASS
+FINE_DETAIL_SOURCE_CONTRACT = PASS
+LIGHT_THEME_SEMANTIC_AUTHORITY = PASS
+UI_B_CAPABILITY_WIRING = PRESERVED
+PUI_001_074 = PRESERVED / 74 OF 74
+G_01_34 = PRESERVED / 34 OF 34
+FAMILY_PLACEMENT = 64 / 64 PRESERVED
+NORMALIZED_ATOMICS = 501 / 501 PRESERVED
+SELECT_CONTROLS = 29 / 29 ACCOUNTED
+PREDECESSOR_STATIC_BUTTON_FAMILIES = 212 ACCOUNTED
+CHAT_NAMED_TOOLS = 22 / 22 PRESERVED
+BOUNDED_EDIT_OPERATIONS = 34 / 34 PRESERVED
+DUPLICATE_LITERAL_DOM_IDS = 0
+HARD_CODED_NORMAL_UI_PX_FONT_SIZE = 0
+NEW_UNAUTHORIZED_WIDTH_THRESHOLD = 0
+CENTRAL_RUNTIME = NOT RUN
+```
 
-- `qa/evidence/c019-text-warp-render-20261003/C019_BROWSER_QA_EVIDENCE.json`
-- `qa/evidence/c019-text-warp-render-20261003/C019_SOURCE_CANDIDATE_QA_REQUEST.json`
-- `working/INK_C019_TEXT_WARP_RENDER_INTEGRATION_FINAL_DEV_RETURN_20261003.md`
+Authoritative screenshot/runtime acceptance remains UR/final integrated-Runtime work.
+DEV stops here and does not self-promote.
 
-## Integration note
+**STOP → UR**
 
-Main advanced after dispatch with Cluster C4 and now overlaps C019 in `chat-bounded-edit.js` and `capability-registry.js`. Cluster C was an explicit hard boundary, so this DEV did not rebase/import C4. Draft PR #152 is non-mergeable and must be reconciled by CHAT / Core / Live authority.
 
-LATEST_CHECKPOINT_SHA: `566ab7194cdc37289823f80f10b5a5f4ef0e3ec7`
+## UR Review Round 1
 
-## STOP
+Authority:
+`working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_v1.0.md`
 
-**STOP → CHAT / Core / Live authority.**
+```text
+R1_DYNAMIC_RULERS = REVISION_REQUIRED
+R2_NAVIGATOR_SYNC = REVISION_REQUIRED
+R3_TOOL_ACTIVE_FILL = REVISION_REQUIRED
+R4_POPUP_SEPARATOR = REVISION_REQUIRED
+CENTRAL_RUNTIME = NOT RUN
+INTEGRATION_REQUIRED = NO
+NEXT = DEV_BOUNDED_REVISION → STOP_TO_UR
+```
+
+
+## DEV bounded revision R1 completion
+
+UR return head:
+`48c36674eb2ad60ad002a873e1e2151c9177c209`
+
+Revision source head:
+`d736dc880dffdd7832b9cc37484616f3185d950a`
+
+```text
+R1_DYNAMIC_RULERS = SOURCE_AND_INTERACTION_PATH_READY
+R2_NAVIGATOR_SYNC = SOURCE_AND_INTERACTION_PATH_READY
+R3_TOOL_ACTIVE_FILL = PASS / 31×24 VISUAL FILL / 31×26 HIT TARGET
+R4_POPUP_SEPARATOR = PASS / #C0C0C0 / 1px / 2px INSET
+RULER_GUIDE_ADD_AUTHORITY = app.addGuide() PRESERVED
+RULER_COORDINATE_AUTHORITY = renderer.screenToWorld() PRESERVED
+NAVIGATOR_VIEWPORT_AUTHORITY = renderer.viewportWorldBounds() PRESERVED
+NAVIGATOR_DOCUMENT_BOUNDS = renderer.contentBounds() / SAME WORLD MAPPING
+NAVIGATOR_CAMERA_AUTHORITY = EXISTING page.camera ONLY
+GUIDE_READOUT = X: / Y:
+FOCUSED_SOURCE_STATIC_QA = 58 / 58 PASS
+BOUNDED_DIFF = 5 SOURCE_QA_FILES / NO CORE AUTHORITY FILE
+styles.css chars = 184824 → 184692 (-132)
+!important total = 36 → 36
+RESPONSIVE_WIDTH_FAMILY = 760 / 761 / 1120 UNCHANGED
+DUPLICATE_LITERAL_DOM_IDS = 0
+FORMAT_VERSION = 4 / UNCHANGED
+BUILD_ID = 20260928-ui-c-photoshop-fidelity-closure-r1
+CENTRAL_RUNTIME = NOT RUN
+INTEGRATION_REQUIRED = NO
+```
+
+Authoritative browser visual/interaction acceptance remains UR work.
+
+**STOP → UR**
+
+
+## UR R1 closure
+
+Authority:
+`working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md`
+
+```text
+R1_DYNAMIC_RULERS = PASS
+R2_NAVIGATOR_SYNC = PASS
+R3_TOOL_ACTIVE_FILL = PASS
+R4_POPUP_SEPARATOR = PASS
+UI_C_UR = PASS
+UI_C_PROMOTION = READY
+CENTRAL_RUNTIME = NOT RUN
+INTEGRATION_REQUIRED = NO
+NEXT = UR_PROMOTION → STOP_TO_MR
+```
