@@ -210,6 +210,10 @@ async function cacheKeys(cdp, sessionId) {
   return evaluate(cdp,sessionId,"caches.keys()");
 }
 
+async function appBuildIdentity(cdp, sessionId) {
+  return evaluate(cdp,sessionId,"window.INK_ARCHITECTURE?.buildId || null");
+}
+
 async function coherentCacheProbe(cdp, sessionId, identity) {
   const shell = JSON.stringify(identity.shellCache);
   const id = JSON.stringify(identity.buildId);
@@ -312,7 +316,9 @@ try {
 
   const candidateIdentity = await workerIdentity(cdp,sessionId);
   const candidateCaches = await cacheKeys(cdp,sessionId);
+  const candidateAppBuildId = await appBuildIdentity(cdp,sessionId);
   assert.equal(candidateIdentity.buildId,expectedCandidateBuildId);
+  assert.equal(candidateAppBuildId,expectedCandidateBuildId);
   assert.ok(candidateCaches.includes(candidateIdentity.shellCache));
   assert.ok(candidateCaches.every(key => !key.startsWith('ink-build-') || key.includes(expectedCandidateBuildId)));
   const coherent = await coherentCacheProbe(cdp,sessionId,candidateIdentity);
@@ -328,6 +334,7 @@ try {
 
   report.afterOrdinaryReload = {
     identity: candidateIdentity,
+    appBuildId: candidateAppBuildId,
     caches: candidateCaches,
     coherent,
     navigationRequestsAfterSwitch: navCount3
@@ -343,8 +350,10 @@ try {
   await waitReady(cdp,sessionId);
   await waitControlled(cdp,sessionId);
   const reopenIdentity = await workerIdentity(cdp,sessionId);
+  const reopenAppBuildId = await appBuildIdentity(cdp,sessionId);
   assert.equal(reopenIdentity.buildId,expectedCandidateBuildId);
-  report.reopen = { identity: reopenIdentity, caches: await cacheKeys(cdp,sessionId) };
+  assert.equal(reopenAppBuildId,expectedCandidateBuildId);
+  report.reopen = { identity: reopenIdentity, appBuildId: reopenAppBuildId, caches: await cacheKeys(cdp,sessionId) };
   report.checks.closeReopenReachedCandidate = true;
 
   await hosted.stop();
@@ -352,12 +361,14 @@ try {
   await waitReady(cdp,sessionId);
   await waitControlled(cdp,sessionId);
   const offlineIdentity = await workerIdentity(cdp,sessionId);
+  const offlineAppBuildId = await appBuildIdentity(cdp,sessionId);
   const offlineCaches = await cacheKeys(cdp,sessionId);
   const offlineCoherent = await coherentCacheProbe(cdp,sessionId,offlineIdentity);
   assert.equal(offlineIdentity.buildId,expectedCandidateBuildId);
+  assert.equal(offlineAppBuildId,expectedCandidateBuildId);
   assert.ok(offlineCaches.includes(offlineIdentity.shellCache));
   assert.deepEqual(offlineCoherent,{buildIdentityMatches:true,managerIsCandidate:true,htmlPresent:true});
-  report.offline = { identity: offlineIdentity, caches: offlineCaches, coherent: offlineCoherent };
+  report.offline = { identity: offlineIdentity, appBuildId: offlineAppBuildId, caches: offlineCaches, coherent: offlineCoherent };
   report.checks.offlineFallbackLoads = true;
 
   report.requestSummary = {
