@@ -1671,6 +1671,9 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     if (pathFound.layer?.id !== textFound?.layer?.id || pathParentId !== textParentId) {
       editFail('PATH_TEXT_CONTAINER_MISMATCH', { objectId: pathFound.object.id });
     }
+    if (!Matrix.isInvertible(textFound.object?.matrix || Matrix.identity())) {
+      editFail('TARGET_SINGULAR', { objectId: textFound.object.id });
+    }
     if (!Matrix.isInvertible(pathFound.worldMatrix || pathFound.object?.matrix || Matrix.identity())) {
       editFail('TARGET_SINGULAR', { objectId: pathFound.object.id });
     }
