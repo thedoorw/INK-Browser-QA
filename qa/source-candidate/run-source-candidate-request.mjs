@@ -125,7 +125,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -646,6 +646,106 @@ const RASTER_NAMED_TOOL_CASE = String.raw`(async()=>{
   const restored=flatObjects().find(item=>item.id===object.id);
   if(redone?.status==='FAILED'||!restored?.rasterState?.colorRaster) throw new Error('RASTER_REDO_FAILED');
   return {passed:true,before,after,importStatus:imported.status,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,restoredFormat:restored.rasterState.type||null};
+})()`;
+
+const RASTER_LOCAL_RETOUCH_B3_CASE = String.raw`(async()=>{
+  const app=window.INK_APP,api=app?.inkPublicApi;
+  if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+  const toolNames=api.tools.registry().map(item=>item.name);
+  for(const name of ['import_ink_raster','describe_ink_capability','propose_ink_edit','approve_ink_edit','execute_ink_edit','get_ink_preview','undo_ink','redo_ink']) if(!toolNames.includes(name)) throw new Error('MISSING_TOOL:'+name);
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  const flatObjects=()=>app.page().layers.flatMap(layer=>layer.objects||[]);
+  const waitFrames=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const findField=(value,key,depth=0)=>{if(value==null||depth>12||typeof value!=='object')return undefined;if(Object.prototype.hasOwnProperty.call(value,key))return value[key];for(const item of Object.values(value)){const found=findField(item,key,depth+1);if(found!==undefined)return found;}return undefined;};
+  const fnv=value=>{const text=typeof value==='string'?value:JSON.stringify(value);let h=2166136261;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(16).padStart(8,'0');};
+  const rasterHash=object=>fnv(object?.rasterState?.colorRaster||null);
+  const preview=async()=>{await waitFrames();const r=await Promise.resolve(api.tools.invoke('get_ink_preview',{scope:'content',maxDimension:800,background:true}));if(r?.status==='FAILED')throw new Error('PREVIEW_FAILED');return {status:r.status,fingerprint:findField(r,'renderFingerprint')||null};};
+  const propose=async task=>{const p=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task}));if(p?.status==='FAILED')throw new Error('PROPOSE_FAILED:'+JSON.stringify(p.diagnostics||[]));const proposalId=findField(p,'proposalId');if(!proposalId)throw new Error('PROPOSAL_ID_MISSING');return proposalId;};
+  const approve=async proposalId=>{const a=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId}));if(a?.status==='FAILED')return a;const token=findField(a,'approvalToken');if(!token)throw new Error('TOKEN_MISSING');return {result:a,token};};
+  const edit=async task=>{const proposalId=await propose(task),approved=await approve(proposalId);if(!approved.token)throw new Error('APPROVE_FAILED:'+JSON.stringify(approved));const e=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId,approvalToken:approved.token}));if(e?.status==='FAILED')throw new Error('EXECUTE_FAILED:'+JSON.stringify(e.diagnostics||[]));if(findField(e,'changed')!==true)throw new Error('EXECUTE_NOT_CHANGED');await waitFrames();return e;};
+
+  const source=document.createElement('canvas');source.width=72;source.height=54;
+  const ctx=source.getContext('2d'),image=ctx.createImageData(72,54);
+  for(let y=0;y<54;y++)for(let x=0;x<72;x++){
+    const o=(y*72+x)*4;
+    image.data[o]=60+((x*7+y*3)%140);
+    image.data[o+1]=50+((x*3+y*11)%150);
+    image.data[o+2]=70+((x*13+y*5)%140);
+    image.data[o+3]=255;
+  }
+  for(let y=8;y<21;y++)for(let x=52;x<65;x++){
+    const o=(y*72+x)*4;image.data[o]=180;image.data[o+1]=70;image.data[o+2]=60;image.data[o+3]=255;
+  }
+  ctx.putImageData(image,0,0);
+  const blob=await new Promise(resolve=>source.toBlob(resolve,'image/png'));if(!blob)throw new Error('PNG_BLOB_FAILED');
+  const file=new File([blob],'candidate-raster-local-retouch-b3.png',{type:'image/png'});
+  const imported=await Promise.resolve(api.tools.invoke('import_ink_raster',{input:{file},options:{name:'QA B3 Local Retouch',type:'image/png',intent:'B3 non-source local retouch candidate QA'}}));
+  if(imported?.status==='FAILED')throw new Error('RASTER_IMPORT_FAILED');
+  const ref=imported?.createdRefs?.[0];if(!ref?.objectId)throw new Error('RASTER_REF_MISSING');
+  await waitFrames();let object=flatObjects().find(item=>item.id===ref.objectId);if(!object?.rasterState?.colorRaster)throw new Error('RASTER_STATE_MISSING');
+
+  const descriptor=await Promise.resolve(api.tools.invoke('describe_ink_capability',{idOrToolName:'image.raster.localRetouch.v1'}));
+  if(descriptor?.status==='FAILED')throw new Error('LOCAL_RETOUCH_DESCRIPTOR_FAILED');
+  const descriptorText=JSON.stringify(descriptor);
+  for(const type of ['dodge','burn','sponge','localBlur','localSharpen','colorReplacement'])if(!descriptorText.includes(type))throw new Error('LOCAL_RETOUCH_TYPE_MISSING:'+type);
+  for(const excluded of ['cloneStamp','healingBrush','patchRaster','patternStamp'])if(descriptorText.includes(excluded))throw new Error('SOURCE_DEPENDENT_TYPE_EXPOSED:'+excluded);
+
+  app.selection=[];app.refreshSelectionUI?.();app.renderer?.render?.();await waitFrames();app.history.clear();
+  const baselineHash=rasterHash(object),baselinePreview=await preview();
+  const task=(taskId,type,args={})=>({schema:'INK-CHAT-EDIT-TASK',version:1,taskId,operation:'image.raster.localRetouch.v1',targets:[ref],arguments:{type,x:18,y:18,radius:8,hardness:.9,...args}});
+  const bucketTask={schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-b3-local-retouch-intervening',operation:'image.raster.paintBucket.v1',targets:[ref],arguments:{x:2,y:2,color:'#20b86a',tolerance:0,contiguous:true,opacity:1}};
+
+  const staleProposal=await propose(task('qa-b3-local-retouch-stale','burn',{strength:.7}));
+  await edit(bucketTask);
+  const staleApproval=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId:staleProposal}));
+  const staleCode=findField(staleApproval,'code')||JSON.stringify(staleApproval.diagnostics||[]);
+  if(staleApproval?.status!=='FAILED'||!String(staleCode).includes('TARGET_STALE'))throw new Error('LOCAL_RETOUCH_STALE_NOT_REJECTED:'+String(staleCode));
+  const undoIntervening=await Promise.resolve(api.tools.invoke('undo_ink',{}));if(undoIntervening?.status==='FAILED')throw new Error('UNDO_INTERVENING_FAILED');
+  await waitFrames();object=flatObjects().find(item=>item.id===ref.objectId);if(rasterHash(object)!==baselineHash)throw new Error('STALE_BASELINE_NOT_RESTORED');
+
+  const cases=[
+    {type:'dodge',args:{x:18,y:18,radius:8,strength:.7,hardness:.9}},
+    {type:'burn',args:{x:18,y:18,radius:8,strength:.7,hardness:.9}},
+    {type:'sponge',args:{x:18,y:18,radius:8,strength:.8,mode:'saturate',hardness:.9}},
+    {type:'localBlur',args:{x:36,y:27,radius:10,strength:1,kernelRadius:3,hardness:.9}},
+    {type:'localSharpen',args:{x:36,y:27,radius:10,amount:2,kernelRadius:2,hardness:.9}},
+    {type:'colorReplacement',args:{x:58,y:14,radius:6,replacementColor:'#2d74cf',referenceColor:'#b4463c',tolerance:0,strength:1,hardness:1}}
+  ];
+  const results=[];
+  for(const item of cases){
+    const executed=await edit(task('qa-b3-local-retouch-'+item.type,item.type,item.args));
+    object=flatObjects().find(value=>value.id===ref.objectId);
+    const afterHash=rasterHash(object),afterPreview=await preview();
+    if(afterHash===baselineHash)throw new Error('LOCAL_RETOUCH_PIXELS_UNCHANGED:'+item.type);
+    if(baselinePreview.fingerprint&&afterPreview.fingerprint===baselinePreview.fingerprint)throw new Error('LOCAL_RETOUCH_PREVIEW_UNCHANGED:'+item.type);
+    const controller=findField(executed,'controllerResult');
+    if(controller?.rasterEdit?.type!==item.type||!(controller?.rasterEdit?.changedPixels>0))throw new Error('LOCAL_RETOUCH_RECEIPT_INVALID:'+item.type+':'+JSON.stringify(controller));
+    const serialized=JSON.stringify(controller);
+    if(serialized.includes('"data"')||serialized.includes('"alpha"'))throw new Error('LOCAL_RETOUCH_RAW_PAYLOAD_LEAK:'+item.type);
+    if(app.history.undoStack.at(-1)?.label!=='CHAT raster local retouch: '+item.type)throw new Error('LOCAL_RETOUCH_HISTORY_LABEL:'+item.type);
+
+    const undone=await Promise.resolve(api.tools.invoke('undo_ink',{}));if(undone?.status==='FAILED')throw new Error('LOCAL_RETOUCH_UNDO_FAILED:'+item.type);
+    await waitFrames();object=flatObjects().find(value=>value.id===ref.objectId);const undoHash=rasterHash(object),undoPreview=await preview();
+    if(undoHash!==baselineHash)throw new Error('LOCAL_RETOUCH_UNDO_PIXELS:'+item.type);
+    if(baselinePreview.fingerprint&&undoPreview.fingerprint!==baselinePreview.fingerprint)throw new Error('LOCAL_RETOUCH_UNDO_PREVIEW:'+item.type);
+
+    const redone=await Promise.resolve(api.tools.invoke('redo_ink',{}));if(redone?.status==='FAILED')throw new Error('LOCAL_RETOUCH_REDO_FAILED:'+item.type);
+    await waitFrames();object=flatObjects().find(value=>value.id===ref.objectId);const redoHash=rasterHash(object),redoPreview=await preview();
+    if(redoHash!==afterHash)throw new Error('LOCAL_RETOUCH_REDO_PIXELS:'+item.type);
+    if(afterPreview.fingerprint&&redoPreview.fingerprint!==afterPreview.fingerprint)throw new Error('LOCAL_RETOUCH_REDO_PREVIEW:'+item.type);
+
+    results.push({type:item.type,afterHash,afterPreview,changedPixels:controller.rasterEdit.changedPixels,changedChannels:controller.rasterEdit.changedChannels});
+    const restore=await Promise.resolve(api.tools.invoke('undo_ink',{}));if(restore?.status==='FAILED')throw new Error('LOCAL_RETOUCH_RESTORE_FAILED:'+item.type);
+    await waitFrames();object=flatObjects().find(value=>value.id===ref.objectId);if(rasterHash(object)!==baselineHash)throw new Error('LOCAL_RETOUCH_RESTORE_PIXELS:'+item.type);
+  }
+
+  const noopProposal=await propose(task('qa-b3-local-retouch-noop','dodge',{strength:0}));
+  const noopApproved=await approve(noopProposal);if(!noopApproved.token)throw new Error('LOCAL_RETOUCH_NOOP_APPROVE_FAILED');
+  const noop=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId:noopProposal,approvalToken:noopApproved.token}));
+  const noopCode=findField(noop,'code')||JSON.stringify(noop.diagnostics||[]);
+  if(noop?.status!=='FAILED'||!String(noopCode).includes('NO_OP'))throw new Error('LOCAL_RETOUCH_NOOP_NOT_REJECTED:'+String(noopCode));
+
+  return {passed:true,operation:'image.raster.localRetouch.v1',objectId:ref.objectId,baselineHash,baselinePreview,types:results,staleRejected:true,noOpRejected:true};
 })()`;
 
 const RASTER_SPOT_HEAL_B3_CASE = String.raw`(async()=>{
@@ -1299,7 +1399,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE)))))))))))));
+    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='raster-local-retouch-b3'?RASTER_LOCAL_RETOUCH_B3_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))))))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     assert.equal(caseResult?.passed,true,'Candidate case did not pass');
     const shot=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false},sessionId,30000);
@@ -1315,10 +1415,10 @@ async function run(){
 await run();
 // Fresh installed-browser process/profile for each required cross-capability regression.
 const batchRequest=JSON.parse(await readFile(path.resolve(process.argv[2]),'utf8'));
-if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
+if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
   const primary=JSON.parse(await readFile(path.resolve(process.argv[4]),'utf8'));
   primary.regressions=[];
-  for(const caseName of (batchRequest.case==='raster-direct-paint-bucket-b3'?['raster-import-named-tool','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-mask-b3'?['raster-direct-paint-bucket-b3','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-spot-heal-b3'?['raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2'])){
+  for(const caseName of (batchRequest.case==='raster-direct-paint-bucket-b3'?['raster-import-named-tool','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-mask-b3'?['raster-direct-paint-bucket-b3','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-spot-heal-b3'?['raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-local-retouch-b3'?['raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2'])){
     const prefix=path.resolve(process.argv[4])+'.'+caseName;
     await writeFile(prefix+'.request.json',JSON.stringify({...batchRequest,requestId:batchRequest.requestId+'-'+caseName,case:caseName,regressions:false}));
     const regression=spawn(process.execPath,[path.resolve(process.argv[1]),prefix+'.request.json',path.resolve(process.argv[3]),prefix+'.json',prefix+'.png'],{shell:false,stdio:'inherit'});
