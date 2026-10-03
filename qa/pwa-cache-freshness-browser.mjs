@@ -168,12 +168,6 @@ async function waitControlled(cdp, sessionId) {
     'service worker controller');
 }
 
-async function pressF5(cdp, sessionId) {
-  const event = { key:'F5', code:'F5', windowsVirtualKeyCode:116, nativeVirtualKeyCode:116 };
-  await cdp.send('Input.dispatchKeyEvent',{type:'keyDown',...event},sessionId);
-  await cdp.send('Input.dispatchKeyEvent',{type:'keyUp',...event},sessionId);
-}
-
 async function registrationDiagnostics(cdp, sessionId) {
   return evaluate(cdp,sessionId,`
     (async () => {
@@ -255,6 +249,7 @@ const report = {
   baselineSource: 'd426147bd1b450bc0924f8bbbde959111f9d3314',
   candidateBuildId: expectedCandidateBuildId,
   baseUrl: hosted.baseUrl,
+  ordinaryReloadMechanism: 'Chromium Page.reload; ignoreCache=false (normal reload, not hard reload)',
   checks: {}
 };
 
@@ -283,7 +278,7 @@ try {
 
   hosted.switchToCandidate();
   const switchAt = Date.now();
-  await pressF5(cdp,sessionId);
+  await cdp.send('Page.reload',{ignoreCache:false},sessionId);
 
   await waitFor(cdp,sessionId,`
     (() => new Promise(resolve => {
