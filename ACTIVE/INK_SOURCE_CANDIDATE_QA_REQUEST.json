@@ -1,8 +1,8 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterC-C1-page-ops-candidate-001-regressions",
-  "candidateSha": "8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
-  "case": "page-ops-c1",
+  "requestId": "clusterC-C2-align-distribute-candidate-001-regressions",
+  "candidateSha": "6994160cae577f57e858919e261a57aa7f5fea18",
+  "case": "align-distribute-c2",
   "regressions": true
 }
