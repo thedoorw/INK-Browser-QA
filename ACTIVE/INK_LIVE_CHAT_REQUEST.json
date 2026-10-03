@@ -1,31 +1,163 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B3-local-retouch-live-002c",
+  "requestId": "core-perf-cache-formal-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "ca4bf6913efe1564eb572988a306120b3c008539",
+  "expectedSourceSha": "e095ee54a51f8562d03af248dca658cf321e6479",
   "steps": [
     {
-      "id": "describe",
+      "id": "describeStroke",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "image.raster.localRetouch.v1"
+        "idOrToolName": "stroke.create.v1"
       }
     },
     {
-      "id": "importRaster",
-      "tool": "import_ink_raster",
+      "id": "contextBefore",
+      "tool": "get_ink_context",
       "input": {
-        "options": {
-          "name": "B3 Local Retouch Raster C",
-          "type": "image/png",
-          "intent": "B3 local retouch formal Live C"
+        "maxObjects": 40
+      }
+    },
+    {
+      "id": "historyBefore",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "redPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-a5-red-001",
+          "operation": "stroke.create.v1",
+          "targets": [],
+          "arguments": {
+            "objectId": "live-a5-red",
+            "name": "Live A5 Red",
+            "kind": "brush",
+            "color": "#c14e56",
+            "size": 58,
+            "opacity": 0.9,
+            "smoothing": 0.35,
+            "pressure": 0.85,
+            "flow": 0.82,
+            "wetness": 0.7,
+            "grain": 0.2,
+            "bristle": 0.22,
+            "samples": [
+              {
+                "x": -150,
+                "y": -18,
+                "pressure": 0.7,
+                "timestamp": 0
+              },
+              {
+                "x": 0,
+                "y": -8,
+                "pressure": 0.9,
+                "timestamp": 25
+              },
+              {
+                "x": 150,
+                "y": -18,
+                "pressure": 0.75,
+                "timestamp": 50
+              }
+            ]
+          }
         }
-      },
-      "file": {
-        "path": "qa/fixtures/rose-window/rose-window-primary.png",
-        "name": "rose-window-primary.png",
-        "type": "image/png"
+      }
+    },
+    {
+      "id": "redApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "redPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "redExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "redPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "redApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "bluePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-a5-blue-001",
+          "operation": "stroke.create.v1",
+          "targets": [],
+          "arguments": {
+            "objectId": "live-a5-blue",
+            "name": "Live A5 Blue",
+            "kind": "drybrush",
+            "color": "#385f9c",
+            "size": 58,
+            "opacity": 0.9,
+            "smoothing": 0.35,
+            "pressure": 0.85,
+            "flow": 0.82,
+            "wetness": 0.18,
+            "grain": 0.65,
+            "bristle": 0.68,
+            "samples": [
+              {
+                "x": -145,
+                "y": 22,
+                "pressure": 0.7,
+                "timestamp": 0
+              },
+              {
+                "x": 0,
+                "y": 12,
+                "pressure": 0.9,
+                "timestamp": 25
+              },
+              {
+                "x": 145,
+                "y": 22,
+                "pressure": 0.75,
+                "timestamp": 50
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "blueApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "bluePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "blueExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "bluePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "blueApprove.result.result.approvalToken"
+        }
       }
     },
     {
@@ -33,240 +165,251 @@
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "maxDimension": 900,
+        "background": false
       }
     },
     {
-      "id": "localSharpenPropose",
+      "id": "blenderPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-b3-local-sharpen",
-          "operation": "image.raster.localRetouch.v1",
-          "targets": [
-            {
-              "$ref": "importRaster.createdRefs.0"
-            }
-          ],
+          "taskId": "live-a5-blender-001",
+          "operation": "stroke.create.v1",
+          "targets": [],
           "arguments": {
-            "type": "localSharpen",
-            "x": 543,
-            "y": 724,
-            "radius": 48,
-            "hardness": 0.85,
-            "amount": 2,
-            "kernelRadius": 2
+            "objectId": "live-a5-blender",
+            "name": "Live A5 Blender",
+            "kind": "blender",
+            "color": "#00ff00",
+            "size": 76,
+            "opacity": 0.9,
+            "smoothing": 0.35,
+            "pressure": 0.85,
+            "flow": 0,
+            "wetness": 0,
+            "grain": 0.2,
+            "bristle": 0.22,
+            "blend": 0.96,
+            "smudge": 0.58,
+            "drag": 0.28,
+            "samples": [
+              {
+                "x": -95,
+                "y": -5,
+                "pressure": 0.65,
+                "timestamp": 0
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "pressure": 0.95,
+                "timestamp": 28
+              },
+              {
+                "x": 95,
+                "y": 8,
+                "pressure": 0.75,
+                "timestamp": 56
+              }
+            ]
           }
         }
       }
     },
     {
-      "id": "localSharpenApprove",
+      "id": "blenderApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "localSharpenPropose.result.result.proposalId"
+          "$ref": "blenderPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "localSharpenExecute",
+      "id": "blenderExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "localSharpenPropose.result.result.proposalId"
+          "$ref": "blenderPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "localSharpenApprove.result.result.approvalToken"
+          "$ref": "blenderApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "localSharpenPreview",
+      "id": "previewAfterBlender",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "maxDimension": 900,
+        "background": false
       }
     },
     {
-      "id": "localSharpenUndo",
+      "id": "smudgePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-a5-smudge-001",
+          "operation": "stroke.create.v1",
+          "targets": [],
+          "arguments": {
+            "objectId": "live-a5-smudge",
+            "name": "Live A5 Smudge",
+            "kind": "smudge",
+            "color": "#00ff00",
+            "size": 68,
+            "opacity": 0.9,
+            "smoothing": 0.35,
+            "pressure": 0.85,
+            "flow": 0,
+            "wetness": 0,
+            "grain": 0.2,
+            "bristle": 0.22,
+            "blend": 0.48,
+            "smudge": 0.98,
+            "drag": 0.88,
+            "samples": [
+              {
+                "x": -80,
+                "y": 4,
+                "pressure": 0.6,
+                "timestamp": 0
+              },
+              {
+                "x": 5,
+                "y": 28,
+                "pressure": 0.95,
+                "timestamp": 30
+              },
+              {
+                "x": 105,
+                "y": 42,
+                "pressure": 0.78,
+                "timestamp": 60
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "smudgeApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "smudgePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "smudgeExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "smudgePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "smudgeApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "contextAfterMixers",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 40
+      }
+    },
+    {
+      "id": "historyAfterMixers",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "previewAfterSmudge",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 900,
+        "background": false
+      }
+    },
+    {
+      "id": "undoSmudge",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "localSharpenUndoPreview",
+      "id": "previewUndoSmudge",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "maxDimension": 900,
+        "background": false
       }
     },
     {
-      "id": "localSharpenRedo",
+      "id": "undoBlender",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "previewUndoBlender",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 900,
+        "background": false
+      }
+    },
+    {
+      "id": "redoBlender",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "localSharpenRedoPreview",
+      "id": "previewRedoBlender",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "maxDimension": 900,
+        "background": false
       }
     },
     {
-      "id": "localSharpenRestore",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "colorReplacementPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-b3-local-color",
-          "operation": "image.raster.localRetouch.v1",
-          "targets": [
-            {
-              "$ref": "importRaster.createdRefs.0"
-            }
-          ],
-          "arguments": {
-            "type": "colorReplacement",
-            "x": 543,
-            "y": 724,
-            "radius": 48,
-            "hardness": 0.85,
-            "replacementColor": "#2d74cf",
-            "tolerance": 48,
-            "strength": 1
-          }
-        }
-      }
-    },
-    {
-      "id": "colorReplacementApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "colorReplacementPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "colorReplacementExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "colorReplacementPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "colorReplacementApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "colorReplacementPreview",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "colorReplacementUndo",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "colorReplacementUndoPreview",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "colorReplacementRedo",
+      "id": "redoSmudge",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "colorReplacementRedoPreview",
-      "tool": "get_ink_preview",
+      "id": "contextFinal",
+      "tool": "get_ink_context",
       "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "colorReplacementRestore",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "noOpPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-b3-local-noop",
-          "operation": "image.raster.localRetouch.v1",
-          "targets": [
-            {
-              "$ref": "importRaster.createdRefs.0"
-            }
-          ],
-          "arguments": {
-            "type": "dodge",
-            "x": 543,
-            "y": 724,
-            "radius": 48,
-            "hardness": 0.85,
-            "strength": 0
-          }
-        }
-      }
-    },
-    {
-      "id": "noOpApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "noOpPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "noOpExecute",
-      "tool": "execute_ink_edit",
-      "allowFailure": true,
-      "input": {
-        "proposalId": {
-          "$ref": "noOpPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "noOpApprove.result.result.approvalToken"
-        }
+        "maxObjects": 40
       }
     },
     {
       "id": "historyFinal",
       "tool": "get_ink_history",
       "input": {}
+    },
+    {
+      "id": "previewRedoSmudge",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 900,
+        "background": false
+      }
     }
-  ]
+  ],
+  "naturalMediaCacheReview": true,
+  "qualification": "path-deformation-b4"
 }
