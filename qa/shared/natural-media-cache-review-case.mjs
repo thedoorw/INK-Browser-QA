@@ -1,6 +1,6 @@
 // Executes the loaded product renderer with a real browser Canvas2D sink.
 export const NATURAL_MEDIA_CACHE_REVIEW_CASE = String.raw`(async()=>{
-  const Backend=window.INK_APP?.naturalMedia?.multiChannelCanvas2d?.constructor;
+  const Backend=window.INK_APP?.renderer?.naturalMedia?.multiChannelCanvas2d?.constructor;
   if(!Backend)throw new Error('NATIVE_CANVAS2D_BACKEND_MISSING');
   const make=()=>new Backend({cacheLimit:2,maxDimension:480,maxPixels:90000});
   const check=(condition,message)=>{if(!condition)throw new Error(message);};

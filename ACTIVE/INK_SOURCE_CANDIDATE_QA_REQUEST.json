@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "core-perf-cache-authority-candidate-002",
+  "requestId": "core-perf-cache-authority-candidate-003",
   "candidateSha": "0ac6e236a2baff587224398bc6f3e3aff35f5318",
   "case": "blender-smudge-a5",
   "regressions": true,
