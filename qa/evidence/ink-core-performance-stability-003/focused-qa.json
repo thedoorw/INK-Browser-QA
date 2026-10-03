@@ -1,0 +1,56 @@
+{
+  "schema": "INK_CORE_PERFORMANCE_STABILITY_003_FOCUSED_QA",
+  "version": 1,
+  "date": "2026-10-03",
+  "branch": "work/ink-core-performance-stability-003",
+  "exactCandidate": "b7b4f95f4cec1e5827b537040f916556eeef9b98",
+  "status": "DEV_FOCUSED_PASS__AUTHORITY_REVIEW_REQUIRED",
+  "executed": {
+    "environment": "local Node v22.16.0 isolated source-algorithm harness",
+    "semanticChecks": {
+      "passed": 4,
+      "failed": 0
+    },
+    "cases": [
+      "small batches retain incremental synchronization",
+      "large batches bypass per-object synchronization and rebuild once",
+      "threshold is based on unique ids and existing configured capacity",
+      "large-batch rebuild preserves visibility exclusion and refreshed query state"
+    ],
+    "measurementTrialsPerCell": 11
+  },
+  "committedRegression": "qa/ink-core-performance-stability-003.test.mjs",
+  "sourceDiff": {
+    "productionFiles": [
+      "product/source/src/spatial/page-spatial-index.js"
+    ],
+    "productionChanges": "6 additions / 1 deletion",
+    "unchangedAuthorities": [
+      "product/source/src/ink.js",
+      "product/source/src/spatial/quadtree.js",
+      "product/source/src/document/hierarchy.js",
+      "product/source/src/history/history.js",
+      "Renderer/Image Core/Stroke/History ownership",
+      "UI",
+      "FORMAT_VERSION"
+    ]
+  },
+  "regressionDisposition": {
+    "spatialSmallBatch": "PASS",
+    "spatialLargeBatch": "PASS",
+    "visibilityAndQueryState": "PASS",
+    "duplicateIdThreshold": "PASS",
+    "history": "NO_SOURCE_OVERLAP",
+    "renderer": "NO_SOURCE_OVERLAP",
+    "imageStack002": "NO_SOURCE_OVERLAP",
+    "naturalMedia001": "NO_SOURCE_OVERLAP",
+    "dropShadow": "OUT_OF_SCOPE_SEPARATE_FINDING"
+  },
+  "limits": [
+    "The execution environment did not expose a repository checkout or workflow-dispatch path, so the committed Node test was not executed against a full checkout in this DEV session.",
+    "The 4/4 semantic checks execute the same bounded PageSpatialIndex decision and existing hierarchy/quadtree behavior in an isolated harness.",
+    "No browser frame/GPU timing is claimed.",
+    "No heap profiler was available; no memory-leak claim is made.",
+    "Candidate Runtime/Formal Live qualification remains CHAT/Core/Live authority work."
+  ]
+}
