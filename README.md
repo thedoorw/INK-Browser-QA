@@ -61,6 +61,44 @@ Current task/gate:
 
 `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
+## Architecture Recomposition — planned direction
+
+INK is now planning a bounded **Architecture Recomposition**, not a full rewrite.
+
+Authoritative plan:
+
+`research/INK_ARCHITECTURE_RECOMPOSITION_EXECUTION_PLAN_v0.1.md`
+
+Current direction:
+
+```text
+KEEP mature Core
+→ complete current bounded PWA closure
+→ freeze exact pre-recomposition baseline
+→ define shared Command + State Authority
+→ rebuild UI Shell / Assembly on existing Photoshop grammar
+→ route Human UI + CHAT + Recipe through the same commands
+→ retire old DOM/proxy/duplicate mutation paths only after parity evidence
+```
+
+Mandatory safety gate before product refactor:
+
+```text
+PRE_RECOMPOSITION_BASELINE
+= Git tag
++ archive branch
++ manifest
++ immutable source snapshot/checksum
+```
+
+Current B0/B1 dispatch:
+
+`ACTIVE/INK_ARCHITECTURE_RECOMPOSITION_B0_B1_DISPATCH_v1.0.md`
+
+No Architecture Recomposition product-source mutation is authorized merely by this plan/dispatch. B0 baseline preservation and B1 architecture contract come first.
+
+
+
 ## Roles
 
 ### USER
