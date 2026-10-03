@@ -224,11 +224,14 @@ const APP_SHELL = Object.freeze([
 ]);
 
 self.addEventListener('install', event => {
-  event.waitUntil((async () => {
-    const cache = await caches.open(SHELL_CACHE);
-    await cache.addAll(APP_SHELL.map(path => new Request(path, { cache: 'reload' })));
-    await self.skipWaiting();
-  })());
+  // Request takeover immediately; keep installation open until the complete
+  // build-scoped shell has been cached. This avoids a race where a large
+  // precache finishes but the worker remains waiting behind the legacy shell.
+  const takeover = self.skipWaiting();
+  const precache = caches.open(SHELL_CACHE).then(cache => cache.addAll(
+    APP_SHELL.map(path => new Request(path, { cache: 'reload' }))
+  ));
+  event.waitUntil(Promise.all([takeover, precache]));
 });
 
 function isOwnedInkCache(key) {
