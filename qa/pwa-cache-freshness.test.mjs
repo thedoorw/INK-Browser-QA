@@ -12,13 +12,16 @@ test('generated PWA build identity matches complete product/source fingerprint',
   assert.match(buildId, /^src-[a-f0-9]{24}$/);
 });
 
-test('legacy worker URL is a no-fetch migration bridge', async () => {
+test('legacy worker URL forces network freshness while retaining offline fallback', async () => {
   const source = await read('product/source/service-worker.js');
-  assert.match(source, /MIGRATION_ID = 'ink-pwa-cache-migration-v1'/);
+  assert.match(source, /MIGRATION_ID = 'ink-pwa-cache-migration-v2'/);
   assert.match(source, /self\.skipWaiting\(\)/);
-  assert.match(source, /key\.startsWith\(CACHE_PREFIX\)/);
+  assert.match(source, /await self\.clients\.claim\(\)/);
   assert.match(source, /client\.navigate\?\.\(client\.url\)/);
-  assert.doesNotMatch(source, /addEventListener\('fetch'/);
+  assert.match(source, /new Request\(request, \{ cache: 'reload' \}\)/);
+  assert.match(source, /caches\.match\(request, \{ ignoreSearch: true \}\)/);
+  assert.match(source, /addEventListener\('fetch'/);
+  assert.doesNotMatch(source, /caches\.delete/);
 });
 
 test('runtime worker is online-first with build-scoped offline fallback', async () => {
