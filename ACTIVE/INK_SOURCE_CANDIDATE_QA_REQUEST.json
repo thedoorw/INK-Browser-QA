@@ -1,8 +1,8 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterA-A4-targeted-eraser-candidate-006-regressions",
-  "candidateSha": "daff9553dfc8c433eadc6ee2119703c9770b49a6",
-  "case": "stroke-erase-a4",
+  "requestId": "clusterA-A5-blender-smudge-candidate-001-regressions",
+  "candidateSha": "f351c788e57b7d5ad034f156711d47d431179669",
+  "case": "blender-smudge-a5",
   "regressions": true
 }
