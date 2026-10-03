@@ -1,6 +1,6 @@
 export class ServiceWorkerUpdateManager {
   constructor({
-    scriptURL = './service-worker.js',
+    scriptURL = './service-worker-runtime.js',
     scope = './',
     buildId = null,
     onStatusChange = null,
