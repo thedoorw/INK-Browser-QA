@@ -1,0 +1,143 @@
+{
+  "schema": "INK_CORE_PERFORMANCE_STABILITY_FOCUSED_QA",
+  "version": 1,
+  "date": "2026-10-03",
+  "branch": "work/ink-core-performance-stability-001",
+  "baselineSha": "b3c1b8f77a0d4369508ce811506b423a9ed000ad",
+  "repairCommit": "f93aae7bf4efb02f910b29e04d60054a6f47fec7",
+  "focusedTest": "qa/ink-core-performance-stability-001.test.mjs",
+  "disposition": "DEV_SOURCE_HARNESS_PASS__AUTHORITY_REVIEW_REQUIRED",
+  "checks": [
+    {
+      "id": "warm-cache-preparation-bypass",
+      "status": "PASS",
+      "observed": {
+        "preparations": 1,
+        "preparationSkips": 1,
+        "cacheHits": 1,
+        "cacheMisses": 1,
+        "runs": 1,
+        "cacheEntries": 1
+      },
+      "assertion": "second identical cacheable multichannel render returns the existing retained result without a second prepareNaturalMediaRun"
+    },
+    {
+      "id": "geometry-change-invalidates-request-key",
+      "status": "PASS",
+      "observed": {
+        "preparations": 2,
+        "preparationSkips": 0,
+        "cacheHits": 0,
+        "cacheMisses": 2,
+        "cacheEntries": 2
+      },
+      "assertion": "native Stroke point mutation produces a cache miss and fresh preparation"
+    },
+    {
+      "id": "mixer-warm-hit-and-preview-transient-boundary",
+      "status": "PASS",
+      "cachedObserved": {
+        "preparations": 1,
+        "preparationSkips": 1,
+        "mixingStrokes": 2
+      },
+      "transientObserved": {
+        "cacheHits": 0,
+        "cacheEntries": 0,
+        "preparations": 2,
+        "preparationSkips": 0,
+        "runs": 2
+      },
+      "assertion": "accepted Blender/Smudge uses the same warm-cache optimization; transient Preview/export semantics remain uncached"
+    }
+  ],
+  "outputParity": [
+    {
+      "workload": "Brush+DryBrush 280 points each",
+      "beforeHash": 3400334722,
+      "afterHash": 3400334722,
+      "status": "PASS"
+    },
+    {
+      "workload": "Brush+DryBrush+Blender+Smudge 280/280/220/220 points",
+      "beforeHash": 2019481362,
+      "afterHash": 2019481362,
+      "status": "PASS"
+    },
+    {
+      "workload": "large Brush+DryBrush 800 points each",
+      "beforeHash": 1436354055,
+      "afterHash": 1436354055,
+      "status": "PASS"
+    },
+    {
+      "workload": "transient Preview-style Brush+DryBrush",
+      "beforeHash": 3714391014,
+      "afterHash": 3714391014,
+      "status": "PASS"
+    }
+  ],
+  "affectedRegressionReview": {
+    "A1_A2_A3": {
+      "status": "NO_SOURCE_OVERLAP_PLUS_RENDER_OUTPUT_PARITY",
+      "note": "Main renderer orchestration product/source/src/ink.js is unchanged; repair is bounded to existing Canvas2D multichannel cache-hit ordering."
+    },
+    "A5": {
+      "status": "FOCUSED_PASS",
+      "note": "Accepted Blender/Smudge path covered directly; output hash is identical and warm hit bypasses repeated preparation."
+    },
+    "B2": {
+      "status": "NO_SOURCE_OVERLAP",
+      "note": "product/source/src/image/image-core.js unchanged; representative editable-raster image-stack workload measured separately and not repaired."
+    },
+    "B4": {
+      "status": "NO_SOURCE_OVERLAP",
+      "unchanged": [
+        "product/source/src/editor/transform-advanced.js",
+        "product/source/src/editor/chat-bounded-edit.js",
+        "product/source/src/vector/deformation.js",
+        "qa/ink-chat-path-deformation-b4.test.mjs"
+      ]
+    },
+    "paperSingleton": {
+      "status": "NO_SOURCE_OVERLAP_PLUS_TRANSIENT_BOUNDARY_PRESERVED",
+      "unchanged": [
+        "qa/ink-paper-single-stroke-render-integration.test.mjs"
+      ]
+    },
+    "paperRoughness": {
+      "status": "NO_SOURCE_OVERLAP",
+      "unchanged": [
+        "qa/ink-paper-webgl-roughness-parity.test.mjs"
+      ]
+    },
+    "history": {
+      "status": "NO_SOURCE_OVERLAP",
+      "unchanged": [
+        "product/source/src/history/history.js"
+      ]
+    }
+  },
+  "formatVersion": {
+    "status": "UNCHANGED",
+    "basis": "product/source/src/ink.js is byte-identical to baseline and the only production source diff is product/source/src/render/canvas2d/multi-channel-ink-canvas2d.js"
+  },
+  "boundaries": {
+    "uiChanged": false,
+    "newCoreAuthority": false,
+    "newRendererAuthority": false,
+    "newHistoryAuthority": false,
+    "newStrokeAuthority": false,
+    "newRasterAuthority": false,
+    "newCache": false,
+    "cacheLimitChanged": false,
+    "formatVersionChanged": false
+  },
+  "limits": [
+    "Focused execution used exact repository module bodies in an isolated JavaScript harness because this environment cannot clone/run the repository checkout directly.",
+    "Canvas2D final image sink was mocked only for createImageData/putImageData; natural-media preparation, multichannel surface simulation, cache logic and pixel composition were executed from repository source.",
+    "Timing uses Date.now() millisecond resolution and is not browser frame timing or GPU timing.",
+    "No heap profiler was available; no memory-leak claim is made.",
+    "Formal candidate runtime, deployed browser and Live qualification remain authority work and are not claimed by DEV."
+  ]
+}
