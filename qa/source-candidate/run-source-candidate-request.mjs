@@ -259,11 +259,27 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
   const afterApplyProbe=await renderProbe();
   if(beforeApplyProbe.hash===afterApplyProbe.hash){
     const storedTemplate=app.doc.materialLibrary?.templates?.find(item=>item.templateId===template.templateId)||null;
+    const appearanceModule=await import('./src/vector/paint-appearance.js');
+    const resolvedAppearance=appearanceModule.resolvePathPaintAppearance(applied,app.doc);
+    const instanceObject=app.page().layers.flatMap(layer=>layer.objects||[]).find(object=>object.id===instanceId)||null;
+    const scratchHash=path=>{
+      const canvas=document.createElement('canvas');canvas.width=240;canvas.height=160;
+      const ctx=canvas.getContext('2d');ctx.translate(120,80);app.renderer.drawVectorPath(ctx,path);
+      const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;let h=2166136261;
+      for(let i=0;i<data.length;i++){h^=data[i];h=Math.imul(h,16777619);}
+      return (h>>>0).toString(16);
+    };
+    const ordinaryClone=JSON.parse(JSON.stringify(applied));ordinaryClone.materialAppearance=null;
     throw new Error('MATERIAL_RENDER_NO_DELTA:'+JSON.stringify({
       beforeApply,afterApply,beforeApplyProbe,afterApplyProbe,
       storedPathAppearance:storedTemplate?.metadata?.pathAppearance||storedTemplate?.pathAppearance||null,
+      resolvedAppearance,
       targetMaterialAppearance:applied?.materialAppearance||null,
-      targetFill:applied?.fill||null,targetStroke:applied?.stroke||null
+      targetFill:applied?.fill||null,targetStroke:applied?.stroke||null,
+      targetMatrix:applied?.matrix||null,
+      instanceMatrix:instanceObject?.matrix||null,
+      scratchMaterialHash:scratchHash(applied),
+      scratchOrdinaryHash:scratchHash(ordinaryClone)
     }));
   }
   const undoApply=await invoke('undo_ink',{});if(undoApply?.status==='FAILED')throw new Error('MATERIAL_APPLY_UNDO_FAILED');
