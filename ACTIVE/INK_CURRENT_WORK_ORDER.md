@@ -1,5 +1,55 @@
 # INK Current Work Order
 
+## Architecture Recomposition — B0/B1 DISPATCHED / PRE-IMPLEMENTATION 2026-10-03
+
+USER directed the current recomposition plan to be formalized, noted in root README, and dispatched to a new window.
+
+Primary plan:
+- `research/INK_ARCHITECTURE_RECOMPOSITION_EXECUTION_PLAN_v0.1.md`
+
+Dispatch:
+- `ACTIVE/INK_ARCHITECTURE_RECOMPOSITION_B0_B1_DISPATCH_v1.0.md`
+
+New-window handoff:
+- `ACTIVE/INK_ARCHITECTURE_RECOMPOSITION_B0_B1_NEW_WINDOW_HANDOFF_v1.0.md`
+
+Required sequence:
+
+```text
+current bounded PWA integration + actual live gate closes
+→ freeze exact accepted pre-recomposition baseline
+   - tag: pre-architecture-recomposition-v1
+   - archive branch: archive/pre-architecture-recomposition
+   - baseline manifest
+   - immutable source snapshot + checksum
+→ B1 Command + State Contract
+→ propose first B2 vertical slice
+→ STOP → MR / USER review
+```
+
+Architecture target:
+
+```text
+KEEP mature Core
+→ shared Command + State Authority
+→ rebuild UI Shell / Assembly
+→ Human UI + CHAT + Recipe / API use the same commands
+```
+
+Current authorization:
+
+```text
+B0_BASELINE_PREPARATION = AUTHORIZED
+B1_ARCHITECTURE_CONTRACT = AUTHORIZED
+PRODUCT_SOURCE_MUTATION = NOT AUTHORIZED
+CORE_REWRITE = NO
+UI_REBUILD_IMPLEMENTATION = NOT YET
+FORMAT_VERSION = 4 / UNCHANGED
+```
+
+If current PWA closure is still open, do not freeze an earlier/intermediate baseline. Record `BLOCKED_BY_PWA_CLOSURE`; B1 research may continue only without product mutation.
+
+
 ## Runtime Bridge + GitHub Connector — PHASE 0 COMPLETE / STOP → USER DECISION 2026-10-03
 
 USER authorized Phase 0 architecture/security R&D for replacing the current daily hosted-browser transport with a direct user's-INK-Web Runtime Bridge while retaining GitHub as SSOT and retaining the hosted runner as QA infrastructure.
