@@ -288,7 +288,9 @@ const PAPER_A3_CASE = String.raw`(async()=>{
   if(descriptor.status==='FAILED')throw new Error('DISCOVERY');
   const paper0=JSON.parse(JSON.stringify(app.page().paper));
   const strokeTask={taskId:'qa-a3-natural-stroke',operation:'stroke.create.v1',targets:[],arguments:{kind:'brush',color:'#8f3f58',size:72,opacity:.85,flow:.75,wetness:.8,grain:.4,bristle:.4,samples:[{x:-120,y:-20,pressure:.3,timestamp:0},{x:0,y:70,pressure:.9,timestamp:24},{x:120,y:-40,pressure:.6,timestamp:48}]}};
-  await edit(strokeTask);const baseline=await preview();
+  await edit(strokeTask);
+  await edit({...strokeTask,taskId:'qa-a3-natural-stroke-2',arguments:{...strokeTask.arguments,kind:'drybrush',wetness:.2,color:'#42689a',samples:[{x:-100,y:45,pressure:.4,timestamp:0},{x:15,y:-45,pressure:.85,timestamp:24},{x:100,y:40,pressure:.65,timestamp:48}]}});
+  const baseline=await preview();
   const objectBefore=JSON.stringify(app.page().layers.flatMap(l=>l.objects));
   const beforeUndo=app.history.undoStack.length;
   const proposedId=await propose(task('qa-a3-roughness','roughness',.95));
@@ -318,7 +320,7 @@ const PAPER_A3_CASE = String.raw`(async()=>{
   app.paperPreview={key:'roughness',before:.95};const busy=await invoke('propose_ink_edit',{task:task('qa-a3-busy','roughness',.6)});app.paperPreview=null;
   if(busy.status!=='FAILED'||!JSON.stringify(busy).includes('PAPER_PREVIEW_BUSY'))throw new Error('PREVIEW_BUSY_NOT_REJECTED');
   app.renderer.render();
-  return {passed:true,operation:'page.paper.set.v1',paperBefore:paper0,paperAfter,baseline,roughPreview,changedPreview,undoRedoRenderExact:true,scopedPaperEntries:app.history.undoStack.slice(-2).map(e=>({label:e.label,captureMode:e.captureMode})),paperProfileFingerprint:fingerprint,invalidCasesRejected:rejectCases.length,noOpRejected:true,staleRejected:true,pendingPreviewRejected:true,naturalMedia:app.renderer.naturalMedia.diagnostics()};
+  return {passed:true,operation:'page.paper.set.v1',paperCoupledRunStrokeCount:2,paperBefore:paper0,paperAfter,baseline,roughPreview,changedPreview,undoRedoRenderExact:true,scopedPaperEntries:app.history.undoStack.slice(-2).map(e=>({label:e.label,captureMode:e.captureMode})),paperProfileFingerprint:fingerprint,invalidCasesRejected:rejectCases.length,noOpRejected:true,staleRejected:true,pendingPreviewRejected:true,naturalMedia:app.renderer.naturalMedia.diagnostics()};
 })()`;
 
 const RASTER_CASE = String.raw`(async()=>{
