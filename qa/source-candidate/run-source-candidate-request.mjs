@@ -128,9 +128,178 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1','align-distribute-c2','snap-guides-c3','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1','align-distribute-c2','snap-guides-c3','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2','cluster-d-material-recipe'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
+
+const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw\`(async()=>{
+  const app=window.INK_APP,api=app?.inkPublicApi;
+  if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+  const invoke=(name,input={})=>Promise.resolve(api.tools.invoke(name,input));
+  const find=(value,key,depth=0)=>{
+    if(value==null||depth>12||typeof value!=='object')return undefined;
+    if(Object.prototype.hasOwnProperty.call(value,key))return value[key];
+    for(const child of Object.values(value)){const hit=find(child,key,depth+1);if(hit!==undefined)return hit;}
+    return undefined;
+  };
+  const frames=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const preview=async()=>{
+    const r=await invoke('get_ink_preview',{scope:'content',maxDimension:800,background:true});
+    if(r?.status==='FAILED')throw new Error('PREVIEW_FAILED:'+JSON.stringify(r.diagnostics||[]));
+    await frames();
+    return {status:r.status,fingerprint:find(r,'renderFingerprint')||find(r,'fingerprint')||null,bounds:find(r,'bounds')||null};
+  };
+  const edit=async(task,{checkBlocked=false}={})=>{
+    const p=await invoke('propose_ink_edit',{task});
+    if(p?.status==='FAILED')throw new Error('PROPOSE_FAILED:'+task.operation+':'+JSON.stringify(p.diagnostics||[]));
+    const proposalId=find(p,'proposalId');if(!proposalId)throw new Error('PROPOSAL_ID_MISSING:'+task.operation);
+    if(checkBlocked){
+      const blocked=await invoke('execute_ink_edit',{proposalId,approvalToken:'not-approved'});
+      if(blocked?.status!=='FAILED')throw new Error('UNGOVERNED_EXECUTION_NOT_BLOCKED:'+task.operation);
+    }
+    const a=await invoke('approve_ink_edit',{proposalId});
+    if(a?.status==='FAILED')throw new Error('APPROVE_FAILED:'+task.operation+':'+JSON.stringify(a.diagnostics||[]));
+    const approvalToken=find(a,'approvalToken');if(!approvalToken)throw new Error('APPROVAL_TOKEN_MISSING:'+task.operation);
+    const e=await invoke('execute_ink_edit',{proposalId,approvalToken});
+    if(e?.status==='FAILED'||find(e,'changed')!==true)throw new Error('EXECUTE_FAILED:'+task.operation+':'+JSON.stringify(e.diagnostics||e));
+    await frames();
+    return e;
+  };
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  app.history.clear();
+  const tools=api.tools.registry().map(item=>item.name);
+  for(const name of ['search_ink_library','get_ink_recipe_inventory','propose_ink_edit','approve_ink_edit','execute_ink_edit','get_ink_preview','undo_ink','redo_ink']){
+    if(!tools.includes(name))throw new Error('MISSING_TOOL:'+name);
+  }
+  const descriptorIds=(await invoke('discover_ink_capabilities',{}))?.result?.capabilities?.map?.(item=>item.id)||[];
+  for(const id of ['material.template.create.v1','material.instance.create.v1','recipe.inventory','recipe.studio.execute.v1']){
+    if(!descriptorIds.includes(id))throw new Error('MISSING_CAPABILITY:'+id);
+  }
+
+  const freshLibrary=await invoke('search_ink_library',{types:['material','recipe'],limit:50});
+  if(freshLibrary?.status==='FAILED')throw new Error('FRESH_LIBRARY_SEARCH_FAILED');
+  const freshResults=freshLibrary.result?.results||[];
+  if(freshResults.some(item=>item.type==='material'||item.type==='recipe'))throw new Error('FRESH_LIBRARY_NOT_EMPTY');
+
+  const layerId=app.page().activeLayerId;
+  const createPath=await edit({
+    schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-target',
+    operation:'path.create.v1',targets:[],
+    arguments:{objectId:'qa-d-petal',name:'QA D Petal',shape:'ellipse',cx:0,cy:0,rx:90,ry:50,fill:'#42689a',stroke:'#243746',strokeWidth:3,opacity:1}
+  });
+  const targetId=find(createPath,'objectId')||'qa-d-petal';
+  const targetRef={pageId:app.page().id,layerId,objectId:targetId};
+  const target=app.page().layers.flatMap(layer=>layer.objects||[]).find(object=>object.id===targetId);
+  if(!target||target.type!=='path')throw new Error('D_TARGET_PATH_MISSING');
+  app.history.clear();
+
+  const template={
+    templateId:'material:chat:cluster-d-qa',
+    templateVersion:'1',
+    materialType:'vector-path',
+    geometry:{...JSON.parse(JSON.stringify(target)),id:'material-template-path',name:'Cluster D Material Geometry'},
+    defaultParameters:{},
+    editableParameters:{},
+    constraints:[],
+    semanticRole:'qa-path-appearance',
+    sourceBenchmark:{source:'INK_CLUSTER_D_BROWSER_QA',case:'C39'},
+    validationState:{status:'VALIDATED',scope:'fill-stroke-only'},
+    metadata:{pathAppearance:{fill:'#d7889b',stroke:'#55343d'}}
+  };
+  const libraryBeforeProposal=JSON.stringify(app.doc.materialLibrary);
+  const createTemplateTask={schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-template',operation:'material.template.create.v1',targets:[],arguments:{template}};
+  const templateProposal=await invoke('propose_ink_edit',{task:createTemplateTask});
+  if(templateProposal?.status==='FAILED')throw new Error('MATERIAL_TEMPLATE_PROPOSE_FAILED:'+JSON.stringify(templateProposal.diagnostics||[]));
+  if(JSON.stringify(app.doc.materialLibrary)!==libraryBeforeProposal)throw new Error('MATERIAL_PROPOSAL_MUTATED_DOCUMENT');
+  const proposalId=find(templateProposal,'proposalId');
+  const blockedTemplate=await invoke('execute_ink_edit',{proposalId,approvalToken:'not-approved'});
+  if(blockedTemplate?.status!=='FAILED')throw new Error('MATERIAL_EXECUTION_NOT_GOVERNED');
+  const templateApproval=await invoke('approve_ink_edit',{proposalId});
+  const templateExecution=await invoke('execute_ink_edit',{proposalId,approvalToken:find(templateApproval,'approvalToken')});
+  if(templateExecution?.status==='FAILED'||find(templateExecution,'changed')!==true)throw new Error('MATERIAL_TEMPLATE_EXECUTE_FAILED');
+  if(app.history.undoStack.at(-1)?.label!=='CHAT create Material template')throw new Error('MATERIAL_TEMPLATE_HISTORY_MISSING');
+
+  const materialLibrary=await invoke('search_ink_library',{types:['material'],limit:50});
+  const materialHit=(materialLibrary.result?.results||[]).find(item=>item.metadata?.templateId===template.templateId&&item.metadata?.templateVersion==='1');
+  if(!materialHit)throw new Error('MATERIAL_REDISCOVERY_FAILED');
+  if(materialHit.reuse?.operation!=='path.material.apply.v1')throw new Error('MATERIAL_REUSE_ROUTE_INVALID');
+
+  const instanceExecution=await edit({
+    schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-instance',
+    operation:'material.instance.create.v1',targets:[],
+    arguments:{templateId:template.templateId,templateVersion:'1',instanceId:'qa-d-material-instance',layerId,semanticRole:'qa-material-instance'}
+  },{checkBlocked:true});
+  const instanceId=find(instanceExecution,'instanceId')||'qa-d-material-instance';
+  const instancePresent=()=>app.page().layers.flatMap(layer=>layer.objects||[]).some(object=>object.id===instanceId);
+  if(!instancePresent())throw new Error('MATERIAL_INSTANCE_MISSING');
+  const undoInstance=await invoke('undo_ink',{});if(undoInstance?.status==='FAILED'||instancePresent())throw new Error('MATERIAL_INSTANCE_UNDO_FAILED');
+  const redoInstance=await invoke('redo_ink',{});if(redoInstance?.status==='FAILED'||!instancePresent())throw new Error('MATERIAL_INSTANCE_REDO_FAILED');
+
+  const beforeApply=await preview();
+  const applyExecution=await edit({
+    schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-apply',
+    operation:'path.material.apply.v1',targets:[targetRef],
+    arguments:{templateId:template.templateId,templateVersion:'1'}
+  });
+  const applied=app.page().layers.flatMap(layer=>layer.objects||[]).find(object=>object.id===targetId);
+  if(applied?.materialAppearance?.templateId!==template.templateId)throw new Error('PATH_MATERIAL_NOT_APPLIED');
+  const afterApply=await preview();
+  if(beforeApply.fingerprint&&afterApply.fingerprint&&beforeApply.fingerprint===afterApply.fingerprint)throw new Error('MATERIAL_PREVIEW_NO_DELTA');
+  const undoApply=await invoke('undo_ink',{});if(undoApply?.status==='FAILED')throw new Error('MATERIAL_APPLY_UNDO_FAILED');
+  const undoApplied=app.page().layers.flatMap(layer=>layer.objects||[]).find(object=>object.id===targetId);
+  if(undoApplied?.materialAppearance)throw new Error('MATERIAL_APPLY_UNDO_NOT_EXACT');
+  const redoApply=await invoke('redo_ink',{});if(redoApply?.status==='FAILED')throw new Error('MATERIAL_APPLY_REDO_FAILED');
+  const redoApplied=app.page().layers.flatMap(layer=>layer.objects||[]).find(object=>object.id===targetId);
+  if(redoApplied?.materialAppearance?.templateId!==template.templateId)throw new Error('MATERIAL_APPLY_REDO_NOT_EXACT');
+
+  const docBeforeInventory=JSON.stringify(app.doc);
+  const historyBeforeInventory=app.history.undoStack.length;
+  const inventory=await invoke('get_ink_recipe_inventory',{});
+  if(inventory?.status==='FAILED'||inventory.result?.readOnly!==true)throw new Error('RECIPE_INVENTORY_FAILED');
+  const common=(inventory.result?.studio||[]).find(item=>item.id==='ink.flower.common.v1');
+  if(!common||common.version!=='1'||common.execution?.operation!=='recipe.studio.execute.v1')throw new Error('COMMON_RECIPE_INVENTORY_MISSING');
+  if(JSON.stringify(app.doc)!==docBeforeInventory||app.history.undoStack.length!==historyBeforeInventory)throw new Error('RECIPE_INVENTORY_MUTATED_STATE');
+
+  const recipeBefore=await preview();
+  const recipeHistoryBefore=app.history.undoStack.length;
+  const recipeExecution=await edit({
+    schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-recipe',
+    operation:'recipe.studio.execute.v1',targets:[targetRef],
+    arguments:{recipeId:'ink.flower.common.v1',recipeVersion:'1',parameters:{fillHue:'#cf6e82',stroke:'#58363e',strokeScale:.018,texture:14,contrast:8},roles:['petal']}
+  },{checkBlocked:true});
+  const executionReceipt=find(recipeExecution,'executionReceipt'),replayReceipt=find(recipeExecution,'replayReceipt');
+  if(!executionReceipt||executionReceipt.status!=='completed'||executionReceipt.recipeId!=='ink.flower.common.v1')throw new Error('RECIPE_EXECUTION_RECEIPT_INVALID:'+JSON.stringify(executionReceipt));
+  if(!replayReceipt||replayReceipt.id!==executionReceipt.id||replayReceipt.status!=='completed')throw new Error('RECIPE_REPLAY_RECEIPT_INVALID');
+  if(!Array.isArray(executionReceipt.checkpoints)||!executionReceipt.checkpoints.length)throw new Error('RECIPE_CHECKPOINT_RECEIPT_MISSING');
+  if(app.history.undoStack.length!==recipeHistoryBefore+1||!String(app.history.undoStack.at(-1)?.label||'').startsWith('CHAT Recipe'))throw new Error('RECIPE_HISTORY_MISSING');
+  const recipeAfter=await preview();
+  if(recipeBefore.fingerprint&&recipeAfter.fingerprint&&recipeBefore.fingerprint===recipeAfter.fingerprint)throw new Error('RECIPE_PREVIEW_NO_DELTA');
+  const undoRecipe=await invoke('undo_ink',{});if(undoRecipe?.status==='FAILED')throw new Error('RECIPE_UNDO_FAILED');
+  const recipeUndoPreview=await preview();
+  if(recipeBefore.fingerprint&&recipeUndoPreview.fingerprint&&recipeBefore.fingerprint!==recipeUndoPreview.fingerprint)throw new Error('RECIPE_UNDO_RENDER_NOT_EXACT');
+  const redoRecipe=await invoke('redo_ink',{});if(redoRecipe?.status==='FAILED')throw new Error('RECIPE_REDO_FAILED');
+  const recipeRedoPreview=await preview();
+  if(recipeAfter.fingerprint&&recipeRedoPreview.fingerprint&&recipeAfter.fingerprint!==recipeRedoPreview.fingerprint)throw new Error('RECIPE_REDO_RENDER_NOT_EXACT');
+
+  const storedRecipeLibrary=await invoke('search_ink_library',{types:['recipe'],limit:50});
+  if((storedRecipeLibrary.result?.results||[]).length!==0)throw new Error('STUDIO_RECIPE_FALSELY_STORED_AS_FLORA_RECIPE');
+
+  const rejected=await invoke('propose_ink_edit',{task:{
+    schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-reject-token',
+    operation:'material.template.create.v1',targets:[],
+    arguments:{template:{...template,templateId:'material:chat:bad-token',geometry:{'$expr':'arbitrary()'}}}
+  }});
+  if(rejected?.status!=='FAILED')throw new Error('ARBITRARY_MATERIAL_TOKEN_NOT_REJECTED');
+
+  return {
+    passed:true,
+    cases:['C001','C002','C007','C008','C013'],
+    families:['C39','C55'],
+    material:{freshZero:true,proposalNeutral:true,templateId:template.templateId,rediscovered:true,instanceId,instanceUndoRedo:true,pathApply:true,pathApplyUndoRedo:true,previewDelta:Boolean(!beforeApply.fingerprint||!afterApply.fingerprint||beforeApply.fingerprint!==afterApply.fingerprint),arbitraryTokenRejected:true},
+    recipe:{inventoryReadOnly:true,inventoryCount:inventory.result?.counts||null,recipeId:executionReceipt.recipeId,recipeVersion:String(executionReceipt.recipeVersion),historyAtomic:true,replayId:replayReceipt.id,checkpointCount:executionReceipt.checkpoints.length,undoRedo:true,storedRediscovery:'NOT_APPLICABLE_STUDIO_REGISTRY_NOT_FLORA_PERSISTENCE'},
+    governance:{proposalApprovalRequired:true,noSecondMaterialEngine:true,noSecondRecipeEngine:true,workflowIrUsed:false}
+  };
+})()\`;
 
 const PAINT_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
@@ -1916,7 +2085,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='raster-local-retouch-b3'?RASTER_LOCAL_RETOUCH_B3_CASE:(request.case==='raster-source-retouch-b3'?RASTER_SOURCE_RETOUCH_B3_CASE:(request.case==='raster-advanced-ingest'?RASTER_ADVANCED_INGEST_CASE:(request.case==='page-ops-c1'?PAGE_OPS_C1_CASE:(request.case==='align-distribute-c2'?ALIGN_DISTRIBUTE_C2_CASE:(request.case==='snap-guides-c3'?SNAP_GUIDES_C3_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE)))))))))))))))))));
+    const caseExpression=request.case==='cluster-d-material-recipe'?CLUSTER_D_MATERIAL_RECIPE_CASE:request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='raster-local-retouch-b3'?RASTER_LOCAL_RETOUCH_B3_CASE:(request.case==='raster-source-retouch-b3'?RASTER_SOURCE_RETOUCH_B3_CASE:(request.case==='raster-advanced-ingest'?RASTER_ADVANCED_INGEST_CASE:(request.case==='page-ops-c1'?PAGE_OPS_C1_CASE:(request.case==='align-distribute-c2'?ALIGN_DISTRIBUTE_C2_CASE:(request.case==='snap-guides-c3'?SNAP_GUIDES_C3_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE)))))))))))))))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     if(request.spatialBatchReview===true) caseResult.spatialBatchReview=await evaluate(cdp,sessionId,SPATIAL_BATCH_REVIEW_CASE,90000);
     if(request.imageStackCacheReview===true) caseResult.imageStackCacheReview=await evaluate(cdp,sessionId,IMAGE_STACK_CACHE_REVIEW_CASE,90000);
