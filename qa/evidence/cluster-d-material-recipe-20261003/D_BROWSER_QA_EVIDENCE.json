@@ -1,0 +1,85 @@
+{
+  "schema": "INK_CLUSTER_D_MATERIAL_RECIPE_BROWSER_EVIDENCE",
+  "version": 1,
+  "candidateSha": "da40f868ebdb17c6cacb46d74867f75235ba77e5",
+  "baseMainSha": "b0bd825a8d8ce97763ec45046219ce78f799b4ed",
+  "clusterD": {
+    "status": "PASS",
+    "runtimeIdentity": {
+      "apiReady": true,
+      "toolCount": 24,
+      "appVersion": "0.1"
+    },
+    "cases": [
+      "C001",
+      "C002",
+      "C007",
+      "C008",
+      "C013"
+    ],
+    "families": [
+      "C39",
+      "C55"
+    ],
+    "material": {
+      "freshZero": true,
+      "proposalNeutral": true,
+      "templateId": "material:chat:cluster-d-qa",
+      "rediscovered": true,
+      "instanceId": "qa-d-material-instance",
+      "instanceUndoRedo": true,
+      "pathApply": true,
+      "pathApplyUndoRedo": true,
+      "previewDelta": true,
+      "arbitraryTokenRejected": true
+    },
+    "recipe": {
+      "inventoryReadOnly": true,
+      "inventoryCount": {
+        "floraStored": 0,
+        "studio": 1
+      },
+      "recipeId": "ink.flower.common.v1",
+      "recipeVersion": "1",
+      "parameterSchemaRejected": true,
+      "historyAtomic": true,
+      "replayId": "run_mus9bc93_4kfycj",
+      "checkpointCount": 1,
+      "undoRedo": true,
+      "rollback": true,
+      "rollbackExecutionId": "run_mus9bcqf_yfh421",
+      "storedRediscovery": "NOT_APPLICABLE_STUDIO_REGISTRY_NOT_FLORA_PERSISTENCE"
+    },
+    "governance": {
+      "proposalApprovalRequired": true,
+      "noSecondMaterialEngine": true,
+      "noSecondRecipeEngine": true,
+      "workflowIrUsed": false
+    }
+  },
+  "regressions": {
+    "align-distribute-c2": "PASS",
+    "page-ops-c1": "PASS",
+    "path-deformation-b4": "PASS",
+    "stroke-create-a2": "PASS",
+    "raster-stack-adjustment-b2": "PASS"
+  },
+  "workflow": {
+    "runId": 37116951905,
+    "jobId": 111185489317,
+    "artifactId": 11271832120,
+    "artifactDigest": "sha256:909218129dad5d4645eec625c19ab5f8c84ed68d0c79a303e36a3e11e59da027",
+    "artifactFiles": [
+      "cluster-d.result.json",
+      "cluster-d.png",
+      "regressions.result.json",
+      "regressions.png",
+      "child regression JSON/PNG evidence"
+    ]
+  },
+  "notes": [
+    "Studio RecipeEngine is the selected first governed Recipe route because it already owns a registered recipe inventory, replay report/checkpoints and native execution semantics.",
+    "Stored recipe rediscovery is not applicable to this D3 route because the selected Studio registry recipe is pre-registered runtime authority rather than a page-persisted FLORA recipe.",
+    "No Workflow IR or External Workflow Translation authority was used."
+  ]
+}
