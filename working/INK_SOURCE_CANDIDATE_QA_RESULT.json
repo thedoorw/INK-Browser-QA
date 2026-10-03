@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterB-B3-spot-heal-candidate-001-regressions",
-  "candidateSha": "0551f4516ea197d60a8cae711abf2db7ab92c2c4",
-  "case": "raster-spot-heal-b3",
+  "requestId": "clusterB-B3-local-retouch-candidate-001-regressions",
+  "candidateSha": "865a1b7ec3f023e25d13814a234e6efe6d793074",
+  "case": "raster-local-retouch-b3",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:34459/?sourceCandidate=0551f4516ea197d60a8cae711abf2db7ab92c2c4",
+    "href": "http://127.0.0.1:40253/?sourceCandidate=865a1b7ec3f023e25d13814a234e6efe6d793074",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,65 +13,154 @@
   },
   "result": {
     "passed": true,
-    "operation": "image.raster.spotHeal.v1",
-    "objectId": "d5b2aa36-6482-4ab4-9178-f8fd0a008485",
-    "beforeHash": "56c8e8cb",
-    "afterHash": "73c4534b",
-    "undoHash": "56c8e8cb",
-    "redoHash": "73c4534b",
-    "beforePreview": {
+    "operation": "image.raster.localRetouch.v1",
+    "objectId": "a796116e-1484-4193-ac87-94fc9e4200ff",
+    "baselineHash": "5e882188",
+    "baselinePreview": {
       "status": "COMPLETED",
-      "fingerprint": "fnv1a32:97b6669b"
+      "fingerprint": "fnv1a32:1ac04c76"
     },
-    "afterPreview": {
-      "status": "COMPLETED",
-      "fingerprint": "fnv1a32:afea5d15"
-    },
-    "undoPreview": {
-      "status": "COMPLETED",
-      "fingerprint": "fnv1a32:97b6669b"
-    },
-    "redoPreview": {
-      "status": "COMPLETED",
-      "fingerprint": "fnv1a32:afea5d15"
-    },
-    "historyLabel": "CHAT raster Spot Healing",
-    "changedPixels": 64,
-    "changedChannels": 192,
-    "staleRejected": true,
-    "noOpRejected": true,
-    "controllerResult": {
-      "changed": true,
-      "rasterEdit": {
-        "changedChannels": 192,
-        "changedPixels": 64,
-        "hardness": 1,
-        "neighborRadius": 2,
-        "opacity": 1,
-        "radius": 6,
-        "type": "spotHealing",
-        "x": 32,
-        "y": 24
+    "types": [
+      {
+        "type": "dodge",
+        "afterHash": "bc6a95b1",
+        "afterPreview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:f259d859"
+        },
+        "changedPixels": 193,
+        "changedChannels": 579
       },
-      "resultRefs": [
-        {
-          "layerId": "15da120b-d3f4-4598-a3a4-3862666d3ed7",
-          "objectId": "d5b2aa36-6482-4ab4-9178-f8fd0a008485",
-          "pageId": "d2a8eead-7ccf-4772-8b49-d34b6dc2d3f3"
-        }
-      ]
-    }
+      {
+        "type": "burn",
+        "afterHash": "f271f5ee",
+        "afterPreview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:b73afcc8"
+        },
+        "changedPixels": 193,
+        "changedChannels": 579
+      },
+      {
+        "type": "sponge",
+        "afterHash": "91c9cbe7",
+        "afterPreview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:337c8655"
+        },
+        "changedPixels": 193,
+        "changedChannels": 574
+      },
+      {
+        "type": "localBlur",
+        "afterHash": "236a83e1",
+        "afterPreview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:19935513"
+        },
+        "changedPixels": 286,
+        "changedChannels": 525
+      },
+      {
+        "type": "localSharpen",
+        "afterHash": "2f9676c8",
+        "afterPreview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:81de7660"
+        },
+        "changedPixels": 244,
+        "changedChannels": 355
+      },
+      {
+        "type": "colorReplacement",
+        "afterHash": "6481918c",
+        "afterPreview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:c0cb6440"
+        },
+        "changedPixels": 113,
+        "changedChannels": 339
+      }
+    ],
+    "staleRejected": true,
+    "noOpRejected": true
   },
   "status": "PASS",
   "regressions": [
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-spot-heal-candidate-001-regressions-raster-mask-b3",
-      "candidateSha": "0551f4516ea197d60a8cae711abf2db7ab92c2c4",
+      "requestId": "clusterB-B3-local-retouch-candidate-001-regressions-raster-spot-heal-b3",
+      "candidateSha": "865a1b7ec3f023e25d13814a234e6efe6d793074",
+      "case": "raster-spot-heal-b3",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:36823/?sourceCandidate=865a1b7ec3f023e25d13814a234e6efe6d793074",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "image.raster.spotHeal.v1",
+        "objectId": "e3228d41-5240-4ddc-9cbe-3c96abe0c0a5",
+        "beforeHash": "56c8e8cb",
+        "afterHash": "73c4534b",
+        "undoHash": "56c8e8cb",
+        "redoHash": "73c4534b",
+        "beforePreview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:97b6669b"
+        },
+        "afterPreview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:afea5d15"
+        },
+        "undoPreview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:97b6669b"
+        },
+        "redoPreview": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:afea5d15"
+        },
+        "historyLabel": "CHAT raster Spot Healing",
+        "changedPixels": 64,
+        "changedChannels": 192,
+        "staleRejected": true,
+        "noOpRejected": true,
+        "controllerResult": {
+          "changed": true,
+          "rasterEdit": {
+            "changedChannels": 192,
+            "changedPixels": 64,
+            "hardness": 1,
+            "neighborRadius": 2,
+            "opacity": 1,
+            "radius": 6,
+            "type": "spotHealing",
+            "x": 32,
+            "y": 24
+          },
+          "resultRefs": [
+            {
+              "layerId": "f902d231-4cc0-4313-a744-8e4cab5da267",
+              "objectId": "e3228d41-5240-4ddc-9cbe-3c96abe0c0a5",
+              "pageId": "6cb64e79-3a5a-4d0b-a5cc-e4fd8e884d6e"
+            }
+          ]
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterB-B3-local-retouch-candidate-001-regressions-raster-mask-b3",
+      "candidateSha": "865a1b7ec3f023e25d13814a234e6efe6d793074",
       "case": "raster-mask-b3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:46633/?sourceCandidate=0551f4516ea197d60a8cae711abf2db7ab92c2c4",
+        "href": "http://127.0.0.1:41065/?sourceCandidate=865a1b7ec3f023e25d13814a234e6efe6d793074",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -80,7 +169,7 @@
       "result": {
         "passed": true,
         "operation": "image.mask.raster.set.v1",
-        "objectId": "1d488d68-78ea-488a-b20e-414461ab282e",
+        "objectId": "4e5afca7-9d1f-4a17-ab28-f03140b53a68",
         "baselineHash": "376ec6fb",
         "afterMaskHash": "376ec6fb",
         "baselinePreview": {
@@ -126,11 +215,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-spot-heal-candidate-001-regressions-raster-direct-paint-bucket-b3",
-      "candidateSha": "0551f4516ea197d60a8cae711abf2db7ab92c2c4",
+      "requestId": "clusterB-B3-local-retouch-candidate-001-regressions-raster-direct-paint-bucket-b3",
+      "candidateSha": "865a1b7ec3f023e25d13814a234e6efe6d793074",
       "case": "raster-direct-paint-bucket-b3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:42043/?sourceCandidate=0551f4516ea197d60a8cae711abf2db7ab92c2c4",
+        "href": "http://127.0.0.1:37477/?sourceCandidate=865a1b7ec3f023e25d13814a234e6efe6d793074",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -139,7 +228,7 @@
       "result": {
         "passed": true,
         "operation": "image.raster.paintBucket.v1",
-        "objectId": "796ebf29-d238-4fa4-927f-7e7931475dca",
+        "objectId": "dcb23db8-eaf1-4aff-b81e-f36bcd0ce371",
         "beforeHash": "376ec6fb",
         "afterHash": "b09ebd5b",
         "undoHash": "376ec6fb",
@@ -186,9 +275,9 @@
           },
           "resultRefs": [
             {
-              "layerId": "1ef86d14-1e07-469a-a82d-57320066cfa7",
-              "objectId": "796ebf29-d238-4fa4-927f-7e7931475dca",
-              "pageId": "1a910cff-2c20-4c37-a5e7-cb472764d189"
+              "layerId": "83368ca6-26ae-4008-9dcf-8f30abe76aba",
+              "objectId": "dcb23db8-eaf1-4aff-b81e-f36bcd0ce371",
+              "pageId": "28b1470b-18a1-4fc1-980f-d6d1fd8787ab"
             }
           ]
         }
@@ -198,11 +287,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-spot-heal-candidate-001-regressions-raster-stack-adjustment-b2",
-      "candidateSha": "0551f4516ea197d60a8cae711abf2db7ab92c2c4",
+      "requestId": "clusterB-B3-local-retouch-candidate-001-regressions-raster-stack-adjustment-b2",
+      "candidateSha": "865a1b7ec3f023e25d13814a234e6efe6d793074",
       "case": "raster-stack-adjustment-b2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:36519/?sourceCandidate=0551f4516ea197d60a8cae711abf2db7ab92c2c4",
+        "href": "http://127.0.0.1:36209/?sourceCandidate=865a1b7ec3f023e25d13814a234e6efe6d793074",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -212,9 +301,9 @@
         "passed": true,
         "operation": "image.adjustment.add.v1",
         "adjustmentType": "brightnessContrast",
-        "objectId": "98f2687a-3314-496b-a7d7-54cd0511fb00",
-        "beforeFingerprint": "fnv1a32:953e3eca",
-        "afterFingerprint": "fnv1a32:ba6a0c19",
+        "objectId": "23e6e293-856a-4775-9430-88d007d4902a",
+        "beforeFingerprint": "fnv1a32:8f5860f7",
+        "afterFingerprint": "fnv1a32:0ccc0461",
         "beforeHash": "7883b22",
         "afterHash": "9cd23fe",
         "undoHash": "7883b22",
@@ -227,12 +316,12 @@
           "adjustmentCount": 1,
           "resultRefs": [
             {
-              "layerId": "9727a5be-64d6-4a52-8c91-6da0c39cc35c",
-              "objectId": "98f2687a-3314-496b-a7d7-54cd0511fb00",
-              "pageId": "f42d860d-9bcf-4bdc-bb51-108547884b5c"
+              "layerId": "2cd9a764-5c56-45e2-975c-76b2b3bc71ea",
+              "objectId": "23e6e293-856a-4775-9430-88d007d4902a",
+              "pageId": "bc0546f9-adb8-4104-a409-72486dca41b0"
             }
           ],
-          "stackItemId": "adj_1iho8i6",
+          "stackItemId": "adj_1862gkh",
           "stackItemType": "brightnessContrast"
         }
       },
