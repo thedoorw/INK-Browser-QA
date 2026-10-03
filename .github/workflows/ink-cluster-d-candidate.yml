@@ -9,6 +9,7 @@ on:
       - product/source/src/agent/capability-registry.js
       - product/source/src/agent/public-creative-api.js
       - product/source/src/studio-core.js
+      - product/source/src/recipe/recipe-engine.js
       - qa/source-candidate/run-source-candidate-request.mjs
       - qa/ink-cluster-d-material-recipe-001.test.mjs
       - .github/workflows/ink-cluster-d-candidate.yml
@@ -30,6 +31,7 @@ jobs:
           node --check product/source/src/agent/capability-registry.js
           node --check product/source/src/agent/public-creative-api.js
           node --check product/source/src/studio-core.js
+          node --check product/source/src/recipe/recipe-engine.js
           node --check qa/source-candidate/run-source-candidate-request.mjs
           node --test qa/ink-cluster-d-material-recipe-001.test.mjs
       - name: Cluster D browser qualification
