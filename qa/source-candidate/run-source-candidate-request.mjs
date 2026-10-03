@@ -268,12 +268,14 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
     const appearanceModule=await import('./src/vector/paint-appearance.js');
     const resolvedAppearance=appearanceModule.resolvePathPaintAppearance(applied,app.doc);
     const instanceObject=app.page().layers.flatMap(layer=>layer.objects||[]).find(object=>object.id===instanceId)||null;
-    const scratchHash=path=>{
+    const scratchHash=(path,mode='path')=>{
       const canvas=document.createElement('canvas');canvas.width=240;canvas.height=160;
-      const ctx=canvas.getContext('2d');ctx.translate(120,80);app.renderer.drawVectorPath(ctx,path);
-      const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;let h=2166136261;
+      const ctx=canvas.getContext('2d');ctx.translate(120,80);
+      if(mode==='object')app.renderer.drawObject(ctx,path,{page:app.page()});else app.renderer.drawVectorPath(ctx,path);
+      const image=ctx.getImageData(0,0,canvas.width,canvas.height),data=image.data;let h=2166136261;
       for(let i=0;i<data.length;i++){h^=data[i];h=Math.imul(h,16777619);}
-      return (h>>>0).toString(16);
+      const off=(80*canvas.width+120)*4;
+      return {hash:(h>>>0).toString(16),centerPixel:[data[off],data[off+1],data[off+2],data[off+3]]};
     };
     const ordinaryClone=JSON.parse(JSON.stringify(applied));ordinaryClone.materialAppearance=null;
     throw new Error('MATERIAL_RENDER_NO_DELTA:'+JSON.stringify({
@@ -292,8 +294,10 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
           children:(object.children||[]).map(child=>({id:child.id,type:child.type,matrix:child.matrix||null,fill:child.fill||null,opacity:child.opacity,visible:child.visible,materialAppearance:child.materialAppearance||null}))
         }))
       })),
-      scratchMaterialHash:scratchHash(applied),
-      scratchOrdinaryHash:scratchHash(ordinaryClone)
+      scratchMaterial:scratchHash(applied),
+      scratchOrdinary:scratchHash(ordinaryClone),
+      scratchMaterialObject:scratchHash(applied,'object'),
+      scratchOrdinaryObject:scratchHash(ordinaryClone,'object')
     }));
   }
   const undoApply=await invoke('undo_ink',{});if(undoApply?.status==='FAILED')throw new Error('MATERIAL_APPLY_UNDO_FAILED');
