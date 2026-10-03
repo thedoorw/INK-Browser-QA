@@ -1,5 +1,5 @@
 import { clamp, Matrix } from '../core/index.js';
-import { buildNaturalMediaStamps, isNaturalMediaStroke } from './natural-media-utils.js';
+import { buildNaturalMediaStamps, isNaturalMediaRunStroke, isNaturalMediaStroke } from './natural-media-utils.js';
 
 export function normalizeNaturalMediaRunEntry(entry) {
   const stroke = entry?.stroke || entry;
@@ -17,12 +17,17 @@ export function transformNaturalMediaStamp(stamp, matrix) {
   return { ...stamp, x: point.x, y: point.y, angle: Math.atan2(vy, vx), radiusX: stamp.radiusX * scale, radiusY: stamp.radiusY * scale };
 }
 
-export function supportsNaturalMediaRun(entries, { minimum = 2, includeAirbrush = false } = {}) {
+export function supportsNaturalMediaRun(entries, { minimum = 2, includeAirbrush = false, includeMixers = false } = {}) {
   const kinds = includeAirbrush ? new Set(['brush', 'drybrush', 'airbrush']) : new Set(['brush', 'drybrush']);
-  return Array.isArray(entries) && entries.length >= minimum && entries.every(raw => {
+  if (includeMixers) { kinds.add('blender');kinds.add('smudge'); }
+  if (!Array.isArray(entries) || entries.length < minimum) return false;
+  let depositorCount = 0;
+  for (const raw of entries) {
     const stroke = raw?.stroke || raw;
-    return isNaturalMediaStroke(stroke) && kinds.has(stroke.kind) && !(stroke.segmentStyles || []).some(style => style && Object.keys(style).length);
-  });
+    if (!isNaturalMediaRunStroke(stroke) || !kinds.has(stroke.kind) || (stroke.segmentStyles || []).some(style => style && Object.keys(style).length)) return false;
+    if (isNaturalMediaStroke(stroke)) depositorCount++;
+  }
+  return depositorCount > 0;
 }
 
 export function prepareNaturalMediaRun(entries, { maxStampsPerStroke = 4096 } = {}) {

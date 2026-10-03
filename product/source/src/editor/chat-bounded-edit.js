@@ -538,9 +538,10 @@ export const CHAT_PAINT_SESSION_BRUSH_IDS = Object.freeze(
 );
 const CHAT_PAINT_SESSION_BRUSH_ID_SET = new Set(CHAT_PAINT_SESSION_BRUSH_IDS);
 
-export const CHAT_STROKE_KINDS = Object.freeze(['pen', 'pencil', 'marker', 'brush', 'drybrush', 'airbrush']);
+export const CHAT_STROKE_KINDS = Object.freeze(['pen', 'pencil', 'marker', 'brush', 'drybrush', 'airbrush', 'blender', 'smudge']);
 const CHAT_STROKE_KIND_SET = new Set(CHAT_STROKE_KINDS);
-const CHAT_NATURAL_MEDIA_STROKE_KIND_SET = new Set(['brush', 'drybrush', 'airbrush']);
+const CHAT_MIXER_STROKE_KIND_SET = new Set(['blender', 'smudge']);
+const CHAT_NATURAL_MEDIA_STROKE_KIND_SET = new Set(['brush', 'drybrush', 'airbrush', 'blender', 'smudge']);
 
 function normalizeStrokeCreateSample(raw, field, index) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENT_INVALID', { field });
@@ -586,6 +587,9 @@ function normalizeStrokeCreateArguments(raw = {}) {
     flow: boundedNumber(raw.flow ?? 1, 'arguments.flow', { min: 0, max: 1 }),
     wetness: boundedNumber(raw.wetness ?? 0, 'arguments.wetness', { min: 0, max: 1 }),
     bristle: boundedNumber(raw.bristle ?? 0, 'arguments.bristle', { min: 0, max: 1 }),
+    blend: boundedNumber(raw.blend ?? (kind === 'blender' ? .92 : 0), 'arguments.blend', { min: 0, max: 1 }),
+    smudge: boundedNumber(raw.smudge ?? (kind === 'smudge' ? .94 : kind === 'blender' ? .58 : 0), 'arguments.smudge', { min: 0, max: 1 }),
+    drag: boundedNumber(raw.drag ?? (kind === 'smudge' ? .82 : kind === 'blender' ? .32 : 0), 'arguments.drag', { min: 0, max: 1 }),
     samples
   };
 }
@@ -1554,6 +1558,9 @@ function executeStrokeCreateTask(app, task) {
     flow: args.flow,
     wetness: args.wetness,
     bristle: args.bristle,
+    blend: args.blend,
+    smudge: args.smudge,
+    drag: args.drag,
     samples: args.samples
   }).replace(':', '-')}`;
   if (findPageObject(app.page(), strokeId)) editFail('OBJECT_ID_COLLISION', { objectId: strokeId });
@@ -1589,6 +1596,7 @@ function executeStrokeCreateTask(app, task) {
     flow: args.flow,
     wetness: args.wetness,
     bristle: args.bristle,
+    ...(CHAT_MIXER_STROKE_KIND_SET.has(args.kind) ? { blend: args.blend, smudge: args.smudge, drag: args.drag } : {}),
     ...(CHAT_NATURAL_MEDIA_STROKE_KIND_SET.has(args.kind) ? { mediaModel: 'natural-v2' } : {}),
     points
   };

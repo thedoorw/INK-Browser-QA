@@ -9,11 +9,11 @@ const multiChannelCanvasFactory = () => document.createElement('canvas');
 export class Canvas2DMultiChannelInkRenderer {
   constructor({ canvasFactory = multiChannelCanvasFactory, cacheLimit = 20, maxDimension = 1536, maxPixels = 1250000 } = {}) {
     this.canvasFactory = canvasFactory;this.cacheLimit = cacheLimit;this.maxDimension = maxDimension;this.maxPixels = maxPixels;
-    this.cache = new Map();this.stats = { backend: 'canvas2d-multichannel', runs: 0, strokes: 0, stamps: 0, pixels: 0, cacheHits: 0, cacheMisses: 0, evictions: 0, skipped: 0 };
+    this.cache = new Map();this.stats = { backend: 'canvas2d-multichannel', runs: 0, strokes: 0, mixingStrokes: 0, stamps: 0, mixerStamps: 0, transportedPigment: 0, pixels: 0, cacheHits: 0, cacheMisses: 0, evictions: 0, skipped: 0 };
   }
 
   supports(entries, { minimum = 2 } = {}) {
-    return supportsNaturalMediaRun(entries, { minimum });
+    return supportsNaturalMediaRun(entries, { minimum, includeMixers: true });
   }
 
   render(entries, paper = {}, options = {}) {
@@ -36,7 +36,17 @@ export class Canvas2DMultiChannelInkRenderer {
     const width = Math.max(1, Math.ceil(run.bounds.w * scale)), height = Math.max(1, Math.ceil(run.bounds.h * scale));
     const surface = new MultiChannelInkSurface(width, height, { paper, originX: run.bounds.x, originY: run.bounds.y, scale });
     for (const entry of run.strokes) {
-      const stroke = entry.stroke, rgba = mediaHexToRGBA(stroke.color || '#202020', entry.opacity);
+      const stroke = entry.stroke;
+      if (stroke.kind === 'blender' || stroke.kind === 'smudge') {
+        const mode = stroke.kind;
+        const strength = mode === 'blender' ? (stroke.blend ?? .92) : (stroke.smudge ?? .94);
+        for (const stamp of entry.stamps) surface.transportStamp(stamp, {
+          mode, strength, drag: stroke.drag ?? (mode === 'smudge' ? .82 : .32), opacity: entry.opacity
+        });
+        if (mode === 'smudge') surface.simulate({ steps: 1, diffusion: .04, evaporation: .012, deposition: .025 });
+        continue;
+      }
+      const rgba = mediaHexToRGBA(stroke.color || '#202020', entry.opacity);
       for (const stamp of entry.stamps) surface.depositStamp(stamp, rgba, {
         flow: stroke.flow ?? .82, wetness: stroke.wetness ?? .35,
         granulation: stroke.grain ?? (stroke.kind === 'drybrush' ? .82 : .18), opacity: entry.opacity
@@ -50,7 +60,7 @@ export class Canvas2DMultiChannelInkRenderer {
     const imageData = context.createImageData ? context.createImageData(width, height) : null;
     if (!imageData) return null;imageData.data.set(bytes);context.putImageData(imageData, 0, 0);
     const result = { canvas, x: run.bounds.x, y: run.bounds.y, w: run.bounds.w, h: run.bounds.h, scale, strokes: run.strokes.length, stamps: surface.stats.stamps, backend: 'canvas2d-multichannel', diagnostics: surface.diagnostics() };
-    if (cacheable) { this.cache.set(key, result);this.trimCache(); }this.stats.runs++;this.stats.strokes += run.strokes.length;this.stats.stamps += surface.stats.stamps;this.stats.pixels += width * height;
+    if (cacheable) { this.cache.set(key, result);this.trimCache(); }this.stats.runs++;this.stats.strokes += run.strokes.length;this.stats.mixingStrokes += run.strokes.filter(entry => ['blender','smudge'].includes(entry.stroke.kind)).length;this.stats.stamps += surface.stats.stamps;this.stats.mixerStamps += surface.stats.mixerStamps;this.stats.transportedPigment += surface.stats.transportedPigment;this.stats.pixels += width * height;
     return result;
   }
 
