@@ -1,8 +1,8 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterC-C3-snap-guides-candidate-001-regressions",
-  "candidateSha": "33aebe9302ef8130f102d33c8a6c771c3ea50b3c",
+  "requestId": "clusterC-C3-snap-guides-candidate-002-regressions",
+  "candidateSha": "de4ad731c7bad36626080c32113dbc692113306e",
   "case": "snap-guides-c3",
   "regressions": true
 }
