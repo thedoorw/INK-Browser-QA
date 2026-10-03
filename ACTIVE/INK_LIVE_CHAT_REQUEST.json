@@ -1,20 +1,15 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterA-A2-native-stroke-live-002",
+  "requestId": "clusterA-A3-paper-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "d0248e9661cc242081507e4bf73fc8b73aeb6256",
+  "expectedSourceSha": "ab84aafc3006f0f14a74d231ca862200bd0b5d94",
   "steps": [
     {
-      "id": "capabilities",
-      "tool": "get_ink_capabilities",
-      "input": {}
-    },
-    {
-      "id": "contextBefore",
-      "tool": "get_ink_context",
+      "id": "describePaper",
+      "tool": "describe_ink_capability",
       "input": {
-        "maxObjects": 30
+        "idOrToolName": "page.paper.set.v1"
       }
     },
     {
@@ -23,123 +18,42 @@
       "input": {}
     },
     {
-      "id": "pencilPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-a2-pencil-002",
-          "operation": "stroke.create.v1",
-          "targets": [],
-          "arguments": {
-            "key": "pencil",
-            "name": "Live A2 Pencil",
-            "kind": "pencil",
-            "color": "#243746",
-            "size": 6,
-            "opacity": 0.82,
-            "smoothing": 0.42,
-            "pressure": 0.78,
-            "grain": 0.68,
-            "samples": [
-              {
-                "x": -170,
-                "y": -105,
-                "pressure": 0.22,
-                "timestamp": 0,
-                "tiltX": 2,
-                "tiltY": 8
-              },
-              {
-                "x": -95,
-                "y": -135,
-                "pressure": 0.7,
-                "timestamp": 24,
-                "tiltX": 6,
-                "tiltY": 10
-              },
-              {
-                "x": -20,
-                "y": -80,
-                "pressure": 0.9,
-                "timestamp": 48,
-                "tiltX": 4,
-                "tiltY": 5
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "id": "pencilApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "pencilPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "pencilExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "pencilPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "pencilApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
       "id": "brushPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-a2-brush-002",
+          "taskId": "live-a3-brush-001",
           "operation": "stroke.create.v1",
           "targets": [],
           "arguments": {
-            "key": "brush",
-            "name": "Live A2 Brush",
             "kind": "brush",
             "color": "#8f3f58",
-            "size": 20,
-            "opacity": 0.9,
-            "smoothing": 0.46,
-            "pressure": 0.95,
-            "taper": 0.36,
-            "flow": 0.78,
-            "wetness": 0.62,
-            "bristle": 0.28,
+            "size": 72,
+            "opacity": 0.85,
+            "flow": 0.75,
+            "wetness": 0.8,
+            "grain": 0.4,
+            "bristle": 0.4,
             "samples": [
               {
-                "x": 20,
-                "y": -105,
+                "x": -120,
+                "y": -20,
                 "pressure": 0.3,
-                "timestamp": 0,
-                "tiltX": -4,
-                "tiltY": 7
+                "timestamp": 0
               },
               {
-                "x": 90,
-                "y": -140,
-                "pressure": 0.88,
-                "timestamp": 24,
-                "tiltX": -8,
-                "tiltY": 12
+                "x": 0,
+                "y": 70,
+                "pressure": 0.9,
+                "timestamp": 24
               },
               {
-                "x": 170,
-                "y": -72,
-                "pressure": 0.52,
-                "timestamp": 48,
-                "tiltX": -3,
-                "tiltY": 4
+                "x": 120,
+                "y": -40,
+                "pressure": 0.6,
+                "timestamp": 48
               }
             ]
           }
@@ -168,113 +82,42 @@
       }
     },
     {
-      "id": "airbrushPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-a2-airbrush-002",
-          "operation": "stroke.create.v1",
-          "targets": [],
-          "arguments": {
-            "key": "airbrush",
-            "name": "Live A2 Airbrush",
-            "kind": "airbrush",
-            "color": "#42689a",
-            "size": 44,
-            "opacity": 0.28,
-            "smoothing": 0.7,
-            "pressure": 0.6,
-            "softness": 0.86,
-            "flow": 0.55,
-            "samples": [
-              {
-                "x": -170,
-                "y": 35,
-                "pressure": 0.28,
-                "timestamp": 0
-              },
-              {
-                "x": -95,
-                "y": 78,
-                "pressure": 0.7,
-                "timestamp": 25
-              },
-              {
-                "x": -20,
-                "y": 105,
-                "pressure": 0.42,
-                "timestamp": 50
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "id": "airbrushApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "airbrushPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "airbrushExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "airbrushPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "airbrushApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
       "id": "drybrushPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-a2-drybrush-002",
+          "taskId": "live-a3-drybrush-001",
           "operation": "stroke.create.v1",
           "targets": [],
           "arguments": {
-            "key": "drybrush",
-            "name": "Live A2 DryBrush",
             "kind": "drybrush",
-            "color": "#6a573e",
-            "size": 26,
-            "opacity": 0.65,
-            "smoothing": 0.36,
-            "pressure": 0.9,
-            "taper": 0.3,
-            "grain": 0.82,
-            "flow": 0.58,
-            "wetness": 0.08,
-            "bristle": 0.78,
+            "color": "#42689a",
+            "size": 72,
+            "opacity": 0.85,
+            "flow": 0.75,
+            "wetness": 0.2,
+            "grain": 0.4,
+            "bristle": 0.4,
             "samples": [
               {
-                "x": 20,
-                "y": 35,
-                "pressure": 0.32,
+                "x": -100,
+                "y": 45,
+                "pressure": 0.4,
                 "timestamp": 0
               },
               {
-                "x": 95,
-                "y": 92,
-                "pressure": 0.86,
-                "timestamp": 25
+                "x": 15,
+                "y": -45,
+                "pressure": 0.85,
+                "timestamp": 24
               },
               {
-                "x": 170,
-                "y": 55,
-                "pressure": 0.48,
-                "timestamp": 50
+                "x": 100,
+                "y": 40,
+                "pressure": 0.65,
+                "timestamp": 48
               }
             ]
           }
@@ -303,16 +146,89 @@
       }
     },
     {
-      "id": "contextAfter",
-      "tool": "get_ink_context",
+      "id": "previewBefore",
+      "tool": "get_ink_preview",
       "input": {
-        "maxObjects": 30
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
       }
     },
     {
-      "id": "historyAfter",
-      "tool": "get_ink_history",
-      "input": {}
+      "id": "roughnessPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-a3-roughness-001",
+          "operation": "page.paper.set.v1",
+          "targets": [],
+          "arguments": {
+            "key": "roughness",
+            "value": 0.95
+          }
+        }
+      }
+    },
+    {
+      "id": "roughnessApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "roughnessPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "roughnessExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "roughnessPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "roughnessApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "absorbencyPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-a3-absorbency-001",
+          "operation": "page.paper.set.v1",
+          "targets": [],
+          "arguments": {
+            "key": "absorbency",
+            "value": 0.05
+          }
+        }
+      }
+    },
+    {
+      "id": "absorbencyApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "absorbencyPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "absorbencyExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "absorbencyPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "absorbencyApprove.result.result.approvalToken"
+        }
+      }
     },
     {
       "id": "previewAfter",
@@ -320,8 +236,13 @@
       "input": {
         "scope": "content",
         "maxDimension": 800,
-        "background": true
+        "background": false
       }
+    },
+    {
+      "id": "historyAfter",
+      "tool": "get_ink_history",
+      "input": {}
     },
     {
       "id": "undo1",
@@ -334,20 +255,12 @@
       "input": {}
     },
     {
-      "id": "undo3",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "undo4",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "contextUndo",
-      "tool": "get_ink_context",
+      "id": "previewUndo",
+      "tool": "get_ink_preview",
       "input": {
-        "maxObjects": 30
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
       }
     },
     {
@@ -361,29 +274,19 @@
       "input": {}
     },
     {
-      "id": "redo3",
-      "tool": "redo_ink",
-      "input": {}
-    },
-    {
-      "id": "redo4",
-      "tool": "redo_ink",
-      "input": {}
-    },
-    {
-      "id": "contextRedo",
-      "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 30
-      }
-    },
-    {
       "id": "previewRedo",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
         "maxDimension": 800,
-        "background": true
+        "background": false
+      }
+    },
+    {
+      "id": "contextAfter",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 12
       }
     }
   ]
