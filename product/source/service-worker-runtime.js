@@ -242,13 +242,8 @@ self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
     const staleInkCaches = keys.filter(key => isOwnedInkCache(key) && ![SHELL_CACHE, RUNTIME_CACHE].includes(key));
-    const replacingPreviousBuild = staleInkCaches.length > 0;
     await Promise.all(staleInkCaches.map(key => caches.delete(key)));
     await self.clients.claim();
-    if (replacingPreviousBuild) {
-      const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-      await Promise.all(windows.map(client => client.navigate?.(client.url).catch(() => null)));
-    }
   })());
 });
 
