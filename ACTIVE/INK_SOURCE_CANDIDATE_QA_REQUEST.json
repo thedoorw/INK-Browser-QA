@@ -1,9 +1,8 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "core-perf-image-cache-candidate-002",
-  "candidateSha": "87158d5c372cfd40deff5ee6c887ddecbc7a4e69",
-  "case": "raster-stack-adjustment-b2",
-  "imageStackCacheReview": true,
+  "requestId": "clusterC-C3-snap-guides-candidate-003-integration-regressions",
+  "candidateSha": "1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
+  "case": "snap-guides-c3",
   "regressions": true
 }
