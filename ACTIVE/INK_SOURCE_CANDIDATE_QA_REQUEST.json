@@ -1,9 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "core-perf-image-cache-candidate-001",
-  "candidateSha": "d61e278c17fae1cd49687d8ad3b4a6e3f6d330cc",
-  "case": "raster-stack-b2",
-  "imageStackCacheReview": true,
-  "regressions": true
+  "requestId": "core-perf-image-cache-baseline-shadow-diagnostic-001",
+  "candidateSha": "0793cdbe0d72115962c23ee31353304babfe5472",
+  "case": "raster-stack-b2"
 }
