@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAGE_OPERATIONS, CHAT_OBJECT_ALIGN_MODES, CHAT_PRECISION_LAYOUT_OPERATIONS, CHAT_SNAP_KEYS, CHAT_ARTBOARD_KEYS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES, CHAT_IMAGE_SOURCE_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAGE_OPERATIONS, CHAT_OBJECT_ALIGN_MODES, CHAT_PRECISION_LAYOUT_OPERATIONS, CHAT_MATERIAL_OPERATIONS, CHAT_RECIPE_OPERATIONS, CHAT_SNAP_KEYS, CHAT_ARTBOARD_KEYS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES, CHAT_IMAGE_SOURCE_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -10,7 +10,7 @@ export const INK_CAPABILITY_INPUT_SCHEMA_KEYWORDS = Object.freeze([
 ]);
 
 export const INK_CAPABILITY_TARGET_TYPES = Object.freeze([
-  'Document', 'Page', 'Layer', 'Object', 'Path', 'Image',
+  'Document', 'Page', 'Layer', 'Object', 'Path', 'Image', 'Recipe',
   'ReferenceImage', 'INK_OUTPUT_HANDLE', 'Revision', 'None'
 ]);
 
@@ -60,6 +60,8 @@ const expectedStateSchema = obj({
   paperFingerprint: str('Expected active-page paper fingerprint; captured automatically for page.paper.set.v1.'),
   artboardFingerprint: str('Expected active-page artboard fingerprint; captured automatically for page.artboard.set.v1.'),
   precisionFingerprint: str('Expected active-page snap/guides fingerprint; captured automatically for Cluster C3 precision-layout operations.'),
+  materialLibraryFingerprint: str('Expected native Document material-library fingerprint for Cluster D material creation.'),
+  recipeRegistryFingerprint: str('Expected existing Studio RecipeEngine registry fingerprint for Cluster D recipe execution.'),
   revisionId: str('Expected revision id; omit when not constraining revision.'),
   targetFingerprints: { type: 'object', properties: {}, additionalProperties: true, description: 'Optional target fingerprint map.' }
 }, [], 'Optional optimistic-concurrency preconditions.');
@@ -111,6 +113,50 @@ const useInkSchema = obj({
 }, ['action'], 'Declarative use_ink request. Action-specific fields are validated by the existing Chat Creative Plan authority.');
 
 const editSchemas = {
+  'material.template.create.v1': editTaskSchema(
+    { type: 'string', const: 'material.template.create.v1', description: 'Create one reusable template in the existing native Document materialLibrary.' },
+    obj({
+      template: obj({
+        templateId: str('Stable material template id; must use the native material-* namespace.'),
+        templateVersion: str('Explicit native template version.'),
+        materialType: str('Existing material type token.'),
+        geometry: { type: 'object', properties: {}, additionalProperties: true, description: 'Existing native Material geometry template. Only native $param/$calc tokens are accepted by the bounded route.' },
+        defaultParameters: { type: 'object', properties: {}, additionalProperties: true, description: 'Native template default parameters.' },
+        editableParameters: { type: 'object', properties: {}, additionalProperties: true, description: 'Native editable-parameter declarations.' },
+        constraints: arr({ type: 'object', properties: {}, additionalProperties: true, description: 'Native material constraint.' }, 'Native material constraints.', { maxItems: 128 }),
+        semanticRole: str('Native semantic role.'),
+        sourceBenchmark: { type: 'object', properties: {}, additionalProperties: true, description: 'Bounded source/provenance metadata required by the native template authority.' },
+        validationState: { type: 'object', properties: {}, additionalProperties: true, description: 'Bounded validation metadata required by the native template authority.' },
+        metadata: { type: 'object', properties: {}, additionalProperties: true, description: 'Optional native metadata. metadata.pathAppearance is limited to fill/stroke by the bounded route.' }
+      }, ['templateId','templateVersion','materialType','geometry','defaultParameters','editableParameters','constraints','semanticRole','sourceBenchmark','validationState'], 'Existing native Material template payload.')
+    }, ['template'], 'Creates a reusable native material template; no second Material engine.'),
+    0, 0
+  ),
+  'material.instance.create.v1': editTaskSchema(
+    { type: 'string', const: 'material.instance.create.v1', description: 'Create one native reusable Material instance from an existing template.' },
+    obj({
+      templateId: str('Existing native material template id.'),
+      templateVersion: str('Exact existing template version.'),
+      instanceId: str('Optional stable instance id.'),
+      instanceKey: str('Optional stable instance key.'),
+      name: str('Optional instance name.'),
+      layerId: str('Explicit destination layer on the active page.'),
+      parameterOverrides: { type: 'object', properties: {}, additionalProperties: true, description: 'Bounded native parameter overrides.' },
+      transform: arr(num('Affine matrix coefficient.'), 'Optional six-number affine matrix.', { minItems: 6, maxItems: 6 }),
+      semanticRole: str('Optional native semantic role.')
+    }, ['templateId','templateVersion','layerId'], 'Existing createMaterialInstance() contract, bounded for CHAT.'),
+    0, 0
+  ),
+  'recipe.studio.execute.v1': editTaskSchema(
+    { type: 'string', const: 'recipe.studio.execute.v1', description: 'Execute one already-registered recipe through the existing Studio RecipeEngine under CHAT proposal/approval governance.' },
+    obj({
+      recipeId: str('Existing registered Studio RecipeEngine recipe id.'),
+      recipeVersion: str('Exact recipe version returned by recipe.inventory.'),
+      parameters: { type: 'object', properties: {}, additionalProperties: true, description: 'Bounded parameter overrides passed to the existing recipe engine.' },
+      roles: arr(str('Explicit role bound by index to the stable target ref at the same position.'), 'Role binding for every target.', { minItems: 1, maxItems: 64 })
+    }, ['recipeId','recipeVersion','roles'], 'Existing Studio RecipeEngine execution contract; inline recipes and Workflow IR are not accepted.'),
+    64, 1
+  ),
   'page.create.v1': editTaskSchema(
     { type: 'string', const: 'page.create.v1', description: 'Create one native page through the existing InkApp.addPage() authority.' },
     obj({}, [], 'No arguments; the native defaultPage() authority determines initial page state.'),
@@ -1147,20 +1193,51 @@ primary.push(descriptor({
   toolPrimary: true
 }));
 
+// Cluster D2 read-only bridge over the already-installed Studio RecipeEngine and page-stored FLORA recipe state.
+primary.push(descriptor({
+  id: 'recipe.inventory',
+  title: 'Inspect existing Recipe inventory',
+  description: 'Read the recipes already registered in the existing Studio RecipeEngine plus page-stored FLORA recipe identities without creating or importing a second Recipe registry.',
+  availability: true,
+  routingClass: 'NAMED_TOOL',
+  namedTool: 'get_ink_recipe_inventory',
+  publicMethod: 'recipe.inventory',
+  role: 'READ',
+  authoritativeRoute: 'app.studio.engine.list/describe + current page.floraRecipeState read-only inspection',
+  inputSchema: obj({ recipeId: str('Optional exact Studio recipe id to describe.') }, [], 'Read-only Recipe inventory request.'),
+  targetTypes: ['Recipe'],
+  constraints: [
+    'Read-only inventory only; does not register, import, translate, mutate, approve, or execute a recipe.',
+    'Studio entries come directly from the existing RecipeEngine registry. Stored FLORA entries are identity summaries only.',
+    'No Workflow IR or External Workflow Translation route is introduced.',
+    'Execution remains a separate recipe.studio.execute.v1 proposal → approval → execute flow.'
+  ],
+  ...policy(false, 'DIRECT_NAMED_TOOL', 'NONE', 'READ_CURRENT', false, false, 'Preview is not required for inventory reads.'),
+  resultContract: resultContract({ statuses: ['COMPLETED', 'FAILED'] }),
+  examples: [{}],
+  toolPrimary: true
+}));
+
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   const paperOnly = operation === 'page.paper.set.v1';
   const pageOperation = CHAT_PAGE_OPERATIONS.includes(operation);
   const precisionLayoutOperation = CHAT_PRECISION_LAYOUT_OPERATIONS.includes(operation);
+  const materialOperation = CHAT_MATERIAL_OPERATIONS.includes(operation);
+  const recipeOperation = CHAT_RECIPE_OPERATIONS.includes(operation);
   const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
   const strokeOnly = operation === 'stroke.erase.circle.v1';
   const imageOnly = operation.startsWith('image.');
-  const zeroTargetCreate = ['path.create.v1', 'paint.session.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
+  const zeroTargetCreate = materialOperation || ['path.create.v1', 'paint.session.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
   const operationConstraints = paperOnly
     ? ['Zero object targets; changes only the active page paper through InkApp.changePaper. Requires idle History and no pending interactive paper preview; captured paper fingerprint rejects stale proposals.']
     : precisionLayoutOperation
     ? ['Zero object targets; changes only active-page native snap settings or ruler guides through existing InkApp precision-layout wrappers. Captured precision fingerprint rejects stale proposals; no pointer simulation or duplicate snapping/guide authority is introduced.']
     : pageOperation
     ? ['Zero object targets; explicit stable page id is supplied in arguments where required. Reuses existing InkApp page mutation/navigation authority; page.activate.v1 is navigation-only and creates no History entry. New Document architecture is outside this operation family.']
+    : materialOperation
+    ? ['Zero object targets; reuses the existing Document materialLibrary/createMaterialTemplate/createMaterialInstance authority with native validation and History. Captured material-library fingerprint rejects stale proposals.']
+    : recipeOperation
+    ? ['Targets must resolve to explicit editable visible unlocked Path objects. Recipe id/version and role bindings are explicit; execution reuses the existing Studio RecipeEngine inside existing History.']
     : zeroTargetCreate
     ? ['Creation/import uses zero targets and cannot mutate before explicit approval and execute.']
     : operation === 'text.edit.v1' || operation === 'text.path.set.v1'
@@ -1205,6 +1282,9 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'component.instance.detach.v1') operationConstraints.push('Target must be one resolvable Component Instance; native detach remaps geometry ids and replaces the instance.');
   if (operation === 'component.definition.duplicate.v1') operationConstraints.push('Zero-target definition duplication uses the existing native definition/source duplication transaction.');
   if (operation === 'component.reference.repair.v1') operationConstraints.push('Explicit repair only; target must be one Component Instance and automatic repair remains prohibited.');
+  if (operation === 'material.template.create.v1') operationConstraints.push('Template ids/versions are stable; native $param/$calc geometry tokens are allowed, arbitrary executable expressions/tokens are rejected, and optional Path appearance is limited to fill/stroke.');
+  if (operation === 'material.instance.create.v1') operationConstraints.push('Requires an exact existing template version and explicit destination layer; instance creation remains createMaterialInstance().');
+  if (operation === 'recipe.studio.execute.v1') operationConstraints.push('Inline recipe definitions are prohibited. Exact registered recipe identity/version, one role per stable target, bounded parameters, replay receipt, and existing History rollback are required.');
   if (operation === 'path.repaint.v1') {
     operationConstraints.push('arguments must contain at least one of fill, stroke, opacity, or expressiveStrokeColor; empty arguments are rejected with ARGUMENTS_EMPTY.');
   }
@@ -1222,7 +1302,9 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     role: 'PROPOSAL',
     authoritativeRoute: 'app.chatBoundedEditAdapter.propose → explicit approval → app.chatBoundedEditAdapter.execute',
     inputSchema: editSchemas[operation],
-    targetTypes: (paperOnly || pageOperation || precisionLayoutOperation) ? ['Page'] : zeroTargetCreate
+    targetTypes: (paperOnly || pageOperation || precisionLayoutOperation) ? ['Page'] : materialOperation
+      ? (operation === 'material.template.create.v1' ? ['Document'] : ['Page'])
+      : recipeOperation ? ['Path', 'Recipe'] : zeroTargetCreate
       ? (operation === 'component.definition.duplicate.v1' ? ['Document'] : ['Page'])
       : operation === 'text.edit.v1' || operation === 'text.path.set.v1'
         ? ['Object']
@@ -1234,7 +1316,13 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     constraints: operationConstraints,
     ...policy(true, 'PROPOSE_THEN_EXPLICIT_APPROVAL_BEFORE_EXECUTE', 'AUTHORITATIVE_COMMIT_ON_EXECUTE_ONLY', 'NO_AUTO_CAPTURE', true, false, 'Preview is recommended after execution.'),
     resultContract: resultContract({ statuses: ['PROPOSED', 'FAILED'] }),
-    examples: paperOnly
+    examples: operation === 'material.template.create.v1'
+      ? [{ taskId: 'material-template-create-1', operation, targets: [], arguments: { template: { templateId: 'material-chat-sample', templateVersion: '1', materialType: 'vector', geometry: { type: 'path', subpaths: [] }, defaultParameters: {}, editableParameters: {}, constraints: [], semanticRole: 'sample', sourceBenchmark: { source: 'CHAT' }, validationState: { status: 'BOUNDED' }, metadata: { pathAppearance: { fill: '#b45a54', stroke: '#4d2c2a' } } } } }]
+      : operation === 'material.instance.create.v1'
+      ? [{ taskId: 'material-instance-create-1', operation, targets: [], arguments: { templateId: 'material-chat-sample', templateVersion: '1', layerId: 'layer-1', instanceId: 'material-instance-1' } }]
+      : operation === 'recipe.studio.execute.v1'
+      ? [{ taskId: 'recipe-studio-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: { recipeId: 'ink.flower.common.v1', recipeVersion: '1', parameters: {}, roles: ['petal'] } }]
+      : paperOnly
       ? [{ taskId: 'paper-roughness-1', operation, targets: [], arguments: { key: 'roughness', value: .85 } }]
       : precisionLayoutOperation
       ? [operation === 'page.snap.set.v1'

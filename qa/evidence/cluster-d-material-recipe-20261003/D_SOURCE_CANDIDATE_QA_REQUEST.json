@@ -1,0 +1,8 @@
+{
+  "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
+  "version": 1,
+  "requestId": "cluster-d-material-recipe-da40f868ebdb17c6cacb46d74867f75235ba77e5",
+  "candidateSha": "da40f868ebdb17c6cacb46d74867f75235ba77e5",
+  "case": "cluster-d-material-recipe",
+  "regressions": false
+}
