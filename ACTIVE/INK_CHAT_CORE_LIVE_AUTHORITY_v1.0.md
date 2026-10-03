@@ -20,12 +20,33 @@ Unit PASS, candidate readiness, PR readiness, deployment alone and first Live ti
 
 ## Audited checkpoint and queue
 
-Source snapshot: 8707060ceca34bddcdeea8b92891621e61623082; execution must use latest main.
+Execution always starts from latest main; accepted product/source identity is recorded separately from documentation-only main commits.
 
-A1/A2/A3/A4, B0/B1, B2 representative image-stack operations and B4 native Path warp/distort/perspective have recorded closure. Representative coverage does not imply full operation coverage. Later Paper singleton and WebGL roughness closures supersede older chronological OPEN entries.
+Closed / formally Live-qualified CHAT routes:
+- A1 Paint Session;
+- A2 native Stroke / Natural Media / Airbrush;
+- A3 Paper exposure plus later single-stroke Paper integration and WebGL roughness parity;
+- A4 targeted native Stroke Eraser;
+- A5 Blender / Smudge on existing multi-channel pigment authority;
+- B0/B1 web-raster bridge + mutable web-raster named-tool import;
+- B2 representative non-destructive image stack: brightnessContrast / gaussianBlur / multiply / colorOverlay / twirl;
+- B3.1 Paint Bucket;
+- B3.2 raster Mask plus raster-pixel/mask stale fingerprints;
+- B3.3 Spot Healing;
+- B4 native Path warp / distort / perspective.
 
-A5 Blender/Smudge is active under its existing owner. Candidate QA request: clusterA-A5-blender-smudge-candidate-001-regressions; candidate f351c788e57b7d5ad034f156711d47d431179669. This is not Formal Live closure. Finish its review/integration/deployment/Live chain first. Latest audited accepted Live source is 3ab58f771f927f50d4548c40ca153834df08600d (A4); refresh BUILD_INFO/results before acceptance.
+Latest accepted Live product source at this checkpoint:
+`c6ae51d96d95e2567b9b7ef6d1e55280cfb2cee0` (B3.3 Spot Healing).
 
-Subsequent bounded packages are selected from evidenced gaps: B3 local/destructive raster and masks; advanced mutable raster ingest exposure; Cluster C native pages, align/distribute, snapping/guides and artboard operations; Cluster D existing Material/Recipe authorities and one governed execution route; Text warp/curved-text product rendering integration.
+B3 remains partial. Next bounded B3 work must select from existing local-raster authorities without pointer emulation:
+- other one-shot local retouch families (dodge / burn / sponge / local blur / local sharpen / color replacement);
+- source-dependent retouch (clone / healing brush / patch / pattern stamp) only after an explicit bounded source-point/source-region contract is defined.
+Do not silently broaden Spot Healing PASS to these operations.
 
-Registry counts alone do not close capabilities. Empty default catalogs do not prove missing engines. UI C04/C06, New Document/A4 redesign and external workflow-IR research are outside this appointment.
+After B3, remaining authority queue is:
+- advanced mutable raster ingest exposure for existing PSD / TIFF / EXR / RAW paths;
+- Cluster C native pages, align/distribute, snapping/guides and artboard operations;
+- Cluster D existing Material / Recipe authorities and one governed execution route;
+- Text warp / curved-text product rendering integration.
+
+Representative coverage never implies every enum variant is qualified. Registry counts alone do not close capabilities. Empty default catalogs do not prove missing engines. UI C04/C06, New Document/A4 redesign and external workflow-IR research are outside this appointment.
