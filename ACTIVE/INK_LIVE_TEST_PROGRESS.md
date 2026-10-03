@@ -1279,3 +1279,44 @@ FORMAT_VERSION_CHANGE = NONE
 PR #146 accepted, merged and formally Live-qualified at exact source f56e492af4954ae6da3be39cf10d2dbe2859d87e. Browser candidate 87158d5c372cfd40deff5ee6c887ddecbc7a4e69; final integrated product tree exact. Local 23/23, candidate five-family B2 and affected regressions, Formal Live B2/cache/Natural Media/B4/C1 PASS. [Authority closure](../working/INK_CORE_PERFORMANCE_STABILITY_002_AUTHORITY_CLOSURE_20261003.md).
 
 The old full-B2 opaque dropShadow unchanged-render assertion also fails on unchanged baseline; separate existing finding retained, no dropShadow qualification claimed. UI ownership and FORMAT_VERSION remain unchanged. Existing capability owners continue. This package is CLOSED; do not restart the DEV branch or automatically open another optimization.
+
+
+## Cluster C2 explicit-target align / distribute — merged / deployed / formal Live qualified 2026-10-03
+
+Classification:
+```text
+C2_ALIGN_DISTRIBUTE = PRODUCT EXISTS / CHAT EXPOSURE GAP → REPAIRED
+```
+
+Source/candidate:
+- PR #147 merged.
+- exact candidate: `6994160cae577f57e858919e261a57aa7f5fea18`.
+- merged source: `f8035bd862825b913d0157f51c62de15bbb9d29e`.
+- candidate request: `clusterC-C2-align-distribute-candidate-003-regressions`.
+- candidate run: `37107502278`; artifact `11268731192`; digest `sha256:c3ad4d4bbd9961489cd60066e253d5a7b5890afd31478afe11711227bbd6d268`.
+- candidate `left`, `centerX`, `distributeX`, selection restoration, exact Undo/Redo and two-target distribution guard PASS.
+- exact-SHA C1 / B4 / A2 / B2 regressions PASS.
+
+Formal Live:
+- integrated deployed source: `f56e492af4954ae6da3be39cf10d2dbe2859d87e`.
+- request: `clusterC-C2-align-distribute-live-001`.
+- request commit: `64086b097292433c8af7bba13503d2fe8e6cc4ce`.
+- result commit: `52482c8e347310f60d54923305867c8777a8c660`.
+- run: `37108065303`; artifact `11268926595`.
+- exact source verified; `apiReady=true`; 23 named tools.
+- `left`: X 10 / 90 / 260 → 10 / 10 / 10; History `對齊物件`; Undo restored baseline Preview bounds/bytes; Redo reproduced aligned Preview.
+- `distributeX`: X 10 / 90 / 260 → 10 / 130 / 260 with widths 40 / 50 / 60, giving exact 80 / 80 gaps; Undo/Redo PASS.
+- final Context retained the three native editable Paths and no transient selection.
+
+Boundary:
+- explicit stable refs only;
+- existing `InkApp.alignSelection()` + `applyWorldTransformBatch()` remain sole authorities;
+- no duplicate alignment math, pointer simulation, UI change, History redesign, or FORMAT_VERSION change;
+- representative qualification does not imply every mode enum was independently Formal-Live exercised.
+
+```text
+C2_ALIGN_DISTRIBUTE = CLOSED / MERGED / DEPLOYED / FORMAL LIVE QUALIFIED
+NEXT_CLUSTER_C = C3_SNAP_SETTINGS_AND_RULER_GUIDES
+SECOND_AUTHORITY = NONE
+FORMAT_VERSION_CHANGE = NONE
+```
