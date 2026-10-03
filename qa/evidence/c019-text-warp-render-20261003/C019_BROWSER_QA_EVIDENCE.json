@@ -1,0 +1,200 @@
+{
+  "schema": "INK-C019-TEXT-WARP-RENDER-DEV-EVIDENCE",
+  "version": 1,
+  "status": "PASS",
+  "date": "2026-10-03",
+  "branch": "work/ink-c019-text-warp-render-001",
+  "baseMainAtDispatch": "b6f837643064100b04cad12e338db782709ce255",
+  "latestMainObservedAtReturn": "b1a4331de524c193f77a40b1ad530cfcf75ba37f",
+  "exactBrowserCandidateSha": "35872e4f498950c58d47aac64f8e515967b081e9",
+  "productStateBeforeTemporaryBrowserHarness": "bec30aa18a488ef997d5ac7a6f12c18b42d57465",
+  "formatVersion": {
+    "value": 4,
+    "changed": false
+  },
+  "gapReaudit": {
+    "result": "CONFIRMED_GENUINE_RENDER_GAP",
+    "nativeTextDescriptor": "pathText already persisted on type:text",
+    "existingLayoutAuthority": "product/source/src/editor/text-layout.js::layoutTextOnPath()",
+    "missingAuthorityAtBase": "formal Renderer drawText() did not consume pathText"
+  },
+  "implementation": {
+    "rendererAuthority": "product/source/src/ink.js::Renderer.drawText()",
+    "nativeDescriptorConsumed": {
+      "pathId": "stable native Path id",
+      "startOffset": "non-negative distance",
+      "overflow": "clip"
+    },
+    "chatOperation": "text.path.set.v1",
+    "chatLifecycle": "proposal -> approval -> execute",
+    "productChangedFiles": [
+      "product/source/src/ink.js",
+      "product/source/src/editor/chat-bounded-edit.js",
+      "product/source/src/agent/capability-registry.js"
+    ],
+    "textTypePreserved": true,
+    "pathMutatedByAttach": false,
+    "pathOrRasterConversion": false,
+    "duplicateTextLayoutEngine": false,
+    "existingLayoutReused": true,
+    "existingHistoryRevisionReused": true,
+    "renderabilityGuards": [
+      "same native layer/container",
+      "invertible Text local matrix",
+      "invertible Path transform"
+    ],
+    "staleProtection": [
+      "document/page revision preconditions",
+      "Text target fingerprint",
+      "referenced Path fingerprint"
+    ]
+  },
+  "focusedNodeQa": {
+    "jobId": 111175683056,
+    "tests": 30,
+    "pass": 30,
+    "fail": 0,
+    "covered": [
+      "native type:text preservation",
+      "post-curve text editability",
+      "scoped History + exact Undo/Redo",
+      "Path warp follow-through with stable Path identity",
+      "FORMAT_VERSION 4 persistence roundtrip",
+      "missing/cross-container/no-op/stale Path guards",
+      "singular Text renderability rejection",
+      "existing P1-C Text precision/layout regression",
+      "existing B4 Path deformation regression"
+    ]
+  },
+  "browserQa": {
+    "workflowRunId": 37113470082,
+    "jobId": 111175683056,
+    "artifactId": 11270487286,
+    "artifactName": "ink-c019-35872e4f498950c58d47aac64f8e515967b081e9",
+    "artifactDigest": "sha256:26953eb734742959d361cd849e210290f399a77d2f987e5e554cb865054bb245",
+    "exactCandidateVerified": true,
+    "runtimeIdentity": {
+      "apiReady": true,
+      "toolCount": 23,
+      "appVersion": "0.1"
+    },
+    "primary": {
+      "case": "c019-text-path-render",
+      "status": "PASS",
+      "operation": "text.path.set.v1",
+      "straight": {
+        "canvas": "515b9e3d",
+        "previewFingerprint": "fnv1a32:e33c2b66",
+        "bounds": {
+          "x": -244,
+          "y": -79,
+          "w": 488,
+          "h": 173
+        }
+      },
+      "curved": {
+        "canvas": "81aaa28d",
+        "previewFingerprint": "fnv1a32:517e4286",
+        "bounds": {
+          "x": -244,
+          "y": -79,
+          "w": 488,
+          "h": 173
+        }
+      },
+      "warped": {
+        "canvas": "dbcd65e7",
+        "previewFingerprint": "fnv1a32:72875984",
+        "bounds": {
+          "x": -244,
+          "y": -79,
+          "w": 495.231445,
+          "h": 173
+        }
+      },
+      "visibleRenderDelta": true,
+      "curvedPlacementCount": 18,
+      "curvedAnglesObserved": 18,
+      "historyLabel": "CHAT set Text Path",
+      "undo": {
+        "status": "COMPLETED",
+        "canvas": "515b9e3d",
+        "exactBaselineRestoration": true
+      },
+      "redo": {
+        "status": "COMPLETED",
+        "canvas": "81aaa28d",
+        "exactCurvedRestoration": true
+      },
+      "editableAfterCurve": true,
+      "followsWarp": true,
+      "persistence": {
+        "formatVersion": 4,
+        "textType": "text",
+        "pathText": {
+          "pathId": "qa-c019-path",
+          "startOffset": 14,
+          "overflow": "clip"
+        }
+      },
+      "screenshotPresent": true,
+      "screenshotInspected": true,
+      "screenshotObservation": "Visible editable text follows a curved native Path in the formal INK canvas."
+    },
+    "regressions": [
+      {
+        "case": "path-deformation-b4",
+        "status": "PASS"
+      },
+      {
+        "case": "stroke-create-a2",
+        "status": "PASS"
+      },
+      {
+        "case": "raster-stack-adjustment-b2",
+        "status": "PASS"
+      }
+    ]
+  },
+  "qaHarnessHistory": {
+    "firstRun": {
+      "candidateSha": "5488c0f859f2f39c63ac75d0545fcf756680aad7",
+      "runId": 37113132736,
+      "jobId": 111174750543,
+      "result": "NODE_GATE_FAIL_BEFORE_BROWSER",
+      "productFailure": false,
+      "reasons": [
+        "C019 test stub omitted existing layerObjectsPath History authority",
+        "unrelated current-main Connector-003 test baseline required app Document"
+      ]
+    },
+    "correctedPass": {
+      "candidateSha": "f874ef367486f8602ceaf4cc930e96e79a9e3444",
+      "runId": 37113179945,
+      "result": "PASS"
+    },
+    "finalPass": {
+      "candidateSha": "35872e4f498950c58d47aac64f8e515967b081e9",
+      "runId": 37113470082,
+      "result": "PASS"
+    }
+  },
+  "deferred": [
+    "broad text.warp.v1",
+    "envelope/deformation Text geometry",
+    "UI exposure"
+  ],
+  "mainAdvance": {
+    "observed": true,
+    "note": "main advanced after dispatch with Cluster C4 and later Formal Live evidence; C4 touches chat-bounded-edit.js and capability-registry.js. This DEV did not rebase or import Cluster C because C is an explicit hard boundary. CHAT/Core/Live authority must reconcile integration."
+  },
+  "boundaries": {
+    "merged": false,
+    "deployed": false,
+    "touchedB3": false,
+    "touchedClusterC": false,
+    "touchedClusterD": false,
+    "touchedUI": false
+  },
+  "authorityHandoff": "STOP_TO_CHAT_CORE_LIVE_AUTHORITY"
+}
