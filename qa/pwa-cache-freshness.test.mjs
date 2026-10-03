@@ -16,7 +16,8 @@ test('legacy worker URL forces network freshness while retaining offline fallbac
   const source = await read('product/source/service-worker.js');
   assert.match(source, /MIGRATION_ID = 'ink-pwa-cache-migration-v2'/);
   assert.match(source, /self\.skipWaiting\(\)/);
-  assert.match(source, /await self\.clients\.claim\(\)/);
+  assert.match(source, /event\.waitUntil\(self\.clients\.claim\(\)\)/);
+  assert.match(source, /setTimeout\(\(\) => \{/);
   assert.match(source, /client\.navigate\?\.\(client\.url\)/);
   assert.match(source, /new Request\(request, \{ cache: 'reload' \}\)/);
   assert.match(source, /caches\.match\(request, \{ ignoreSearch: true \}\)/);
