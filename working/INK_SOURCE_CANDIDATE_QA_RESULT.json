@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterC-C3-snap-guides-candidate-002-regressions",
-  "candidateSha": "de4ad731c7bad36626080c32113dbc692113306e",
+  "requestId": "clusterC-C3-snap-guides-candidate-003-integration-regressions",
+  "candidateSha": "1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
   "case": "snap-guides-c3",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:42309/?sourceCandidate=de4ad731c7bad36626080c32113dbc692113306e",
+    "href": "http://127.0.0.1:40245/?sourceCandidate=1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -72,11 +72,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterC-C3-snap-guides-candidate-002-regressions-align-distribute-c2",
-      "candidateSha": "de4ad731c7bad36626080c32113dbc692113306e",
+      "requestId": "clusterC-C3-snap-guides-candidate-003-integration-regressions-align-distribute-c2",
+      "candidateSha": "1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
       "case": "align-distribute-c2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:36265/?sourceCandidate=de4ad731c7bad36626080c32113dbc692113306e",
+        "href": "http://127.0.0.1:34643/?sourceCandidate=1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -183,11 +183,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterC-C3-snap-guides-candidate-002-regressions-page-ops-c1",
-      "candidateSha": "de4ad731c7bad36626080c32113dbc692113306e",
+      "requestId": "clusterC-C3-snap-guides-candidate-003-integration-regressions-page-ops-c1",
+      "candidateSha": "1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
       "case": "page-ops-c1",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:42535/?sourceCandidate=de4ad731c7bad36626080c32113dbc692113306e",
+        "href": "http://127.0.0.1:38437/?sourceCandidate=1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -202,21 +202,21 @@
           "page.rename.v1",
           "page.activate.v1"
         ],
-        "initialPageId": "e001a179-9f6f-42ef-a0dd-9b985ebb02a2",
-        "createdPageId": "020a8b99-ae80-461d-b6eb-c945f83b4e43",
-        "duplicatedPageId": "8a246806-4776-42fc-b6e2-bc9220a6dafe",
+        "initialPageId": "4895f79d-a0ca-4e58-8ff9-31cd02a43ae6",
+        "createdPageId": "a9ba2b69-8816-4c2c-acba-34c2d6c89180",
+        "duplicatedPageId": "2e0b573d-00fc-46c3-a436-101b4536424f",
         "duplicateIdentity": {
           "sourceLayerIds": [
-            "e862f7df-7857-4e50-ba4e-d1465b41023b"
+            "5cc19e06-b2bf-4d52-9d6c-1055279e2f2a"
           ],
           "sourceObjectIds": [
             "qa-c1-page2-path"
           ],
           "duplicateLayerIds": [
-            "517717f8-0489-4c3f-9954-d1f8335691f3"
+            "abf99d35-fdc6-43f9-a8c3-6bda984a1328"
           ],
           "duplicateObjectIds": [
-            "0ccbba95-4271-4216-b17e-8edea2dac7b7"
+            "0a8f4d8a-556a-424e-acd7-7d4c1b189f04"
           ]
         },
         "noOpCodes": {
@@ -226,7 +226,7 @@
         "staleCode": "CHAT_EDIT_STALE_PAGE",
         "minimumPageCode": "CHAT_EDIT_MINIMUM_PAGE_REQUIRED",
         "finalPageCount": 1,
-        "finalActivePageId": "e001a179-9f6f-42ef-a0dd-9b985ebb02a2",
+        "finalActivePageId": "4895f79d-a0ca-4e58-8ff9-31cd02a43ae6",
         "historyLabels": [
           "新增頁面",
           "CHAT create Path",
@@ -243,11 +243,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterC-C3-snap-guides-candidate-002-regressions-page-paper-a3",
-      "candidateSha": "de4ad731c7bad36626080c32113dbc692113306e",
+      "requestId": "clusterC-C3-snap-guides-candidate-003-integration-regressions-page-paper-a3",
+      "candidateSha": "1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
       "case": "page-paper-a3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:41473/?sourceCandidate=de4ad731c7bad36626080c32113dbc692113306e",
+        "href": "http://127.0.0.1:45861/?sourceCandidate=1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -361,7 +361,7 @@
             "strokes": 32,
             "drawCalls": 32,
             "simulationPasses": 68,
-            "cacheHits": 18,
+            "cacheHits": 16,
             "cacheMisses": 17,
             "evictions": 0,
             "contextLosses": 0,
@@ -436,11 +436,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterC-C3-snap-guides-candidate-002-regressions-raster-stack-adjustment-b2",
-      "candidateSha": "de4ad731c7bad36626080c32113dbc692113306e",
+      "requestId": "clusterC-C3-snap-guides-candidate-003-integration-regressions-raster-stack-adjustment-b2",
+      "candidateSha": "1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
       "case": "raster-stack-adjustment-b2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:35927/?sourceCandidate=de4ad731c7bad36626080c32113dbc692113306e",
+        "href": "http://127.0.0.1:42407/?sourceCandidate=1cc82a17b50063a4ed6acfd45b31662c8a97faa6",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -450,9 +450,9 @@
         "passed": true,
         "operation": "image.adjustment.add.v1",
         "adjustmentType": "brightnessContrast",
-        "objectId": "fb2780f5-92cc-4bca-94eb-9005e2a6650c",
-        "beforeFingerprint": "fnv1a32:ccca8b2d",
-        "afterFingerprint": "fnv1a32:8758ef68",
+        "objectId": "49b9025e-44db-4d5f-8a65-b698f9cfc7a9",
+        "beforeFingerprint": "fnv1a32:3ece49b6",
+        "afterFingerprint": "fnv1a32:25c0a1ff",
         "beforeHash": "7883b22",
         "afterHash": "9cd23fe",
         "undoHash": "7883b22",
@@ -465,12 +465,12 @@
           "adjustmentCount": 1,
           "resultRefs": [
             {
-              "layerId": "c167abb1-083f-4f61-8ee1-af7ad44e15bf",
-              "objectId": "fb2780f5-92cc-4bca-94eb-9005e2a6650c",
-              "pageId": "4cd9750a-046d-4f09-9285-4f5e3e132b0c"
+              "layerId": "93549f78-1152-4c28-8d59-36422cb41c70",
+              "objectId": "49b9025e-44db-4d5f-8a65-b698f9cfc7a9",
+              "pageId": "d7c4a0ab-9e9c-4e38-abb3-fbb1f4f0ec51"
             }
           ],
-          "stackItemId": "adj_1x6gov0",
+          "stackItemId": "adj_1602qxr",
           "stackItemType": "brightnessContrast"
         }
       },
