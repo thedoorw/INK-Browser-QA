@@ -297,7 +297,9 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
       scratchMaterial:scratchHash(applied),
       scratchOrdinary:scratchHash(ordinaryClone),
       scratchMaterialObject:scratchHash(applied,'object'),
-      scratchOrdinaryObject:scratchHash(ordinaryClone,'object')
+      scratchOrdinaryObject:scratchHash(ordinaryClone,'object'),
+      runtimeDrawObjectSource:String(app.renderer.drawObject).slice(0,1800),
+      runtimeDrawVectorPathSource:String(app.renderer.drawVectorPath).slice(0,1200)
     }));
   }
   const undoApply=await invoke('undo_ink',{});if(undoApply?.status==='FAILED')throw new Error('MATERIAL_APPLY_UNDO_FAILED');
