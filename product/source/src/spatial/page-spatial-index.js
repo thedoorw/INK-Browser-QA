@@ -80,7 +80,12 @@ export class PageSpatialIndex {
 
   syncObjects(page, objectIds, boundsForObject) {
     if (!this.tree || page?.id !== this.pageId) return false;
-    for (const objectId of new Set(objectIds)) {
+    const uniqueObjectIds = [...new Set(objectIds)];
+    if (uniqueObjectIds.length > this.capacity) {
+      this.rebuild(page, boundsForObject);
+      return true;
+    }
+    for (const objectId of uniqueObjectIds) {
       if (!this.syncObject(page, objectId, boundsForObject)) return false;
     }
     return true;
