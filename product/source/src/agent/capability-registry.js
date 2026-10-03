@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAGE_OPERATIONS, CHAT_OBJECT_ALIGN_MODES, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES, CHAT_IMAGE_SOURCE_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAGE_OPERATIONS, CHAT_OBJECT_ALIGN_MODES, CHAT_PRECISION_LAYOUT_OPERATIONS, CHAT_SNAP_KEYS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES, CHAT_IMAGE_SOURCE_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -58,6 +58,7 @@ const expectedStateSchema = obj({
   documentId: str('Expected document id.'),
   pageId: str('Expected page id.'),
   paperFingerprint: str('Expected active-page paper fingerprint; captured automatically for page.paper.set.v1.'),
+  precisionFingerprint: str('Expected active-page snap/guides fingerprint; captured automatically for Cluster C3 precision-layout operations.'),
   revisionId: str('Expected revision id; omit when not constraining revision.'),
   targetFingerprints: { type: 'object', properties: {}, additionalProperties: true, description: 'Optional target fingerprint map.' }
 }, [], 'Optional optimistic-concurrency preconditions.');
@@ -140,6 +141,45 @@ const editSchemas = {
       key: { type: 'string', enum: ['type', 'color', 'gridSize', 'absorbency', 'roughness', 'fiberStrength', 'fiberAngle', 'sizing', 'granulation', 'seed', 'textureVisible'], description: 'Existing page.paper field.' },
       value: { description: 'Field-specific scalar: type=blank/dots/grid/ruled; color=#RRGGBB; gridSize=8..100; fiberAngle=-90..90; seed=uint32; textureVisible=boolean; other profile values=0..1. Validated by the existing bounded edit authority.' }
     }, ['key', 'value'], 'One field per atomic History entry; no-op, unknown fields, active paper preview and stale paper proposals are rejected.'),
+    0, 0
+  ),
+  'page.snap.set.v1': editTaskSchema(
+    { type: 'string', const: 'page.snap.set.v1', description: 'Set one existing active-page snap enable/category boolean through InkApp snap-state wrappers and scoped History.' },
+    obj({
+      key: { type: 'string', enum: [...CHAT_SNAP_KEYS], description: 'Overall enabled state or one existing native snap category.' },
+      value: bool('Boolean snap state.')
+    }, ['key', 'value'], 'One atomic snap-state mutation; current scalar tolerance/hysteresis/angleStep values are intentionally not expanded by this package.'),
+    0, 0
+  ),
+  'guide.add.v1': editTaskSchema(
+    { type: 'string', const: 'guide.add.v1', description: 'Add one active-page ruler guide through InkApp.addGuide().' },
+    obj({
+      id: str('Optional caller-supplied stable guide id.'),
+      orientation: { type: 'string', enum: ['horizontal', 'vertical'], description: 'Native ruler-guide orientation.' },
+      position: num('World-space ruler-guide position.', { minimum: -1000000, maximum: 1000000 }),
+      locked: bool('Optional initial lock state.', { default: false }),
+      visible: bool('Optional initial visibility.', { default: true })
+    }, ['orientation', 'position'], 'Native ruler-guide descriptor; id may be omitted so the existing guide authority derives it.'),
+    0, 0
+  ),
+  'guide.move.v1': editTaskSchema(
+    { type: 'string', const: 'guide.move.v1', description: 'Move one existing active-page ruler guide through InkApp.moveGuide().' },
+    obj({ guideId: str('Stable guide id.'), position: num('New world-space ruler-guide position.', { minimum: -1000000, maximum: 1000000 }) }, ['guideId', 'position'], 'Explicit guide id and position.'),
+    0, 0
+  ),
+  'guide.remove.v1': editTaskSchema(
+    { type: 'string', const: 'guide.remove.v1', description: 'Remove one existing active-page ruler guide through InkApp.removeGuide().' },
+    obj({ guideId: str('Stable guide id.') }, ['guideId'], 'Explicit guide id.'),
+    0, 0
+  ),
+  'guide.lock.set.v1': editTaskSchema(
+    { type: 'string', const: 'guide.lock.set.v1', description: 'Set one existing ruler guide lock state through InkApp.setGuideLocked().' },
+    obj({ guideId: str('Stable guide id.'), locked: bool('Desired lock state.') }, ['guideId', 'locked'], 'Explicit guide id and lock state.'),
+    0, 0
+  ),
+  'guide.visibility.set.v1': editTaskSchema(
+    { type: 'string', const: 'guide.visibility.set.v1', description: 'Set one existing ruler guide visibility through InkApp.setGuideVisible().' },
+    obj({ guideId: str('Stable guide id.'), visible: bool('Desired visibility state.') }, ['guideId', 'visible'], 'Explicit guide id and visibility state.'),
     0, 0
   ),
   'path.repaint.v1': editTaskSchema(
@@ -1092,12 +1132,15 @@ primary.push(descriptor({
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   const paperOnly = operation === 'page.paper.set.v1';
   const pageOperation = CHAT_PAGE_OPERATIONS.includes(operation);
+  const precisionLayoutOperation = CHAT_PRECISION_LAYOUT_OPERATIONS.includes(operation);
   const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
   const strokeOnly = operation === 'stroke.erase.circle.v1';
   const imageOnly = operation.startsWith('image.');
   const zeroTargetCreate = ['path.create.v1', 'paint.session.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
   const operationConstraints = paperOnly
     ? ['Zero object targets; changes only the active page paper through InkApp.changePaper. Requires idle History and no pending interactive paper preview; captured paper fingerprint rejects stale proposals.']
+    : precisionLayoutOperation
+    ? ['Zero object targets; changes only active-page native snap settings or ruler guides through existing InkApp precision-layout wrappers. Captured precision fingerprint rejects stale proposals; no pointer simulation or duplicate snapping/guide authority is introduced.']
     : pageOperation
     ? ['Zero object targets; explicit stable page id is supplied in arguments where required. Reuses existing InkApp page mutation/navigation authority; page.activate.v1 is navigation-only and creates no History entry. New Document architecture is outside this operation family.']
     : zeroTargetCreate
@@ -1160,7 +1203,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     role: 'PROPOSAL',
     authoritativeRoute: 'app.chatBoundedEditAdapter.propose → explicit approval → app.chatBoundedEditAdapter.execute',
     inputSchema: editSchemas[operation],
-    targetTypes: (paperOnly || pageOperation) ? ['Page'] : zeroTargetCreate
+    targetTypes: (paperOnly || pageOperation || precisionLayoutOperation) ? ['Page'] : zeroTargetCreate
       ? (operation === 'component.definition.duplicate.v1' ? ['Document'] : ['Page'])
       : operation === 'text.edit.v1'
         ? ['Object']
@@ -1174,6 +1217,18 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     resultContract: resultContract({ statuses: ['PROPOSED', 'FAILED'] }),
     examples: paperOnly
       ? [{ taskId: 'paper-roughness-1', operation, targets: [], arguments: { key: 'roughness', value: .85 } }]
+      : precisionLayoutOperation
+      ? [operation === 'page.snap.set.v1'
+          ? { taskId: 'snap-grid-1', operation, targets: [], arguments: { key: 'grid', value: true } }
+          : operation === 'guide.add.v1'
+            ? { taskId: 'guide-add-1', operation, targets: [], arguments: { orientation: 'vertical', position: 120 } }
+            : operation === 'guide.move.v1'
+              ? { taskId: 'guide-move-1', operation, targets: [], arguments: { guideId: 'guide-1', position: 180 } }
+              : operation === 'guide.lock.set.v1'
+                ? { taskId: 'guide-lock-1', operation, targets: [], arguments: { guideId: 'guide-1', locked: true } }
+                : operation === 'guide.visibility.set.v1'
+                  ? { taskId: 'guide-visible-1', operation, targets: [], arguments: { guideId: 'guide-1', visible: false } }
+                  : { taskId: 'guide-remove-1', operation, targets: [], arguments: { guideId: 'guide-1' } }]
       : pageOperation
       ? [operation === 'page.create.v1'
           ? { taskId: 'page-create-1', operation, targets: [], arguments: {} }
