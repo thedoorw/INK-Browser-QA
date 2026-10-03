@@ -1,12 +1,181 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B4-warp-distort-perspective-live-001",
+  "requestId": "local-paper-webgl-roughness-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "468873503155f66585564a6ca7b11f7a82586d7a",
-  "tool": "describe_ink_capability",
-  "input": {
-    "idOrToolName": "path.distort.v1"
-  },
-  "qualification": "path-deformation-b4"
+  "expectedSourceSha": "698ce0ef781eeb5899ab5b84183d9a0d0eb8e6f5",
+  "steps": [
+    {
+      "id": "describePaper",
+      "tool": "describe_ink_capability",
+      "input": {
+        "idOrToolName": "page.paper.set.v1"
+      }
+    },
+    {
+      "id": "brushPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-webgl-roughness-brush",
+          "operation": "stroke.create.v1",
+          "targets": [],
+          "arguments": {
+            "kind": "brush",
+            "color": "#355d73",
+            "size": 78,
+            "opacity": 0.92,
+            "flow": 0.86,
+            "wetness": 0.9,
+            "grain": 0.34,
+            "bristle": 0.3,
+            "seed": 9182,
+            "samples": [
+              {
+                "x": -145,
+                "y": -35,
+                "pressure": 0.3,
+                "timestamp": 0
+              },
+              {
+                "x": -55,
+                "y": 55,
+                "pressure": 0.82,
+                "timestamp": 22
+              },
+              {
+                "x": 45,
+                "y": -5,
+                "pressure": 0.96,
+                "timestamp": 44
+              },
+              {
+                "x": 145,
+                "y": 42,
+                "pressure": 0.55,
+                "timestamp": 66
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "brushApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "brushPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "brushExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "brushPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "brushApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "previewBefore",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
+      }
+    },
+    {
+      "id": "roughnessPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-webgl-roughness-paper",
+          "operation": "page.paper.set.v1",
+          "targets": [],
+          "arguments": {
+            "key": "roughness",
+            "value": 0.95
+          }
+        }
+      }
+    },
+    {
+      "id": "roughnessApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "roughnessPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "roughnessExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "roughnessPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "roughnessApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "previewAfter",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
+      }
+    },
+    {
+      "id": "historyAfter",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "undoPaper",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "previewUndo",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
+      }
+    },
+    {
+      "id": "redoPaper",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "previewRedo",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
+      }
+    },
+    {
+      "id": "historyFinal",
+      "tool": "get_ink_history",
+      "input": {}
+    }
+  ]
 }
