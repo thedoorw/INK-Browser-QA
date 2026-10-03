@@ -1111,3 +1111,67 @@ Formal exact-source Live: cache/A5/B4 run37099162758; combined Draw37099239809; 
 Authority closure: `working/INK_CORE_PERFORMANCE_STABILITY_AUTHORITY_CLOSURE_20261003.md`; evidence manifest: `qa/evidence/ink-core-performance-stability-001/authority-evidence-manifest.json`.
 
 Exact-deployment reservation released; existing B3 ownership continues. No UI/FORMAT_VERSION/new authority change. No full-Core performance, Preview speedup or browser-baseline speedup claim.
+
+
+## B3.5 Source-dependent Retouch — merged / deployed / formal Live qualified 2026-10-03
+
+Classification:
+```text
+B3_SOURCE_DEPENDENT_RETOUCH = PRODUCT EXISTS / CHAT EXPOSURE GAP → REPAIRED
+PATTERN_STAMP = SEPARATE / NOT QUALIFIED
+```
+
+Authority:
+- bounded operation `image.raster.sourceRetouch.v1`;
+- qualified: Clone Stamp / Healing Brush / Patch;
+- explicit raster-local source/target point or equal-sized source/target region only;
+- one stable editable native 8-bit RGB image target;
+- existing `cloneStamp()`, `healingBrush()`, `patchRaster()` remain sole pixel authorities;
+- same native rasterState, pixel/mask stale fingerprints, scoped History and Renderer cache invalidation;
+- no pointer emulation, source inference, cross-image source, raw mask/pixel payload, second authority, UI or FORMAT_VERSION change;
+- Pattern Stamp remains separate pending a bounded pattern-asset contract.
+
+Source/candidate:
+- PR #143 merged.
+- original DEV candidate `22593c2a59bd16c2c166a67a260a0390a6efd218` was superseded for integration because it predated accepted Core cache optimization.
+- final integrated candidate `628fbcc811bbd8a072dc20be0cc53d057faf3dc8`.
+- merged/deployed source `0794cd5aa0567314ec6c240acdef57de7ef314d6`.
+- candidate request `clusterB-B3-source-retouch-integration-001-regressions`.
+- request commit `36da79947a502add96ff77f34a70a031be5cf842`.
+- result commit `590cff2a8802442e7c455f91f066ca74d6486af8`.
+- run `37100616413`; artifact `11265594883`; digest `sha256:7e2c6fb4a60e70940fb1db0a7ee49a4aea8a12bc5d9d72148917875c00223770`.
+- Clone / Healing / Patch primary PASS with Preview deltas and exact Undo/Redo.
+- stale / NO_OP / out-of-range PASS.
+- B3.4 / B3.3 / B3.2 / B3.1 / B2 regressions PASS.
+
+Formal Live A:
+- request `clusterB-B3-source-retouch-live-001a`;
+- request commit `76ffc944de0fe291c5ea1d53cdd291906ced28b5`;
+- result commit `cacd18fcd7c73c535262317207366516f5320261`;
+- run `37100778335`; artifact `11266046309`; digest `sha256:99c29b233ff3c09ce8d8049935e3f313a20ebcd02fd84de01082c47aa43b618b`;
+- exact source verified; `apiReady=true`; 23 tools;
+- baseline/restored `fnv1a32:34d01658`;
+- Clone `f2642fce`; Healing `e6647657`; exact Undo/Redo;
+- stale approval rejected `CHAT_EDIT_TARGET_STALE`.
+
+Formal Live B:
+- request `clusterB-B3-source-retouch-live-001b`;
+- request commit `016d7c92bb2e845df8be2050320dc9c963263bc7`;
+- result commit `0f384513ba8292f6a8d0672ce6e53fe8a0186acc`;
+- run `37100900280`; artifact `11265976478`; digest `sha256:ef537621c17047ba243196c3eed1b7f299886e9fbfcd1d8b52e7baca044d2188`;
+- Patch `fnv1a32:34d01658 → fnv1a32:546753a7`; exact Undo/Redo;
+- same-source/target Clone rejected `CHAT_EDIT_NO_OP`;
+- out-of-range Healing source rejected `CHAT_EDIT_ARGUMENT_OUT_OF_RANGE`.
+
+```text
+B3_PAINT_BUCKET = CLOSED
+B3_RASTER_MASK = CLOSED
+B3_SPOT_HEAL = CLOSED
+B3_LOCAL_RETOUCH_NON_SOURCE = CLOSED
+B3_SOURCE_DEPENDENT_RETOUCH = CLOSED / FORMAL LIVE QUALIFIED
+B3_DIRECT_AND_LOCAL_RASTER_SCOPE = CLOSED FOR QUALIFIED CHAT ROUTES
+PATTERN_STAMP = FOLLOW-UP / SEPARATE CONTRACT
+NEXT_AUTHORITY_QUEUE = ADVANCED_MUTABLE_RASTER_INGEST_PSD_TIFF_EXR_RAW
+SECOND_AUTHORITY = NONE
+FORMAT_VERSION_CHANGE = NONE
+```
