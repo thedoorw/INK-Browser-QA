@@ -1,0 +1,8 @@
+{
+  "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
+  "version": 1,
+  "requestId": "c019-text-path-35872e4f498950c58d47aac64f8e515967b081e9",
+  "candidateSha": "35872e4f498950c58d47aac64f8e515967b081e9",
+  "case": "c019-text-path-render",
+  "regressions": true
+}
