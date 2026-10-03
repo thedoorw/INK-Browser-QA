@@ -324,7 +324,7 @@ const PAPER_A3_CASE = String.raw`(async()=>{
 })()`;
 
 
-const PAPER_SINGLE_STROKE_CASE = String.raw\`(async()=>{
+const PAPER_SINGLE_STROKE_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app.inkPublicApi;
   if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
   const invoke=(tool,input={})=>Promise.resolve(api.tools.invoke(tool,input));
@@ -369,7 +369,7 @@ const PAPER_SINGLE_STROKE_CASE = String.raw\`(async()=>{
     cases.push({kind,objectId,baseline,changed,historyBefore,paperHistoryAfter:historyBefore+1,activeBackend:diagnostics.activeBackend,identityStable:true,undoRedoExact:true});
   }
   return {passed:true,paperBefore:paper0,cases,naturalMedia:app.renderer.naturalMedia.diagnostics()};
-})()\`;
+})()`;
 
 const RASTER_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
